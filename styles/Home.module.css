@@ -1,7 +1,103 @@
-.videoHome{
+.contVideoHome{
   width: 100vw;
   max-width: 100vw;
   height: 100vh;
   max-height: 100vh;
+  position: relative;
+}
+
+.contVideoHome::before{
+  content: '';
+  background: rgba(0, 0, 0, .4);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.videoHome{
+  width: 100%;
+  height: 100%;
+  max-width: 100vw;
+  max-height: 100vh;
   object-fit: cover;
+}
+
+.videoCaption{
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  z-index: 2;
+}
+
+.videoCaptionText{
+  color: white;
+  margin-left: 180px;
+  display: block;
+  transition: .4s;
+}
+
+.videoCaptionText span{
+  display: block;
+}
+
+.videoCaptionTextTop{
+  font-family: 'Gotham', sans-serif;
+  font-size: 16px;
+}
+
+.videoCaptionTextBottom{
+  font-family: 'Libre Caslon Text', serif;
+  font-size: 40px;
+  position: relative;
+}
+
+.textArrow{
+  width: 0;
+  height: 1px;
+  background: white;
+  top: 50%;
+  position: absolute;
+  left: -1rem;
+  opacity: 0;
+  transition: width .5s;
+}
+
+.textArrow::before{
+  position: absolute;
+  content: '';
+  border-top: 1px solid white;
+  border-right: 1px solid white;
+  width: 8px;
+  height: 8px;
+  transform: rotate(45deg);
+  right: 1px;
+  top: -4px;
+}
+
+.videoCaptionText:hover{
+  padding-left: 1rem;
+}
+
+.videoCaptionText:hover .textArrow{
+  width: calc(100% + 2rem);
+  opacity: 1;
+}
+
+@media (max-width: 575.98px) { 
+  .videoCaptionText{
+    color: white;
+    margin-left: 0px;
+    margin-top: 20px;
+    display: block;
+    transition: .4s;
+  }
 }

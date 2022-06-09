@@ -11,7 +11,7 @@ export default function MenuPrincipal({ handler }) {
         </button>
         <ul className={styles.menuPrincipalList}>
           <li className={styles.menuPrincipalItem}>
-            <Link href="#">
+            <Link href="/">
               <a className={styles.menuPrincipalLink}>
                 <div className={styles.menuPrincipalIndicator}>
                   <svg
@@ -38,7 +38,7 @@ export default function MenuPrincipal({ handler }) {
           </li>
 
           <li className={styles.menuPrincipalItem}>
-            <Link href="#">
+            <Link href="/projects">
               <a className={styles.menuPrincipalLink}>
                 <div className={styles.menuPrincipalIndicator}>
                   <svg
@@ -66,7 +66,7 @@ export default function MenuPrincipal({ handler }) {
           </li>
 
           <li className={styles.menuPrincipalItem}>
-            <Link href="#">
+            <Link href="/about-us">
               <a className={styles.menuPrincipalLink}>
                 <div className={styles.menuPrincipalIndicator}>
                   <svg
@@ -94,7 +94,7 @@ export default function MenuPrincipal({ handler }) {
           </li>
 
           <li className={styles.menuPrincipalItem}>
-            <Link href="#">
+            <Link href="/download-portfolios">
               <a className={styles.menuPrincipalLink}>
                 <div className={styles.menuPrincipalIndicator}>
                   <svg

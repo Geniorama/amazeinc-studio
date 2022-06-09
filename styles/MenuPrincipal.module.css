@@ -85,6 +85,7 @@
     width: 45px;
     display: block;
     background: white;
+    transition: .5s;
 }
 
 .btnCloseMenuLine:first-child{
@@ -93,4 +94,17 @@
 
 .btnCloseMenuLine:last-child{
     transform: rotate(-45deg);
+}
+
+.btnCloseMenu:hover .btnCloseMenuLine{
+    transform: rotate(0);
+}
+
+@media (max-width: 575.98px) { 
+    .menuPrincipalTextTop{
+        font-size: 13px;
+    }
+    .menuPrincipalTextBottom{
+        font-size: 30px;
+    }
 }
