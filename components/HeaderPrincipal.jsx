@@ -5,29 +5,61 @@ import Image from 'next/image'
 import Link from 'next/link'
 import SocialNav from './SocialNav'
 import MenuPrincipal from './MenuPrincipal'
-import { toggleMenu } from '../helpers'
+import { motion } from "framer-motion"
+import { useState } from 'react'
 
 export default function HeaderPrincipal({fixed}){
-    // const openMenu = (e) => {
-    //     const amaze_menu = document.getElementById('amaze-menu')
-    //     const active_class = styles.genNavActive
+    // State menu
+    const [isMenuOpen, setIsMenuOpen] = useState(false)
 
-    //     amaze_menu.classList.add(active_class)
-    // }
+    // Animation variants
+    const variants = {
+        open:{
+            y: 0,
+            transition: {
+                type: "spring",
+                stiffness: 20,
+                restDelta: 0
+            }
+        },
+        close:{
+            y: "-200%",
+            transition: {
+                type: "spring",
+                stiffness: 20,
+                restDelta: 0
+            }
+        }
+    }
 
-    // const closeMenu = (e) => {
-    //     const amaze_menu = document.getElementById('amaze-menu')
-    //     const active_class = styles.amazeNavActive
+    // Animation overlay variants
+    const variantsOverlay = {
+        open:{
+            rotate: 0,
+            scale: 1,
+            transition: {
+                type: "spring",
+                stiffness: 20,
+                restDelta: 0
+            }
+        },
 
-    //     amaze_menu.classList.remove(active_class)
-    // }
-    
+        close:{
+            rotate: -10,
+            scale: 2,
+            transition: {
+                type: "spring",
+                stiffness: 20,
+                restDelta: 0
+            }
+        }
+    }
 
     return(
         <header id='amaze-header' className={`${styles.headerPrincipal} ${fixed ? styles.headerFixed : ""}`}>
             <div className='container'>
                 <nav className={styles.navMenu}>
-                    <button id='btn-toggle-nav' className={styles.btnToggleMenu} onClick={(e) => toggleMenu("." + styles.boxMenu, styles.activeMenu)} role="button">
+                    <button id='btn-toggle-nav' className={styles.btnToggleMenu} onClick={() => setIsMenuOpen(true)} role="button">
                         <span className={styles.btnToggleMenu__line}></span>
                         <span className={styles.btnToggleMenu__line}></span>
                         <span className={styles.btnToggleMenu__line}></span>
@@ -43,10 +75,15 @@ export default function HeaderPrincipal({fixed}){
             </div>
 
             {/* Menu principal */}
-            <div className={styles.boxMenu}>
-                <MenuPrincipal />
-            </div>
-            
+            <motion.div className={styles.boxMenu} initial={"close"} animate={isMenuOpen ? "open" : "close"} variants={variants}>
+                
+                {/* Background overlay */}
+                <motion.div initial={"close"} animate={isMenuOpen ? "open" : "close"} variants={variantsOverlay} className={styles.menuOverlay}></motion.div>
+                
+                <MenuPrincipal
+                    handler={setIsMenuOpen}
+                /> 
+            </motion.div>        
         </header>
     )
 }

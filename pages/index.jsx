@@ -12,7 +12,7 @@ export default function Home(){
     >
 
     {/* Video */}
-    <video className={styles.videoHome} autoplay="true" muted="true" loop="true" src="https://cdn.videvo.net/videvo_files/video/free/2019-11/large_watermarked/190301_1_25_11_preview.mp4"></video>
+    <video className={styles.videoHome} autoPlay muted loop src="https://cdn.videvo.net/videvo_files/video/free/2013-11/large_watermarked/RotatingLens1Videvo_preview.mp4"></video>
 
 
     </Layout>

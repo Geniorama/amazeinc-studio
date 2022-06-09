@@ -2,8 +2,15 @@
     display: flex;
     list-style: none;
     align-items: center;
+    margin: 0;
+    padding: 0;
 }
 
 .socialNavItem{
     margin: 0 .5rem;
+}
+
+.socialNavIcon svg{
+    width: 15px;
+    height: 15px;
 }

@@ -1,25 +1,24 @@
 .menuPrincipal{
-    background-color: var(--p-color);
     min-height: 100vh;
     color: white;
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    padding: 3rem;
     position: relative;
 }
 
 .menuPrincipalList{
     list-style: none;
     padding: 0;
-    margin-left: 20rem;
+    /* margin-left: 20rem; */
 }
 .menuPrincipalLink{
     color: white;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     font-family: 'Libre Caslon Text', serif;
-    margin: 2rem 0;
+    margin: 1rem 0;
+    transition: .7s;
 }
 
 .menuPrincipalLink span{
@@ -28,22 +27,57 @@
 }
 
 .menuPrincipalTextTop{
-    font-size: 20px;
+    font-size: 15px;
     font-family: 'Gotham', sans-serif;
 }
 
 .menuPrincipalTextBottom{
     font-size: 50px;
+    position: relative;
+}
+
+.textArrow{
+    width: 0;
+    height: 1px;
+    background: var(--s-color);
+    top: 50%;
+    position: absolute;
+    left: -1rem;
+    opacity: 0;
+    transition: width .5s;
+}
+
+.textArrow::before{
+    position: absolute;
+    content: '';
+    border-top: 1px solid var(--s-color);
+    border-right: 1px solid var(--s-color);
+    width: 8px;
+    height: 8px;
+    transform: rotate(45deg);
+    right: 1px;
+    top: -4px;
+}
+
+.menuPrincipalLink:hover{
+    color: var(--s-color);
+    padding-left: 1rem;
+}
+
+.menuPrincipalLink:hover .textArrow{
+    width: calc(100% + 1rem);
+    opacity: 1;
 }
 
 .btnCloseMenu{
     background: none;
     position: absolute;
-    right: 4rem;
-    top: 4rem;
+    right: 0;
+    top: 0;
     width: 45px;
     border: none;
     height: 45px;
+    cursor: pointer;
 }
 
 .btnCloseMenuLine{
