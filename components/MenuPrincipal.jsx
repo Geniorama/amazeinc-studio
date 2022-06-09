@@ -1,5 +1,6 @@
 import Link from "next/link";
 import styles from "../styles/MenuPrincipal.module.css"
+import TextArrow from "./TextArrow";
 
 export default function MenuPrincipal({ handler }) {
   return (
@@ -30,7 +31,11 @@ export default function MenuPrincipal({ handler }) {
                 <div>
                   <span className={styles.menuPrincipalTextBottom}>
                     <span className={styles.textArrow}></span>
-                    HOME
+                    <TextArrow 
+                        text={"HOME"}
+                        arrowColor={"var(--s-color)"}
+                        fontFamily={"'Libre Caslon Text', serif"}
+                    />
                   </span>
                 </div>
               </a>
@@ -57,8 +62,11 @@ export default function MenuPrincipal({ handler }) {
                 <div>
                   <span className={styles.menuPrincipalTextTop}>SEE OUR WORK</span>
                   <span className={styles.menuPrincipalTextBottom}>
-                    <span className={styles.textArrow}></span>
-                    PROJECTS
+                    <TextArrow 
+                        text={"PROJECTS"}
+                        arrowColor={"var(--s-color)"}
+                        fontFamily={"'Libre Caslon Text', serif"}
+                    />
                   </span>
                 </div>
               </a>
@@ -86,7 +94,11 @@ export default function MenuPrincipal({ handler }) {
                   <span className={styles.menuPrincipalTextTop}>IF YOU LIKE KNOW MORE</span>
                   <span className={styles.menuPrincipalTextBottom}>
                     <span className={styles.textArrow}></span>
-                    ABOUT US
+                    <TextArrow 
+                        text={"ABOUT US"}
+                        arrowColor={"var(--s-color)"}
+                        fontFamily={"'Libre Caslon Text', serif"}
+                    />
                   </span>
                 </div>
               </a>
@@ -114,7 +126,11 @@ export default function MenuPrincipal({ handler }) {
                   <span className={styles.menuPrincipalTextTop}>DOWNLOAD OUR</span>
                   <span className={styles.menuPrincipalTextBottom}>
                     <span className={styles.textArrow}></span>
-                    PORTFOLIOS
+                    <TextArrow 
+                        text={"PORTFOLIOS"}
+                        arrowColor={"var(--s-color)"}
+                        fontFamily={"'Libre Caslon Text', serif"}
+                    />
                   </span>
                 </div>
               </a>

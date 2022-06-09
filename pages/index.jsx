@@ -3,6 +3,7 @@ import styles from "../styles/Home.module.css";
 import LogoAmazeinc from "../public/logos/amazeinc-logo.svg";
 import Image from 'next/image';
 import Link from 'next/link'
+import TextArrow from "../components/TextArrow"
 
 export default function Home(){
   return(
@@ -27,8 +28,12 @@ export default function Home(){
                   SEE OUR AMAZING
                 </span>
                 <span className={styles.videoCaptionTextBottom}>
-                  <span className={styles.textArrow}></span>
-                  WORKS
+                  <TextArrow
+                     text={"WORKS"}
+                     fontSize="40px"
+                     fontFamily={"'Libre Caslon Text', serif"}
+                     arrowColor="white"
+                  />
                 </span>
             </a>
           </Link>
