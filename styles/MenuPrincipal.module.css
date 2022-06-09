@@ -36,29 +36,6 @@
     position: relative;
 }
 
-.textArrow{
-    width: 0;
-    height: 1px;
-    background: var(--s-color);
-    top: 50%;
-    position: absolute;
-    left: -1rem;
-    opacity: 0;
-    transition: width .5s;
-}
-
-.textArrow::before{
-    position: absolute;
-    content: '';
-    border-top: 1px solid var(--s-color);
-    border-right: 1px solid var(--s-color);
-    width: 8px;
-    height: 8px;
-    transform: rotate(45deg);
-    right: 1px;
-    top: -4px;
-}
-
 .menuPrincipalLink:hover{
     color: var(--s-color);
     padding-left: 1rem;
@@ -85,6 +62,7 @@
     width: 45px;
     display: block;
     background: white;
+    transition: .5s;
 }
 
 .btnCloseMenuLine:first-child{
@@ -93,4 +71,17 @@
 
 .btnCloseMenuLine:last-child{
     transform: rotate(-45deg);
+}
+
+.btnCloseMenu:hover .btnCloseMenuLine{
+    transform: rotate(0);
+}
+
+@media (max-width: 575.98px) { 
+    .menuPrincipalTextTop{
+        font-size: 13px;
+    }
+    .menuPrincipalTextBottom{
+        font-size: 30px;
+    }
 }

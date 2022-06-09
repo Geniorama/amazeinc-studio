@@ -23,10 +23,16 @@
 
 .btnToggleMenu__line:nth-child(2){
     width: 70%;
+    transition: .5s;
 }
 
 .btnToggleMenu__line:nth-child(3){
     width: 50%;
+    transition: .7s;
+}
+
+.btnToggleMenu:hover .btnToggleMenu__line:nth-child(2), .btnToggleMenu:hover .btnToggleMenu__line:nth-child(3){
+    width: 100%;
 }
 
 .navMenu{
@@ -52,7 +58,7 @@
     top: 0;
     left: 0;
     right: 0;
-    z-index: 2;
+    z-index: 4;
 }
 
 .boxMenu{
