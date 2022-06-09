@@ -1,0 +1,33 @@
+.contGallery{
+    width: 500px;
+    height: 500px;
+}
+
+.contImage{
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.overlayGallery{
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    opacity: .9;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.titleProject{
+    font-family: 'Libre Caslon Text', serif;
+    font-size: 24px;
+}
+
+.subTitleProject{
+    font-family: 'Gotham', sans-serif;
+    font-size: 12px;
+    margin-top: -15px;
+}
