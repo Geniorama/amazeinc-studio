@@ -1,0 +1,66 @@
+.headerPrincipal{
+    background-color: transparent;
+}
+
+.btnToggleMenu{
+    background: none;
+    border: none;
+    display: block;
+    width: 40px;
+    cursor: pointer;
+}
+
+.btnToggleMenu__line{
+    height: 1px;
+    width: 100%;
+    background: white;
+    display: block;
+    margin: 5px 0;
+}
+
+.btnToggleMenu__line:nth-child(2){
+    width: 70%;
+}
+
+.btnToggleMenu__line:nth-child(3){
+    width: 50%;
+}
+
+.navMenu{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.btnLanguage{
+    color: white;
+    margin-left: 5px;
+    font-family: 'Gotham', sans-serif;
+}
+
+.headerContRight{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.headerFixed{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
+}
+
+.boxMenu{
+    transform: translateY(-200%);
+    transition: .4s;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+.activeMenu{
+    transform: translateY(0);
+}

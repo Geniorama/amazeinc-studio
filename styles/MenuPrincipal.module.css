@@ -1,0 +1,62 @@
+.menuPrincipal{
+    background-color: var(--p-color);
+    min-height: 100vh;
+    color: white;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 3rem;
+    position: relative;
+}
+
+.menuPrincipalList{
+    list-style: none;
+    padding: 0;
+    margin-left: 20rem;
+}
+.menuPrincipalLink{
+    color: white;
+    display: flex;
+    align-items: center;
+    font-family: 'Libre Caslon Text', serif;
+    margin: 2rem 0;
+}
+
+.menuPrincipalLink span{
+    display: block;
+    margin-left: 10px;
+}
+
+.menuPrincipalTextTop{
+    font-size: 20px;
+    font-family: 'Gotham', sans-serif;
+}
+
+.menuPrincipalTextBottom{
+    font-size: 50px;
+}
+
+.btnCloseMenu{
+    background: none;
+    position: absolute;
+    right: 4rem;
+    top: 4rem;
+    width: 45px;
+    border: none;
+    height: 45px;
+}
+
+.btnCloseMenuLine{
+    height: 1px;
+    width: 45px;
+    display: block;
+    background: white;
+}
+
+.btnCloseMenuLine:first-child{
+    transform: rotate(45deg);
+}
+
+.btnCloseMenuLine:last-child{
+    transform: rotate(-45deg);
+}

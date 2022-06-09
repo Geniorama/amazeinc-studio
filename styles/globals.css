@@ -1,9 +1,15 @@
+/* Fonts */
+@import url('http://fonts.cdnfonts.com/css/gotham');
+@import url('https://fonts.googleapis.com/css2?family=Libre+Caslon+Text&display=swap');
+
 html,
 body {
   padding: 0;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+
+  overflow-x: hidden;
 }
 
 a {
@@ -14,3 +20,29 @@ a {
 * {
   box-sizing: border-box;
 }
+
+
+
+/* Colors */
+:root{
+  --p-color: #000000;
+  --s-color: #D9042D;
+}
+
+.container{
+  width: 80%;
+  max-width: 1310px;
+  margin: 0 auto;
+}
+
+@media (min-width: 1920px){
+  .container{
+    max-width: 1600px;
+  }
+}
+
+#amaze-home{
+  overflow-y: hidden;
+  max-height: 100vh;
+}
+
