@@ -35,6 +35,7 @@ export default function PreloadPages({theme}) {
         <Image
             width={200}
             src={LogoAmazeinc}
+            alt="Logo AmazeInc"
         />
     </motion.div>
   )

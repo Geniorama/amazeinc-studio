@@ -15,6 +15,7 @@ export default function MultimediaGallery() {
             layout="fill"
             objectFit="cover"
             objectPosition={"top"}
+            alt="Image test"
           />
           <div className={styles.overlayGallery}>
             <h2 className={styles.titleProject}>PROJECT NAME</h2>

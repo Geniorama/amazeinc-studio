@@ -49,6 +49,7 @@ export default function Home(props){
           <Image
             width={200}
             src={LogoAmazeinc}
+            alt="Logo AmazeInc"
           />
           <Link href={"/projects"}>
             <motion.a key={"video-text-bottom"} animate={'show'} initial={'hide'} variants={variantsText} transition={{delay: 1}} className={styles.videoCaptionText}>
