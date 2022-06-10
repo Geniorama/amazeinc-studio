@@ -16,7 +16,7 @@ export default function SocialNav() {
 
       {/* Item Instagram */}
       <li className={styles.socialNavItem}>
-        <a href="" className={styles.socialNavLink}>
+        <a href="https://www.instagram.com/amazeinc_studio/" target={"_blank"} rel="noreferrer" className={styles.socialNavLink}>
           <span className={styles.socialNavIcon}>
             <FontAwesomeIcon icon={faInstagram}/>
           </span>
