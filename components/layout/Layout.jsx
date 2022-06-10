@@ -5,9 +5,9 @@ import { motion, AnimatePresence } from "framer-motion"
 import { useRouter } from "next/router";
 import PreloadPages from "../preloadPages";
 
-export default function Layout({children, title, description, idPage, header, headerFixed, footer}){
+export default function Layout({children, title, description, idPage, header, headerFixed, footer, translate}){
     const router = useRouter()
-
+    // console.log(translate('menu:see_our_work'))
     const variants = {
         show: {
             opacity:1
@@ -35,6 +35,7 @@ export default function Layout({children, title, description, idPage, header, he
             {header="principal" ?
                 <HeaderPrincipal
                     fixed={headerFixed}
+                    handlerT={translate}
                 />
                 :
                 <HeaderSecondary />

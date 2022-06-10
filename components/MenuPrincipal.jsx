@@ -2,10 +2,10 @@ import Link from "next/link";
 import styles from "../styles/MenuPrincipal.module.css"
 import TextArrow from "./TextArrow";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
 
-export default function MenuPrincipal({ handler }) {
+export default function MenuPrincipal({ handler, handlerT }) {
   const router = useRouter()
+
   return (
     <div className={styles.menuPrincipal}>
       <div className="container" style={{position: 'relative'}}>
@@ -63,7 +63,7 @@ export default function MenuPrincipal({ handler }) {
                   </svg>
                 </div>
                 <div>
-                  <span className={styles.menuPrincipalTextTop}>SEE OUR WORK</span>
+                  <span className={styles.menuPrincipalTextTop}>{handlerT('menu:see_our_work')}</span>
                   <span className={styles.menuPrincipalTextBottom}>
                     <TextArrow 
                         text={"PROJECTS"}

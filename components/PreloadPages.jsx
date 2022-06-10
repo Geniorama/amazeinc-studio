@@ -22,7 +22,7 @@ export default function PreloadPages({theme}) {
     },
 
     hide: {
-      y: "-50%",
+      y: "-150%",
       rotate: -10,
       scale: 2
     }

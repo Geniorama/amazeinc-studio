@@ -40,6 +40,7 @@ export default function Home(props){
       idPage={"amaze-home"}
       header={"principal"}
       headerFixed={true}
+      translate={t}
     >
 
     {/* Video */}
@@ -77,7 +78,7 @@ export default function Home(props){
 export async function getStaticProps({locale}){
   return {
     props: {
-        ...(await serverSideTranslations(locale, ['homepage'])) 
+        ...(await serverSideTranslations(locale, ['homepage', 'menu'])) 
     }
   }
 }

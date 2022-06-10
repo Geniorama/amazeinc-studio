@@ -1,7 +1,10 @@
 import styles from "./../styles/AboutUs.module.css";
 import Layout from "../components/layout/Layout";
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useTranslation } from "next-i18next";
 
-export default function AboutUs() {
+export default function AboutUs(props) {
+  const { t } = useTranslation()
   return (
     <Layout
       title={"AmazeInc Studio"}
@@ -9,6 +12,7 @@ export default function AboutUs() {
       header={"principal"}
       headerFixed={true}
       footer={true}
+      translate={t}
     >
       <div className={styles.contAbout}>
         <div className="container">
@@ -30,4 +34,13 @@ export default function AboutUs() {
       </div>
     </Layout>
   );
+}
+
+
+export async function getStaticProps({locale}){
+  return {
+    props: {
+        ...(await serverSideTranslations(locale, ['menu'])) 
+    }
+  }
 }

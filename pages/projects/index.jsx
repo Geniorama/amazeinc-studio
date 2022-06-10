@@ -2,8 +2,12 @@ import Layout from "./../../components/layout/Layout";
 import styles from "./../../styles/ProjectsArchive.module.css";
 import TextArrow from "../../components/TextArrow";
 import Link from "next/link";
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useTranslation } from "next-i18next";
+import MultimediaGallery from "../../components/MultimediaGallery"
 
-export default function Projects() {
+export default function Projects(props) {
+  const { t } = useTranslation()
   return (
     <Layout
       title={"AmazeInc Studio"}
@@ -11,6 +15,7 @@ export default function Projects() {
       header={"principal"}
       headerFixed={true}
       footer={true}
+      translate={t}
     >
       <div className={styles.contProjectArchive}>
         <div className="container">
@@ -20,6 +25,8 @@ export default function Projects() {
                 OUR<br></br>WORK
               </h2>
             </div>
+
+            {/* Menu Categories */}
             <div className={styles.contCategories}>
               <ul className={styles.contItemsCategories}>
                 <li>
@@ -135,8 +142,86 @@ export default function Projects() {
               </ul>
             </div>
           </div>
+
+          <div className={styles.gridProjects}>
+              <div className={styles.gridProjectsItem}>
+                <MultimediaGallery/>
+              </div>
+
+              <div className={styles.gridProjectsItem}>
+                <MultimediaGallery/>
+              </div>
+
+              <div className={styles.gridProjectsItem}>
+                <MultimediaGallery/>
+              </div>
+
+              <div className={styles.gridProjectsItem}>
+                <MultimediaGallery/>
+              </div>
+
+              <div className={styles.gridProjectsItem}>
+                <MultimediaGallery/>
+              </div>
+
+              <div className={`${styles.gridProjectsItem} ${styles.gridProjectsItemFeat}`}>
+                <MultimediaGallery/>
+              </div>
+
+              <div className={`${styles.gridProjectsItem} ${styles.gridProjectsItemVertical}`}>
+                <MultimediaGallery/>
+              </div>
+
+              <div className={styles.gridProjectsItem}>
+                <MultimediaGallery/>
+              </div>
+
+              <div className={`${styles.gridProjectsItem} ${styles.gridProjectsItemFeat}`}>
+                <MultimediaGallery/>
+              </div>
+
+              <div className={`${styles.gridProjectsItem} ${styles.gridProjectsItemVertical}`}>
+                <MultimediaGallery/>
+              </div>
+
+              <div className={styles.gridProjectsItem}>
+                <MultimediaGallery/>
+              </div>
+
+              <div className={styles.gridProjectsItem}>
+                <MultimediaGallery/>
+              </div>
+
+              <div className={styles.gridProjectsItem}>
+                <MultimediaGallery/>
+              </div>
+
+              <div className={styles.gridProjectsItem}>
+                <MultimediaGallery/>
+              </div>
+
+              <div className={`${styles.gridProjectsItem} ${styles.gridProjectsItemFeat}`}>
+                <MultimediaGallery/>
+              </div>
+
+              <div className={styles.gridProjectsItem}>
+                <MultimediaGallery/>
+              </div>
+
+              <div className={styles.gridProjectsItem}>
+                <MultimediaGallery/>
+              </div>
+          </div>
         </div>
       </div>
     </Layout>
   );
+}
+
+export async function getStaticProps({locale}){
+  return {
+    props: {
+        ...(await serverSideTranslations(locale, ['menu'])) 
+    }
+  }
 }

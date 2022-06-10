@@ -29,6 +29,7 @@
     list-style: none;
     display: flex;
     flex-flow: row wrap;
+    padding: 0;
 }
 
 .contItemsCategories li{
@@ -44,4 +45,72 @@
 
 .contItemsCategories li a:hover{
     color: var(--s-color);
+}
+
+.gridProjects{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-top: 3rem;
+}
+
+.gridProjectsItem:nth-child(1){
+    grid-column: 1 span;
+    grid-row: 1 span;
+}
+
+.gridProjectsItem{
+    min-height: 300px;
+}
+
+.gridProjectsItemFeat{
+    grid-column: 2 span;
+    grid-row: 2 span;
+}
+
+.gridProjectsItemVertical{
+    grid-row: 2 span;
+}
+
+@media (max-width: 991.98px){
+    .contProjectsTop{
+        flex-direction: column;
+    }
+    .gridProjects{
+        display: flex;
+        flex-flow: row wrap;
+        grid-gap: 0;
+        gap: 0;
+    }
+
+    .gridProjectsItem{
+        width: 50%;
+        height: 300px;
+        box-sizing: border-box;
+        padding: 10px;
+    }
+
+    .contTitle h2{
+        font-size: 50px;
+    }
+
+    .contTitle{
+        width: 100%;
+    }
+
+    .contCategories{
+        width: 100%;
+    }
+
+    .contItemsCategories{
+        margin-top: 3rem;
+    }
+}
+
+@media (max-width: 767.98px){
+    .gridProjectsItem{
+        width: 100%;
+        height: 300px;
+    }
+ 
 }

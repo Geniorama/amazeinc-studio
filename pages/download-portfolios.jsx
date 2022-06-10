@@ -2,8 +2,11 @@ import Layout from "../components/layout/Layout";
 import styles from "../styles/DownloadPortfolios.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDownload } from "@fortawesome/free-solid-svg-icons";
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useTranslation } from "next-i18next";
 
-export default function DownloadPortfolios() {
+export default function DownloadPortfolios(props) {
+  const { t } = useTranslation()
   return (
     <Layout
       title={"AmazeInc Studio"}
@@ -11,6 +14,7 @@ export default function DownloadPortfolios() {
       header={"principal"}
       headerFixed={true}
       footer={true}
+      translate={t}
     >
       <div className={styles.contPortfolios}>
         <div className="container">
@@ -76,3 +80,12 @@ export default function DownloadPortfolios() {
     </Layout>
   );
 }
+
+export async function getStaticProps({locale}){
+  return {
+    props: {
+        ...(await serverSideTranslations(locale, ['menu'])) 
+    }
+  }
+}
+

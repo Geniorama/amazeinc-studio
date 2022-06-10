@@ -45,6 +45,7 @@
   display: block;
   transition: .4s;
   position: relative;
+  cursor: pointer;
 }
 
 .videoCaptionTextTop{

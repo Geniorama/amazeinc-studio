@@ -13,7 +13,7 @@
 .titleAbout{
     color: white;
     font-family: 'Libre Caslon Text', serif;
-    font-size: 90px;
+    font-size: 75px;
     position: relative;
     width: 30%;
 }
@@ -37,4 +37,26 @@
     font-size: 18px;
     font-family: 'Gotham', sans-serif;
     line-height: 32px;
+}
+
+@media (max-width: 767.98px){
+    .contAbout{
+        margin-top: 15rem;
+    }
+    .contentAbout{
+        flex-direction: column;
+    }
+    .titleAbout{
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+
+    .textAbout{
+        width: 100%;
+        padding: 0;
+    }
+
+    .titleAbout::before{
+        display: none;
+    }
 }

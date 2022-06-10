@@ -13,6 +13,7 @@
     font-family: 'Libre Caslon Text', serif;
     font-size: 75px;
     text-align: left;
+    display: inline-block;
 }
 .contTitle{
     width: 50%;
@@ -51,11 +52,21 @@
     margin: 30px 0;
 }
 
-@media (max-width: 575.98px){
+@media (max-width: 991.98px){
     .contItems, .contTitle{
         width: 100%;
     }
+    
+    .contTitle{
+        text-align: center;
+    }
 
+    .contItems{
+        padding: 0;
+    }
+}
+
+@media (max-width: 767.98px){
     .title{
         font-size: 30px;
     }

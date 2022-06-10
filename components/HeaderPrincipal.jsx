@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 
 
-export default function HeaderPrincipal({fixed}){
+export default function HeaderPrincipal({fixed, handlerT}){
     const [isMenuOpen, setIsMenuOpen] = useState(false)
     const [pageChange, setPageChange] = useState(true)
     
@@ -110,6 +110,7 @@ export default function HeaderPrincipal({fixed}){
                     
                     <MenuPrincipal
                         handler={setIsMenuOpen}
+                        handlerT={handlerT}
                     /> 
                 </motion.div>
             </AnimatePresence>
