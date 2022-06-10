@@ -3,7 +3,7 @@ import Footer from  "../Footer";
 import HeaderPrincipal from "../HeaderPrincipal";
 import { motion, AnimatePresence } from "framer-motion"
 import { useRouter } from "next/router";
-import PreloadPages from "../preloadPages";
+import PreloadPages from "../PreloadPages";
 
 export default function Layout({children, title, description, idPage, header, headerFixed, footer, translate}){
     const router = useRouter()
