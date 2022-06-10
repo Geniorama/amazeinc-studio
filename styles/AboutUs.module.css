@@ -1,3 +1,40 @@
-.body{
-    color: black;
+.contAbout{
+    width: 100%;
+    margin: 100px 0px;
+}
+
+.contentAbout{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: -200px;
+}
+
+.titleAbout{
+    color: white;
+    font-family: 'Libre Caslon Text', serif;
+    font-size: 90px;
+    position: relative;
+    width: 30%;
+}
+
+.titleAbout::before{
+    position: absolute;
+    content: '';
+    top: 205px;
+    left: 145px;
+    width: 500px;
+    height: 2px;
+    background-color: white;
+    transform: rotate(140deg);
+}
+
+.textAbout{
+    width: 70%;
+    padding-left: 120px;
+    padding-top: 420px;
+    color: white;
+    font-size: 18px;
+    font-family: 'Gotham', sans-serif;
+    line-height: 32px;
 }
