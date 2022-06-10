@@ -21,14 +21,53 @@ export default function DownloadPortfolios() {
             <div className={styles.contItems}>
               <ul>
                 <li>
-                  <a href="">
-                    <span>
+                  <a href="#">
+                    <span className={styles.contIcon}>
                       <FontAwesomeIcon icon={faDownload}/>
                     </span>
                     <span>CAMPAINGS</span>
                   </a>
                 </li>
-                
+                <li>
+                  <a href="#">
+                    <span className={styles.contIcon}>
+                      <FontAwesomeIcon icon={faDownload}/>
+                    </span>
+                    <span>LIFESTYLE</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#">
+                    <span className={styles.contIcon}>
+                      <FontAwesomeIcon icon={faDownload}/>
+                    </span>
+                    <span>CARS</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#">
+                    <span className={styles.contIcon}>
+                      <FontAwesomeIcon icon={faDownload}/>
+                    </span>
+                    <span>PORTRAITS</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#">
+                    <span className={styles.contIcon}>
+                      <FontAwesomeIcon icon={faDownload}/>
+                    </span>
+                    <span>PRODUCT</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#">
+                    <span className={styles.contIcon}>
+                      <FontAwesomeIcon icon={faDownload}/>
+                    </span>
+                    <span>FASHION</span>
+                  </a>
+                </li>
               </ul>
             </div>
           </div>

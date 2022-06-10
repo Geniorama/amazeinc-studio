@@ -1,0 +1,47 @@
+.contProjectArchive{
+    width: 100%;
+    margin: 100px 0px;
+}
+
+.contProjectsTop{
+    display: flex;
+    width: 100%;
+    color: white;
+    align-items: flex-end;
+}
+
+.contTitle{
+    width: 50%;
+    font-size: 75px;
+    font-family: 'Libre Caslon Text', serif;
+}
+
+.contTitle h2{
+    margin: 0;
+}
+
+.contCategories{
+    width: 50%;
+    justify-content: flex-end;
+}
+
+.contItemsCategories{
+    list-style: none;
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.contItemsCategories li{
+    margin-right: 30px;
+}
+
+.contItemsCategories li a{
+    transition: .4s;
+    line-height: 1.5em;
+    display: block;
+    margin-bottom: 2em;
+}
+
+.contItemsCategories li a:hover{
+    color: var(--s-color);
+}
