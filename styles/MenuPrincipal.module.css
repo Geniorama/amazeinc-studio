@@ -77,6 +77,11 @@
     transform: rotate(0);
 }
 
+.active{
+    opacity: .5;
+    pointer-events: none;
+}
+
 @media (max-width: 575.98px) { 
     .menuPrincipalTextTop{
         font-size: 13px;

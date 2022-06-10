@@ -1,10 +1,30 @@
 import Head from "next/head";
 import Footer from  "../Footer";
 import HeaderPrincipal from "../HeaderPrincipal";
+import { motion, AnimatePresence } from "framer-motion"
+import { useRouter } from "next/router";
+import PreloadPages from "../preloadPages";
 
 export default function Layout({children, title, description, idPage, header, headerFixed, footer}){
+    const router = useRouter()
+
+    const variants = {
+        show: {
+            opacity:1
+        },
+
+        hide: {
+            opacity:0
+        }
+    }
+
     return(
+        <AnimatePresence exitBeforeEnter>
         <div className="amaze-layout">
+            {/* Preloader no carga en el home */}
+            {router.asPath != "/" ? 
+                <PreloadPages theme={'light'} />
+            : ""}
             <div id="amaze-ancle-top"></div>
             <Head>
                 <title>{title}</title>
@@ -19,11 +39,18 @@ export default function Layout({children, title, description, idPage, header, he
                 :
                 <HeaderSecondary />
             }
-
-            <main className="amaze-main" id={idPage}>
-                {children}
-            </main>
-
+            
+            {router.asPath != "/"?
+                <motion.main key={"main"} className="amaze-main" id={idPage} initial={"hide"} animate={"show"} variants={variants} transition={{delay: 1, duration: 2}} >
+                    {children}
+                </motion.main>
+                :
+                <main className="amaze-main" id={idPage} >
+                    {children}
+                </main>
+            }
+            
+            
             {footer 
                 ?
                 <Footer />
@@ -32,5 +59,6 @@ export default function Layout({children, title, description, idPage, header, he
             }
             
         </div>
+        </AnimatePresence>
     )
 }

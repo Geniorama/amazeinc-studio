@@ -6,9 +6,33 @@ import Link from 'next/link'
 import TextArrow from "../components/TextArrow";
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from "next-i18next";
+import { motion, AnimatePresence } from "framer-motion"
 
 export default function Home(props){
   const { t } = useTranslation()
+  const variants = {
+    show:{
+      y: 0,
+      rotate: -10,
+      scale: 2
+    },
+
+    hide:{
+      y: "-100%",
+      rotate: 0,
+      scale: 1
+    }
+  }
+
+  const variantsText = {
+    show: {
+      opacity: 1
+    },
+
+    hide: {
+      opacity: 0
+    }
+  }
 
   return(
     <Layout
@@ -26,7 +50,7 @@ export default function Home(props){
             src={LogoAmazeinc}
           />
           <Link href={"/projects"}>
-            <a className={styles.videoCaptionText}>
+            <motion.a key={"video-text-bottom"} animate={'show'} initial={'hide'} variants={variantsText} transition={{delay: 1}} className={styles.videoCaptionText}>
                 <span className={styles.videoCaptionTextTop}>
                   {t('homepage:see_our_amazing')}
                 </span>
@@ -38,8 +62,10 @@ export default function Home(props){
                      arrowColor="white"
                   />
                 </span>
-            </a>
+            </motion.a>
           </Link>
+
+          <motion.div key={"layer-home"} className={styles.layerHome} initial="show" animate={'hide'} variants={variants} transition={{duration: 2, ease: "easeInOut"}}></motion.div>
           
       </div>
       <video className={styles.videoHome} autoPlay muted loop src="https://cdn.videvo.net/videvo_files/video/free/2013-11/large_watermarked/RotatingLens1Videvo_preview.mp4"></video>

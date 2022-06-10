@@ -5,11 +5,15 @@ import Image from 'next/image'
 import Link from 'next/link'
 import SocialNav from './SocialNav'
 import MenuPrincipal from './MenuPrincipal'
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 
+
 export default function HeaderPrincipal({fixed}){
+    const [isMenuOpen, setIsMenuOpen] = useState(false)
+    const [pageChange, setPageChange] = useState(true)
+    
     let router = useRouter()
 
     let langLink = {}
@@ -30,7 +34,7 @@ export default function HeaderPrincipal({fixed}){
         }
     }
     // State menu
-    const [isMenuOpen, setIsMenuOpen] = useState(false)
+    
     // Animation variants
     const variants = {
         open:{
@@ -97,15 +101,20 @@ export default function HeaderPrincipal({fixed}){
             </div>
 
             {/* Menu principal */}
-            <motion.div className={styles.boxMenu} initial={"close"} animate={isMenuOpen ? "open" : "close"} variants={variants}>
-                
-                {/* Background overlay */}
-                <motion.div initial={"close"} animate={isMenuOpen ? "open" : "close"} variants={variantsOverlay} className={styles.menuOverlay}></motion.div>
-                
-                <MenuPrincipal
-                    handler={setIsMenuOpen}
-                /> 
-            </motion.div>        
+
+            <AnimatePresence>
+                <motion.div className={styles.boxMenu} initial="close" animate={isMenuOpen ? "open" : "close"} exit="close" variants={variants}>
+                    
+                    {/* Background overlay */}
+                    <motion.div initial={"close"} animate={isMenuOpen ? "open" : "close"} variants={variantsOverlay} className={styles.menuOverlay}></motion.div>
+                    
+                    <MenuPrincipal
+                        handler={setIsMenuOpen}
+                    /> 
+                </motion.div>
+            </AnimatePresence>
+
+                    
         </header>
     )
 }

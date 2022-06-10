@@ -1,8 +1,11 @@
 import Link from "next/link";
 import styles from "../styles/MenuPrincipal.module.css"
 import TextArrow from "./TextArrow";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 export default function MenuPrincipal({ handler }) {
+  const router = useRouter()
   return (
     <div className={styles.menuPrincipal}>
       <div className="container" style={{position: 'relative'}}>
@@ -12,8 +15,8 @@ export default function MenuPrincipal({ handler }) {
         </button>
         <ul className={styles.menuPrincipalList}>
           <li className={styles.menuPrincipalItem}>
-            <Link href="/">
-              <a className={styles.menuPrincipalLink}>
+            <Link href="/" scroll={false}>
+              <a className={`${styles.menuPrincipalLink} ${router.pathname == "/" ? styles.active : ""}`}>
                 <div className={styles.menuPrincipalIndicator}>
                   <svg
                     width="30"
@@ -43,8 +46,8 @@ export default function MenuPrincipal({ handler }) {
           </li>
 
           <li className={styles.menuPrincipalItem}>
-            <Link href="/projects">
-              <a className={styles.menuPrincipalLink}>
+            <Link href="/projects" scroll={false}>
+              <a className={`${styles.menuPrincipalLink} ${router.pathname == "/projects" ? styles.active : ""}`}>
                 <div className={styles.menuPrincipalIndicator}>
                   <svg
                     width="30"
@@ -74,8 +77,8 @@ export default function MenuPrincipal({ handler }) {
           </li>
 
           <li className={styles.menuPrincipalItem}>
-            <Link href="/about-us">
-              <a className={styles.menuPrincipalLink}>
+            <Link href="/about-us" scroll={false}>
+              <a className={`${styles.menuPrincipalLink} ${router.pathname == "/about-us" ? styles.active : ""}`}>
                 <div className={styles.menuPrincipalIndicator}>
                   <svg
                     width="30"
@@ -106,8 +109,8 @@ export default function MenuPrincipal({ handler }) {
           </li>
 
           <li className={styles.menuPrincipalItem}>
-            <Link href="/download-portfolios">
-              <a className={styles.menuPrincipalLink}>
+            <Link href="/download-portfolios" scroll={false}>
+              <a className={`${styles.menuPrincipalLink} ${router.pathname == "/download-portfolios" ? styles.active : ""}`}>
                 <div className={styles.menuPrincipalIndicator}>
                   <svg
                     width="30"
