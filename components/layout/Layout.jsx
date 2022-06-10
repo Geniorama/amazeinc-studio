@@ -38,7 +38,7 @@ export default function Layout({children, title, description, idPage, header, he
                     handlerT={translate}
                 />
                 :
-                <HeaderSecondary />
+                ""
             }
             
             {router.asPath != "/"?

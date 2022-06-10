@@ -9,7 +9,7 @@ export default function Footer() {
           <span className={styles.textFooter}>Amaze Inc 2022 | All rights reserved ®</span>
           <span className={styles.textFooter}>
             Powered by
-            <a href="https://geniorama.co" target={"_blank"} rel="noreferer" className={styles.amazeWebLink}> Geniorama</a>
+            <a href="https://geniorama.co" target={"_blank"} rel="noreferrer" className={styles.amazeWebLink}> Geniorama</a>
           </span>
         </div>
       </div>
