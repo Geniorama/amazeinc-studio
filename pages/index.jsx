@@ -3,9 +3,13 @@ import styles from "../styles/Home.module.css";
 import LogoAmazeinc from "../public/logos/amazeinc-logo.svg";
 import Image from 'next/image';
 import Link from 'next/link'
-import TextArrow from "../components/TextArrow"
+import TextArrow from "../components/TextArrow";
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useTranslation } from "next-i18next";
 
-export default function Home(){
+export default function Home(props){
+  const { t } = useTranslation()
+
   return(
     <Layout
       title={"AmazeInc Studio"}
@@ -21,15 +25,14 @@ export default function Home(){
             width={200}
             src={LogoAmazeinc}
           />
-          
           <Link href={"/projects"}>
             <a className={styles.videoCaptionText}>
                 <span className={styles.videoCaptionTextTop}>
-                  SEE OUR AMAZING
+                  {t('homepage:see_our_amazing')}
                 </span>
                 <span className={styles.videoCaptionTextBottom}>
                   <TextArrow
-                     text={"WORKS"}
+                     text={t('homepage:works')}
                      fontSize="40px"
                      fontFamily={"'Libre Caslon Text', serif"}
                      arrowColor="white"
@@ -43,5 +46,13 @@ export default function Home(){
     </div>
     </Layout>
   )  
+}
+
+export async function getStaticProps({locale}){
+  return {
+    props: {
+        ...(await serverSideTranslations(locale, ['homepage'])) 
+    }
+  }
 }
 

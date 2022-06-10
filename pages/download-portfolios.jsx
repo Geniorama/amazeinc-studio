@@ -1,6 +1,7 @@
 import Layout from "../components/layout/Layout";
 import styles from "../styles/DownloadPortfolios.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faDownload } from "@fortawesome/free-solid-svg-icons";
 
 export default function DownloadPortfolios() {
   return (
@@ -19,36 +20,15 @@ export default function DownloadPortfolios() {
             </div>
             <div className={styles.contItems}>
               <ul>
-                <a href="#">
-                  <li>
+                <li>
+                  <a href="">
+                    <span>
+                      <FontAwesomeIcon icon={faDownload}/>
+                    </span>
                     <span>CAMPAINGS</span>
-                  </li>
-                </a>
-                <a href="#">
-                  <li>
-                    <span>CAMPAINGS</span>
-                  </li>
-                </a>
-                <a href="#">
-                  <li>
-                    <span>CAMPAINGS</span>
-                  </li>
-                </a>
-                <a href="#">
-                  <li>
-                    <span>CAMPAINGS</span>
-                  </li>
-                </a>
-                <a href="#">
-                  <li>
-                    <span>CAMPAINGS</span>
-                  </li>
-                </a>
-                <a href="#">
-                  <li>
-                    <span>CAMPAINGS</span>
-                  </li>
-                </a>
+                  </a>
+                </li>
+                
               </ul>
             </div>
           </div>

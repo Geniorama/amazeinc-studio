@@ -6,12 +6,31 @@ import Link from 'next/link'
 import SocialNav from './SocialNav'
 import MenuPrincipal from './MenuPrincipal'
 import { motion } from "framer-motion"
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
 
 export default function HeaderPrincipal({fixed}){
+    let router = useRouter()
+
+    let langLink = {}
+
+    if(router.locale === "es") {
+        langLink = {
+            locale: "en",
+            text: "EN",
+            title: "English"
+        }
+    }
+
+    if(router.locale === "en") {
+         langLink = {
+            locale: "es",
+            text: "ES",
+            title: "Spanish"
+        }
+    }
     // State menu
     const [isMenuOpen, setIsMenuOpen] = useState(false)
-
     // Animation variants
     const variants = {
         open:{
@@ -67,9 +86,12 @@ export default function HeaderPrincipal({fixed}){
 
                     <div className={styles.headerContRight}>
                         <SocialNav />
-                        <a className={styles.btnLanguage} href="#">
-                            ES
-                        </a>
+                        <Link href={router.asPath} locale={langLink.locale}>
+                            <a className={styles.btnLanguage} href="#" title={langLink.title}>
+                                {langLink.text}
+                            </a>
+                        </Link>
+                        
                     </div>
                 </nav>
             </div>
