@@ -1,0 +1,54 @@
+.imageTop{
+    width: 100%;
+    object-fit: cover;
+    min-height: 100vh;
+    position: relative;
+}
+
+.infoProject{
+    display: flex;
+    width: 100%;
+    padding: 7em 0px;
+    color: white;
+    align-items: center;
+}
+
+.infoLeft{
+    width: 50%;
+}
+
+.companyName{
+    display: block;
+    font-size: 20px;
+    font-family: 'Gotham', sans-serif;
+}
+
+.projectName{
+    display: block;
+    font-family: 'Libre Caslon Text', serif;
+    font-size: 50px;
+}
+
+.infoRight{
+    width: 50%;
+}
+
+.descProject{
+    font-size: 16px;
+    font-family: 'Gotham', sans-serif;
+    line-height: 25px;
+}
+
+.contGallery{
+    width: 100%;
+    display: block;
+}
+
+.imgStyle1{
+    width: 100%;
+    position: relative;
+}
+
+.imgStyle1 span{
+    max-width: 850px;
+}
