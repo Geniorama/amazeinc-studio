@@ -32,14 +32,11 @@ export default function Layout({children, title, description, idPage, header, he
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-            {header="principal" ?
-                <HeaderPrincipal
-                    fixed={headerFixed}
-                    handlerT={translate}
-                />
-                :
-                ""
-            }
+            <HeaderPrincipal
+                fixed={headerFixed}
+                handlerT={translate}
+                style={header}
+            />
             
             {router.asPath != "/"?
                 <motion.main key={"main"} className="amaze-main" id={idPage} initial={"hide"} animate={"show"} variants={variants} transition={{delay: 1, duration: 2}} >

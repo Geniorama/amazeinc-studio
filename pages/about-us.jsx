@@ -9,7 +9,7 @@ export default function AboutUs(props) {
     <Layout
       title={"AmazeInc Studio"}
       idPage={"amaze-about-us"}
-      header={"principal"}
+      header={"secondary"}
       headerFixed={true}
       footer={true}
       translate={t}
@@ -20,6 +20,7 @@ export default function AboutUs(props) {
             <h2 className={styles.titleAbout}>
               ABOUT<br></br>US
             </h2>
+            <span className={styles.aboutArrow}></span>
             <p className={styles.textAbout}>
               Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam
               nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam

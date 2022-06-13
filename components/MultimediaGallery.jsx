@@ -3,23 +3,22 @@ import styles from "./../styles/MultimediaGallery.module.css";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function MultimediaGallery() {
+export default function MultimediaGallery({title, customer, coverImage}) {
   return (
 
     <Link href={"#"}>
       <a className={styles.cardLink}>
         <div className={styles.contImage}>
           <Image
-            src={Photo}
-            width={100}
+            src={coverImage}
             layout="fill"
             objectFit="cover"
             objectPosition={"top"}
             alt="Image test"
           />
           <div className={styles.overlayGallery}>
-            <h2 className={styles.titleProject}>PROJECT NAME</h2>
-            <span className={styles.subTitleProject}>COMPANY NAME</span>
+            <h2 className={styles.titleProject}>{title}</h2>
+            <span className={styles.subTitleProject}>{customer}</span>
           </div>
         </div>
       </a>

@@ -6,13 +6,15 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from "next-i18next";
 import MultimediaGallery from "../../components/MultimediaGallery"
 
-export default function Projects(props) {
+export default function Projects({locale, data}) {
+  const projects = data.data.projects.nodes
+
   const { t } = useTranslation()
   return (
     <Layout
       title={"AmazeInc Studio"}
       idPage={"amaze-about-us"}
-      header={"principal"}
+      header={"secondary"}
       headerFixed={true}
       footer={true}
       translate={t}
@@ -31,7 +33,7 @@ export default function Projects(props) {
               <ul className={styles.contItemsCategories}>
                 <li>
                   <Link href="#">
-                    <a>
+                    <a className={styles.catActive}>
                       <TextArrow
                         text={"All"}
                         arrowColor={"var(--s-color)"}
@@ -143,74 +145,31 @@ export default function Projects(props) {
             </div>
           </div>
 
+          {/* Grid Projects */}
           <div className={styles.gridProjects}>
-              <div className={styles.gridProjectsItem}>
-                <MultimediaGallery/>
-              </div>
+              {projects.map((item) =>{
+                let categories = item.categoriesProject
+                let cats = ""
+                let counter = 0
 
-              <div className={styles.gridProjectsItem}>
-                <MultimediaGallery/>
-              </div>
-
-              <div className={styles.gridProjectsItem}>
-                <MultimediaGallery/>
-              </div>
-
-              <div className={styles.gridProjectsItem}>
-                <MultimediaGallery/>
-              </div>
-
-              <div className={styles.gridProjectsItem}>
-                <MultimediaGallery/>
-              </div>
-
-              <div className={`${styles.gridProjectsItem} ${styles.gridProjectsItemFeat}`}>
-                <MultimediaGallery/>
-              </div>
-
-              <div className={`${styles.gridProjectsItem} ${styles.gridProjectsItemVertical}`}>
-                <MultimediaGallery/>
-              </div>
-
-              <div className={styles.gridProjectsItem}>
-                <MultimediaGallery/>
-              </div>
-
-              <div className={`${styles.gridProjectsItem} ${styles.gridProjectsItemFeat}`}>
-                <MultimediaGallery/>
-              </div>
-
-              <div className={`${styles.gridProjectsItem} ${styles.gridProjectsItemVertical}`}>
-                <MultimediaGallery/>
-              </div>
-
-              <div className={styles.gridProjectsItem}>
-                <MultimediaGallery/>
-              </div>
-
-              <div className={styles.gridProjectsItem}>
-                <MultimediaGallery/>
-              </div>
-
-              <div className={styles.gridProjectsItem}>
-                <MultimediaGallery/>
-              </div>
-
-              <div className={styles.gridProjectsItem}>
-                <MultimediaGallery/>
-              </div>
-
-              <div className={`${styles.gridProjectsItem} ${styles.gridProjectsItemFeat}`}>
-                <MultimediaGallery/>
-              </div>
-
-              <div className={styles.gridProjectsItem}>
-                <MultimediaGallery/>
-              </div>
-
-              <div className={styles.gridProjectsItem}>
-                <MultimediaGallery/>
-              </div>
+                categories.nodes.forEach(element => {
+                  counter ++
+                  if(counter > 1){
+                    cats +=  "," + element.slug
+                  } else {
+                    cats += element.slug
+                  }
+                });
+                return (
+                  <div key={item.projectFeatures.projectId} className={`${styles.gridProjectsItem} ${item.projectFeatures.layout==2 ? styles.gridProjectsItemFeat : item.projectFeatures.layout==3 ? styles.gridProjectsItemVertical : ""} `} dataCategories={cats}>
+                    <MultimediaGallery
+                      title={item.title}
+                      customer={item.projectFeatures.customer}
+                      coverImage={item.featuredImage.node.mediaItemUrl}
+                    />
+                  </div>
+                )
+              })}
           </div>
         </div>
       </div>
@@ -219,9 +178,78 @@ export default function Projects(props) {
 }
 
 export async function getStaticProps({locale}){
+  const url_api = "https://www.geniorama.site/demo/amazeinc/graphql"
+  const res = await fetch(url_api, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      query: `
+      query allProjects {
+        projects {
+          nodes {
+            title(format: RENDERED)
+            projectFeatures {
+              coverVideo {
+                mediaItemUrl
+              }
+              customer
+              layout
+            }
+            featuredImage {
+              node {
+                mediaItemUrl
+              }
+            }
+            projectId
+            categoriesProject {
+              nodes {
+                categoryProjectId
+                name
+                slug
+              }
+            }
+          }
+        }
+      }
+      `
+    })
+  })
+
+  const data = await res.json()
+
+  // const resCats = await fetch(url_api, {
+  //   method: 'POST',
+  //   headers: { 'Content-Type': 'application/json' },
+  //   body: JSON.stringify({
+  //     query: `
+  //     query allProjects {
+  //       projects {
+  //         nodes {
+  //           title(format: RENDERED)
+  //           projectFeatures {
+  //             coverVideo {
+  //               mediaItemUrl
+  //             }
+  //             customer
+  //             layout
+  //           }
+  //           featuredImage {
+  //             node {
+  //               mediaItemUrl
+  //             }
+  //           }
+  //           projectId
+  //         }
+  //       }
+  //     }
+  //     `
+  //   })
+  // })
+
   return {
     props: {
-        ...(await serverSideTranslations(locale, ['menu'])) 
+        ...(await serverSideTranslations(locale, ['menu'])),
+        data
     }
   }
 }

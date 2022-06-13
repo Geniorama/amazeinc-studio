@@ -1,4 +1,4 @@
-export default function TextArrow({text, fontSize, fontFamily, fontColor, arrowColor, size}) {
+export default function TextArrow({text, fontSize, fontFamily, fontColor, arrowColor}) {
   return (
     <div className={"textArrow"}>
        <span className={"arrow"}></span>

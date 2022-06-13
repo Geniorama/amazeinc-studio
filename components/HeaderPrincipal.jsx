@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 
 
-export default function HeaderPrincipal({fixed, handlerT}){
+export default function HeaderPrincipal({fixed, handlerT, style}){
     const [isMenuOpen, setIsMenuOpen] = useState(false)
     const [pageChange, setPageChange] = useState(true)
     
@@ -79,8 +79,10 @@ export default function HeaderPrincipal({fixed, handlerT}){
     }
 
     return(
-        <header id='amaze-header' className={`${styles.headerPrincipal} ${fixed ? styles.headerFixed : ""}`}>
+        <header id='amaze-header' className={`${styles.header} ${fixed ? styles.headerFixed : ""} ${style=="secondary" ? styles.headerSecondary : ""}`}>
             <div className='container'>
+                {style=="principal"
+                ?
                 <nav className={styles.navMenu}>
                     <button id='btn-toggle-nav' className={styles.btnToggleMenu} onClick={() => setIsMenuOpen(true)} role="button">
                         <span className={styles.btnToggleMenu__line}></span>
@@ -98,6 +100,38 @@ export default function HeaderPrincipal({fixed, handlerT}){
                         
                     </div>
                 </nav>
+                :
+                <nav className={styles.navMenu}>
+                    <div className={styles.navMenuContSecondary}>
+                        <button id='btn-toggle-nav' className={styles.btnToggleMenu} onClick={() => setIsMenuOpen(true)} role="button">
+                            <span className={styles.btnToggleMenu__line}></span>
+                            <span className={styles.btnToggleMenu__line}></span>
+                            <span className={styles.btnToggleMenu__line}></span>
+                        </button>
+
+                        <div className={styles.headerContRight}>
+                            <SocialNav />
+                            <Link href={router.asPath} locale={langLink.locale}>
+                                <a className={styles.btnLanguage} href="#" title={langLink.title}>
+                                    {langLink.text}
+                                </a>
+                            </Link>
+                            
+                        </div>
+                    </div>
+                    <div className={styles.headerBrand}>
+                        <Link href={"/"}>
+                            <a>
+                                <Image
+                                    src={Logo}
+                                />
+                            </a>
+                        </Link>
+                    </div>
+                    
+                </nav>
+                }
+                
             </div>
 
             {/* Menu principal */}

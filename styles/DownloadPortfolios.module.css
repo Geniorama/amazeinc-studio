@@ -1,5 +1,6 @@
 .contPortfolios{
-    margin: 200px 0;
+    padding-top: 8rem;
+    box-sizing: border-box;
 }
 
 .contGeneral{
@@ -17,6 +18,7 @@
 }
 .contTitle{
     width: 50%;
+    box-sizing: border-box;
 }
 
 .contItems{
@@ -25,10 +27,14 @@
     font-family: 'Gotham', sans-serif;
     width: 50%;
     padding: 0px 50px;
+    box-sizing: border-box;
 }
 
 .contItems ul{
     list-style: none;
+    margin: 0;
+    padding: 0;
+    margin-left: 50px;
 }
 
 .contItems ul a{
@@ -69,5 +75,14 @@
 @media (max-width: 767.98px){
     .title{
         font-size: 30px;
+        margin-top: 0;
+    }
+
+    .contItems ul{
+        margin: 0;
+    }
+
+    .contPortfolios{
+        padding-top: 6rem;
     }
 }

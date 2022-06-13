@@ -11,7 +11,7 @@ export default function DownloadPortfolios(props) {
     <Layout
       title={"AmazeInc Studio"}
       idPage={"amaze-download"}
-      header={"principal"}
+      header={"secondary"}
       headerFixed={true}
       footer={true}
       translate={t}

@@ -8,7 +8,8 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from "next-i18next";
 import { motion, AnimatePresence } from "framer-motion"
 
-export default function Home(props){
+export default function Home({locale, data}){
+  const videoCoverHome = data.data.page.homeFeatures.videoCover
   const { t } = useTranslation()
   const variants = {
     show:{
@@ -70,16 +71,43 @@ export default function Home(props){
           <motion.div key={"layer-home"} className={styles.layerHome} initial="show" animate={'hide'} variants={variants} transition={{duration: 2, ease: "easeInOut"}}></motion.div>
           
       </div>
-      <video className={styles.videoHome} autoPlay muted loop src="https://cdn.videvo.net/videvo_files/video/free/2013-11/large_watermarked/RotatingLens1Videvo_preview.mp4"></video>
+
+      {videoCoverHome
+        ?
+        <video className={styles.videoHome} autoPlay muted loop src={videoCoverHome}></video>
+        :
+        ""
+      }
+      
     </div>
     </Layout>
   )  
 }
 
 export async function getStaticProps({locale}){
+  const url_api = "https://www.geniorama.site/demo/amazeinc/graphql"
+  const res = await fetch(url_api, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      query: `
+      query dataHome {
+        page(idType: URI, id: "home") {
+          homeFeatures {
+            videoCover
+          }
+        }
+      }
+      `
+    })
+  })
+
+  const data = await res.json()
+
   return {
     props: {
-        ...(await serverSideTranslations(locale, ['homepage', 'menu'])) 
+        ...(await serverSideTranslations(locale, ['homepage', 'menu'])),
+        data 
     }
   }
 }

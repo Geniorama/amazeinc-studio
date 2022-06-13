@@ -1,6 +1,7 @@
 .contProjectArchive{
     width: 100%;
-    margin: 100px 0px;
+    margin-top: 8rem;
+    margin-bottom: 2rem;
 }
 
 .contProjectsTop{
@@ -12,7 +13,7 @@
 
 .contTitle{
     width: 50%;
-    font-size: 75px;
+    font-size: 50px;
     font-family: 'Libre Caslon Text', serif;
 }
 
@@ -70,6 +71,15 @@
 
 .gridProjectsItemVertical{
     grid-row: 2 span;
+}
+
+.catActive{
+  color: var(--s-color);
+}
+.catActive div span:first-child{
+    width: calc(100% + 20px);
+    opacity: 1;
+    background-color: var(--s-color);
 }
 
 @media (max-width: 991.98px){
