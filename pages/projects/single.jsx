@@ -16,6 +16,7 @@ export default function SingleProject({ locale }) {
             layout="fill"
           />
         </div>
+
         <section>
           <div className="container">
             <div className={styles.infoProject}>
@@ -36,16 +37,65 @@ export default function SingleProject({ locale }) {
             </div>
           </div>
         </section>
+
         <section>
           <div className="container">
             <div className={styles.contGallery}>
-              <div className={styles.imgStyle1}>
-                <Image
-                  src="https://www.geniorama.site/demo/amazeinc/wp-content/uploads/2022/06/1280.jpg"
-                  width={850}
-                  height={560}
-                  layout="responsive"
-                />
+              <div className={styles.imgStyleRight}>
+                <div className={styles.imgStyleRightCont}>
+                  <Image
+                    src="https://www.geniorama.site/demo/amazeinc/wp-content/uploads/2022/06/1280.jpg"
+                    width={800}
+                    height={500}
+                    layout="responsive"
+                    objectFit="contain"
+                  />
+                </div>
+              </div>
+              <div className={styles.imgStyleLeft}>
+                <div className={styles.imgStyleLeftCont}>
+                  <Image
+                    src="https://www.geniorama.site/demo/amazeinc/wp-content/uploads/2022/06/1280.jpg"
+                    width={800}
+                    height={500}
+                    layout="responsive"
+                    objectFit="contain"
+                  />
+                </div>
+              </div>
+              <div className={styles.imgStyleDuo}>
+                <div className={styles.imgStyleDuoLeft}>
+                  <div className={styles.imgStyleDuoLeftCont}>
+                    <Image
+                      src="https://www.geniorama.site/demo/amazeinc/wp-content/uploads/2022/06/1280.jpg"
+                      width={400}
+                      height={300}
+                      layout="responsive"
+                      objectFit="contain"
+                    />
+                  </div>
+                </div>
+                <div className={styles.imgStyleDuoRight}>
+                  <div className={styles.imgStyleDuoRightCont}>
+                    <Image
+                      src="https://www.geniorama.site/demo/amazeinc/wp-content/uploads/2022/06/1280.jpg"
+                      width={400}
+                      height={300}
+                      layout="responsive"
+                      objectFit="contain"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className={styles.imgStyleFull}>
+                <div className={styles.imgStyleFullCont}>
+                  <Image
+                    src="https://www.geniorama.site/demo/amazeinc/wp-content/uploads/2022/06/1280.jpg"
+                    width={800}
+                    height={500}
+                    layout="fill"
+                  />
+                </div>
               </div>
             </div>
           </div>
