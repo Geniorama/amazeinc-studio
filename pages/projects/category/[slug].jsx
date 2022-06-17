@@ -16,10 +16,6 @@ import Image from "next/image";
 export default function Slug({locale, data, dataMenu }) {
   const [pageLoad, setPageLoad] = useState(false)
   const router = useRouter()
-  
-  if (router.isFallback) {
-    return <h1 style={{ color: "white" }}>Cargando</h1>
-  } 
 
   function handleStart(){
     setPageLoad(true)
