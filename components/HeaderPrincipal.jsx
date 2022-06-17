@@ -10,30 +10,28 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 
 
-export default function HeaderPrincipal({fixed, handlerT}){
+export default function HeaderPrincipal({fixed, style, menuData}){
     const [isMenuOpen, setIsMenuOpen] = useState(false)
-    const [pageChange, setPageChange] = useState(true)
     
     let router = useRouter()
 
     let langLink = {}
 
-    if(router.locale === "es") {
+    if(router.locale === "es-ES") {
         langLink = {
-            locale: "en",
+            locale: "en-US",
             text: "EN",
             title: "English"
         }
     }
 
-    if(router.locale === "en") {
+    if(router.locale === "en-US") {
          langLink = {
-            locale: "es",
+            locale: "es-ES",
             text: "ES",
             title: "Spanish"
         }
     }
-    // State menu
     
     // Animation variants
     const variants = {
@@ -79,8 +77,10 @@ export default function HeaderPrincipal({fixed, handlerT}){
     }
 
     return(
-        <header id='amaze-header' className={`${styles.headerPrincipal} ${fixed ? styles.headerFixed : ""}`}>
+        <header id='amaze-header' className={`${styles.header} ${fixed ? styles.headerFixed : ""} ${style=="secondary" ? styles.headerSecondary : ""}`}>
             <div className='container'>
+                {style=="principal"
+                ?
                 <nav className={styles.navMenu}>
                     <button id='btn-toggle-nav' className={styles.btnToggleMenu} onClick={() => setIsMenuOpen(true)} role="button">
                         <span className={styles.btnToggleMenu__line}></span>
@@ -91,13 +91,45 @@ export default function HeaderPrincipal({fixed, handlerT}){
                     <div className={styles.headerContRight}>
                         <SocialNav />
                         <Link href={router.asPath} locale={langLink.locale}>
-                            <a className={styles.btnLanguage} href="#" title={langLink.title}>
+                            <a className={styles.btnLanguage} title={langLink.title}>
                                 {langLink.text}
                             </a>
                         </Link>
                         
                     </div>
                 </nav>
+                :
+                <nav className={styles.navMenu}>
+                    <div className={styles.navMenuContSecondary}>
+                        <button id='btn-toggle-nav' className={styles.btnToggleMenu} onClick={() => setIsMenuOpen(true)} role="button">
+                            <span className={styles.btnToggleMenu__line}></span>
+                            <span className={styles.btnToggleMenu__line}></span>
+                            <span className={styles.btnToggleMenu__line}></span>
+                        </button>
+
+                        <div className={styles.headerContRight}>
+                            <SocialNav />
+                            <Link href={router.asPath} locale={langLink.locale}>
+                                <a className={styles.btnLanguage} title={langLink.title}>
+                                    {langLink.text}
+                                </a>
+                            </Link>
+                            
+                        </div>
+                    </div>
+                    <div className={styles.headerBrand}>
+                        <Link href={"/"}>
+                            <a>
+                                <Image
+                                    src={Logo}
+                                />
+                            </a>
+                        </Link>
+                    </div>
+                    
+                </nav>
+                }
+                
             </div>
 
             {/* Menu principal */}
@@ -110,12 +142,10 @@ export default function HeaderPrincipal({fixed, handlerT}){
                     
                     <MenuPrincipal
                         handler={setIsMenuOpen}
-                        handlerT={handlerT}
+                        menuData={menuData}
                     /> 
                 </motion.div>
             </AnimatePresence>
-
-                    
         </header>
     )
 }

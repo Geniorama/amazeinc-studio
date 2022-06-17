@@ -7,8 +7,13 @@ import TextArrow from "../components/TextArrow";
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from "next-i18next";
 import { motion, AnimatePresence } from "framer-motion"
+import queries from "./api/queries";
 
-export default function Home(props){
+export default function Home({locale, data, dataMenu}){
+
+  const videoCoverHome = data.data.page.homeFeatures.videoCover
+  const imageCoverHome = data.data.page.homeFeatures.imageCover.mediaItemUrl
+
   const { t } = useTranslation()
   const variants = {
     show:{
@@ -41,6 +46,7 @@ export default function Home(props){
       header={"principal"}
       headerFixed={true}
       translate={t}
+      menuData={dataMenu.data}
     >
 
     {/* Video */}
@@ -51,7 +57,7 @@ export default function Home(props){
             src={LogoAmazeinc}
             alt="Logo AmazeInc"
           />
-          <Link href={"/projects"}>
+          <Link href={"/projects/category/all"}>
             <motion.a key={"video-text-bottom"} animate={'show'} initial={'hide'} variants={variantsText} transition={{delay: 1}} className={styles.videoCaptionText}>
                 <span className={styles.videoCaptionTextTop}>
                   {t('homepage:see_our_amazing')}
@@ -70,17 +76,48 @@ export default function Home(props){
           <motion.div key={"layer-home"} className={styles.layerHome} initial="show" animate={'hide'} variants={variants} transition={{duration: 2, ease: "easeInOut"}}></motion.div>
           
       </div>
-      <video className={styles.videoHome} autoPlay muted loop src="https://cdn.videvo.net/videvo_files/video/free/2013-11/large_watermarked/RotatingLens1Videvo_preview.mp4"></video>
+
+      {videoCoverHome
+        ?
+        <video poster={imageCoverHome ? imageCoverHome : ""} className={styles.videoHome} autoPlay muted loop>
+          <source src={videoCoverHome} type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+        :
+        <Image 
+          src={imageCoverHome}
+          layout="fill"
+          objectFit="cover"
+        />
+      }
     </div>
     </Layout>
   )  
 }
 
 export async function getStaticProps({locale}){
+  let localeForTranslation
+
+  if(locale == "en-US"){
+   localeForTranslation = "EN"
+  }
+
+  if(locale == "es-ES"){
+   localeForTranslation = "ES"
+  }
+
+  const url_api = "https://www.geniorama.site/demo/amazeinc/graphql"
+ 
+  const data = await queries.getDataHome(url_api)
+  const dataMenu = await queries.getMenuItems(url_api, localeForTranslation)
+
   return {
     props: {
-        ...(await serverSideTranslations(locale, ['homepage', 'menu'])) 
-    }
+        ...(await serverSideTranslations(locale, ['homepage', 'menu'])),
+        data,
+        dataMenu
+    },
+    revalidate: 10
   }
 }
 

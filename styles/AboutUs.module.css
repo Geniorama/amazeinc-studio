@@ -1,13 +1,14 @@
 .contAbout{
     width: 100%;
-    margin: 100px 0px;
+    padding-top: 8rem;
+    box-sizing: border-box;
 }
 
 .contentAbout{
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: -200px;
+    position: relative;
 }
 
 .titleAbout{
@@ -16,32 +17,51 @@
     font-size: 75px;
     position: relative;
     width: 30%;
-}
-
-.titleAbout::before{
-    position: absolute;
-    content: '';
-    top: 205px;
-    left: 145px;
-    width: 500px;
-    height: 2px;
-    background-color: white;
-    transform: rotate(140deg);
+    box-sizing: border-box;
 }
 
 .textAbout{
     width: 70%;
-    padding-left: 120px;
-    padding-top: 420px;
+    padding-left: 200px;
+    transform: translateY(9rem);
+    box-sizing: border-box;
     color: white;
     font-size: 18px;
     font-family: 'Gotham', sans-serif;
     line-height: 32px;
+    box-sizing: border-box;
+}
+
+.aboutArrow{
+    display: block;
+    height: 1px;
+    width: 450px;
+    position: absolute;
+    background: white;
+    left: 4rem;
+    bottom: 4rem;
+    transform: rotate(-45deg);
+}
+
+.aboutArrow::before{
+    position: absolute;
+    content: '';
+    width: 8px;
+    height: 8px;
+    transform: rotate(45deg);
+    right: 0;
+    top: -4px;
+    border-top: 1px solid white;
+    border-right: 1px solid white;
 }
 
 @media (max-width: 767.98px){
     .contAbout{
-        margin-top: 15rem;
+        padding-top: 6rem;
+    }
+
+    .titleAbout{
+        margin-top: 0;
     }
     .contentAbout{
         flex-direction: column;
@@ -49,14 +69,16 @@
     .titleAbout{
         width: 100%;
         margin-bottom: 1rem;
+        font-size: 50px;
     }
 
     .textAbout{
         width: 100%;
         padding: 0;
+        transform: translateY(0);
     }
 
-    .titleAbout::before{
+    .aboutArrow{
         display: none;
     }
 }

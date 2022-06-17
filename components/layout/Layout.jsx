@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { useRouter } from "next/router";
 import PreloadPages from "../PreloadPages";
 
-export default function Layout({children, title, description, idPage, header, headerFixed, footer, translate}){
+export default function Layout({children, title, description, idPage, header, headerFixed, footer, menuData}){
     const router = useRouter()
     // console.log(translate('menu:see_our_work'))
     const variants = {
@@ -32,14 +32,11 @@ export default function Layout({children, title, description, idPage, header, he
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-            {header="principal" ?
-                <HeaderPrincipal
-                    fixed={headerFixed}
-                    handlerT={translate}
-                />
-                :
-                ""
-            }
+            <HeaderPrincipal
+                fixed={headerFixed}
+                style={header}
+                menuData={menuData}
+            />
             
             {router.asPath != "/"?
                 <motion.main key={"main"} className="amaze-main" id={idPage} initial={"hide"} animate={"show"} variants={variants} transition={{delay: 1, duration: 2}} >

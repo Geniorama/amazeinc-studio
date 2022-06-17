@@ -4,17 +4,19 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDownload } from "@fortawesome/free-solid-svg-icons";
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from "next-i18next";
+import queries from "./api/queries";
 
-export default function DownloadPortfolios(props) {
+export default function DownloadPortfolios({locale, dataMenu, data}) {
+  const portfolios = data.data.portfolios.nodes
   const { t } = useTranslation()
   return (
     <Layout
       title={"AmazeInc Studio"}
       idPage={"amaze-download"}
-      header={"principal"}
+      header={"secondary"}
       headerFixed={true}
       footer={true}
-      translate={t}
+      menuData={dataMenu.data}
     >
       <div className={styles.contPortfolios}>
         <div className="container">
@@ -24,54 +26,20 @@ export default function DownloadPortfolios(props) {
             </div>
             <div className={styles.contItems}>
               <ul>
-                <li>
-                  <a href="#">
-                    <span className={styles.contIcon}>
-                      <FontAwesomeIcon icon={faDownload}/>
-                    </span>
-                    <span>CAMPAINGS</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <span className={styles.contIcon}>
-                      <FontAwesomeIcon icon={faDownload}/>
-                    </span>
-                    <span>LIFESTYLE</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <span className={styles.contIcon}>
-                      <FontAwesomeIcon icon={faDownload}/>
-                    </span>
-                    <span>CARS</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <span className={styles.contIcon}>
-                      <FontAwesomeIcon icon={faDownload}/>
-                    </span>
-                    <span>PORTRAITS</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <span className={styles.contIcon}>
-                      <FontAwesomeIcon icon={faDownload}/>
-                    </span>
-                    <span>PRODUCT</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <span className={styles.contIcon}>
-                      <FontAwesomeIcon icon={faDownload}/>
-                    </span>
-                    <span>FASHION</span>
-                  </a>
-                </li>
+                {portfolios.map((item) => (
+                    item.downloads.file.mediaItemUrl
+                    ?
+                    <li key={item.portfolioId}>
+                      <a href={item.downloads.file.mediaItemUrl} target="_blank" rel="noreferrer" download={item.title}>
+                        <span className={styles.contIcon}>
+                          <FontAwesomeIcon icon={faDownload}/>
+                        </span>
+                        <span>{item.title}</span>
+                      </a>
+                    </li>
+                    :
+                    ""
+                ))}
               </ul>
             </div>
           </div>
@@ -82,9 +50,25 @@ export default function DownloadPortfolios(props) {
 }
 
 export async function getStaticProps({locale}){
+  const url_api = "https://www.geniorama.site/demo/amazeinc/graphql"
+  let localeForTranslation
+
+  if (locale == "en-US") {
+    localeForTranslation = "EN"
+  }
+
+  if (locale == "es-ES") {
+    localeForTranslation = "ES"
+  }
+
+  const dataMenu = await queries.getMenuItems(url_api, localeForTranslation)
+  const data = await queries.getAllPortfolios(url_api, localeForTranslation)
+
   return {
     props: {
-        ...(await serverSideTranslations(locale, ['menu'])) 
+        ...(await serverSideTranslations(locale, ['menu'])),
+        data,
+        dataMenu
     }
   }
 }
