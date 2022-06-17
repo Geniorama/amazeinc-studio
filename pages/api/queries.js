@@ -208,7 +208,12 @@ const queries = {
                         mediaItemUrl
                       }
                       customer
+                      gallery {
+                        mediaItemUrl
+                        id
+                      }
                     }
+                    content(format: RENDERED)
                   }
                 }
               }

@@ -4,9 +4,11 @@ import styles from "../../styles/SingleProject.module.css";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import queries from '../api/queries'
 import { flatMap } from "lodash";
+import { useState } from "react";
 
-export default function SingleProject({ locale, dataMenu }) {
+export default function SingleProject({ locale, dataMenu, data }) {
   
+  const projectData = data.data.project.translation
   return (
     <Layout 
       header={"secondary"} 
@@ -20,6 +22,7 @@ export default function SingleProject({ locale, dataMenu }) {
           <Image
             src="https://www.geniorama.site/demo/amazeinc/wp-content/uploads/2022/06/1280.jpg"
             layout="fill"
+            objectFit="cover"
           />
         </div>
 
@@ -27,18 +30,16 @@ export default function SingleProject({ locale, dataMenu }) {
           <div className="container">
             <div className={styles.infoProject}>
               <div className={styles.infoLeft}>
-                <span className={styles.companyName}>Alpina</span>
-                <span className={styles.projectName}>AINKAA</span>
+                <span className={styles.companyName}>{projectData.projectFeatures.customer}</span>
+                <span className={styles.projectName}>{projectData.title}</span>
               </div>
               <div className={styles.infoRight}>
-                <p className={styles.descProject}>
-                  Sit lacus, id nunc cras aliquam proin est et vulputate. A,
-                  tortor, morbi et amet. Nunc quis sagittis, etiam pharetra non
-                  lacus nibh sit. Sit vestibulum dignissim fermentum at. Sit
-                  lacus, id nunc cras aliquam proin est et vulputate. A, tortor,
-                  morbi et amet. Nunc quis sagittis, etiam pharetra non lacus
-                  nibh sit.{" "}
-                </p>
+                {projectData.content
+                  ?
+                  <div className={styles.descProject} dangerouslySetInnerHTML={{__html: projectData.content}}/>
+                  :
+                  ""
+                }
               </div>
             </div>
           </div>
@@ -46,64 +47,23 @@ export default function SingleProject({ locale, dataMenu }) {
 
         <section>
           <div className="container">
-            <div className={styles.contGallery}>
-              <div className={styles.imgStyleRight}>
-                <div className={styles.imgStyleRightCont}>
-                  <Image
-                    src="https://www.geniorama.site/demo/amazeinc/wp-content/uploads/2022/06/1280.jpg"
-                    width={800}
-                    height={500}
-                    layout="responsive"
-                    objectFit="contain"
-                  />
-                </div>
+              <div className={styles.contGallery}>
+                {projectData.projectFeatures.gallery.map((item) => (
+                    <a href={item.mediaItemUrl} key={item.id} className={styles.imgStyleRight}>
+                      <div className={styles.imgStyleRightCont}>
+                        <Image
+                          src={item.mediaItemUrl}
+                          width={800}
+                          height={500}
+                          layout="responsive"
+                          objectFit="contain"
+                          srl_gallery_image="true"
+                          priority
+                        />
+                      </div>
+                    </a>
+                ))}
               </div>
-              <div className={styles.imgStyleLeft}>
-                <div className={styles.imgStyleLeftCont}>
-                  <Image
-                    src="https://www.geniorama.site/demo/amazeinc/wp-content/uploads/2022/06/1280.jpg"
-                    width={800}
-                    height={500}
-                    layout="responsive"
-                    objectFit="contain"
-                  />
-                </div>
-              </div>
-              <div className={styles.imgStyleDuo}>
-                <div className={styles.imgStyleDuoLeft}>
-                  <div className={styles.imgStyleDuoLeftCont}>
-                    <Image
-                      src="https://www.geniorama.site/demo/amazeinc/wp-content/uploads/2022/06/1280.jpg"
-                      width={400}
-                      height={300}
-                      layout="responsive"
-                      objectFit="contain"
-                    />
-                  </div>
-                </div>
-                <div className={styles.imgStyleDuoRight}>
-                  <div className={styles.imgStyleDuoRightCont}>
-                    <Image
-                      src="https://www.geniorama.site/demo/amazeinc/wp-content/uploads/2022/06/1280.jpg"
-                      width={400}
-                      height={300}
-                      layout="responsive"
-                      objectFit="contain"
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className={styles.imgStyleFull}>
-                <div className={styles.imgStyleFullCont}>
-                  <Image
-                    src="https://www.geniorama.site/demo/amazeinc/wp-content/uploads/2022/06/1280.jpg"
-                    width={800}
-                    height={500}
-                    layout="fill"
-                  />
-                </div>
-              </div>
-            </div>
           </div>
         </section>
       </article>
@@ -129,7 +89,8 @@ export async function getStaticPaths({ locales }) {
 }
 
 export async function getStaticProps({ locale, params }) {
-  
+  const {slug} = params
+
   const url_api = "https://www.geniorama.site/demo/amazeinc/graphql"
   let localeForTranslation
 
@@ -148,7 +109,8 @@ export async function getStaticProps({ locale, params }) {
   return {
     props: {
       ...(await serverSideTranslations(locale, ["menu"])),
-      dataMenu
+      dataMenu,
+      data
     },
   };
 }
