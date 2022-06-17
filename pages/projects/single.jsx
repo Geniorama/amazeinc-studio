@@ -2,17 +2,21 @@ import Layout from "../../components/layout/Layout";
 import Image from "next/image";
 import styles from "../../styles/SingleProject.module.css";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { useTranslation } from "next-i18next";
+import queries from '../api/queries'
 
-export default function SingleProject({ locale }) {
-  const { t } = useTranslation();
+export default function SingleProject({ locale, dataMenu }) {
+  
   return (
-    <Layout header={"secondary"} headerFixed={true} footer={true} translate={t}>
+    <Layout 
+      header={"secondary"} 
+      headerFixed={true} 
+      footer={true} 
+      menuData={dataMenu.data}  
+    >
       <article>
         <div className={styles.imageTop}>
           <Image
             src="https://www.geniorama.site/demo/amazeinc/wp-content/uploads/2022/06/1280.jpg"
-            width={100}
             layout="fill"
           />
         </div>
@@ -106,9 +110,23 @@ export default function SingleProject({ locale }) {
 }
 
 export async function getStaticProps({ locale }) {
+  const url_api = "https://www.geniorama.site/demo/amazeinc/graphql"
+  let localeForTranslation
+
+  if (locale == "en-US") {
+    localeForTranslation = "EN"
+  }
+
+  if (locale == "es-ES") {
+    localeForTranslation = "ES"
+  }
+  
+  const dataMenu = await queries.getMenuItems(url_api, localeForTranslation)
+
   return {
     props: {
       ...(await serverSideTranslations(locale, ["menu"])),
+      dataMenu
     },
   };
 }
