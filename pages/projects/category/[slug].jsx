@@ -16,6 +16,7 @@ import Image from "next/image";
 export default function Slug({locale, data, dataMenu }) {
   const [pageLoad, setPageLoad] = useState(false)
   const router = useRouter()
+
   function handleStart(){
     setPageLoad(true)
   }
@@ -37,11 +38,6 @@ export default function Slug({locale, data, dataMenu }) {
 
   }, [router])
 
-  
-  if (router.isFallback) {
-    return <h1 style={{ color: "white" }}>Cargando</h1>
-  } 
-
   const projects = data.projects.data.categoryProject.translation.projects.nodes
   const categories = data.categories.data.categoriesProject.nodes
 
@@ -57,7 +53,6 @@ export default function Slug({locale, data, dataMenu }) {
     }
   }
 
-  // const { t } = useTranslation()
   return (
     <Layout
       title={"AmazeInc Studio"}
@@ -108,17 +103,19 @@ export default function Slug({locale, data, dataMenu }) {
               </motion.div>
               :
               <motion.div key={"grid-projects"} className={styles.gridProjects} initial={'hide'} animate={'show'} variants={variants} transition={{delay: 0, duration: 1}}>
-                  {projects.map((item) =>{
-                    return (
-                      <div key={item.projectId} className={`${styles.gridProjectsItem} ${item.projectFeatures.layout==2 ? styles.gridProjectsItemFeat : item.projectFeatures.layout==3 ? styles.gridProjectsItemVertical : ""} `}>
-                        <MultimediaGallery
-                          title={item.title}
-                          customer={item.projectFeatures.customer}
-                          coverImage={item.featuredImage.node.mediaItemUrl}
-                        />
-                      </div>
-                    )
-                  })}
+                  {projects.map((item) =>(
+                    item.featuredImage
+                    ?
+                    <div key={item.projectId} className={`${styles.gridProjectsItem} ${item.projectFeatures.layout==2 ? styles.gridProjectsItemFeat : item.projectFeatures.layout==3 ? styles.gridProjectsItemVertical : ""} `}>
+                      <MultimediaGallery
+                        title={item.title}
+                        customer={item.projectFeatures.customer}
+                        coverImage={item.featuredImage.node.mediaItemUrl}
+                      />
+                    </div>
+                    :
+                    ""
+                  ))}
               </motion.div>
             }
           </div>          
@@ -173,7 +170,6 @@ export async function getStaticProps({ locale, params }) {
       ...(await serverSideTranslations(locale, ['menu'])),
       data,
       dataMenu
-    },
-    revalidate: 10
+    }
   }
 }
