@@ -173,7 +173,6 @@ export async function getStaticProps({ locale, params }) {
       ...(await serverSideTranslations(locale, ['menu'])),
       data,
       dataMenu
-    },
-    revalidate: 10
+    }
   }
 }
