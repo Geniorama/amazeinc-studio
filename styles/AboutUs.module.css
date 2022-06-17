@@ -17,17 +17,19 @@
     font-size: 75px;
     position: relative;
     width: 30%;
+    box-sizing: border-box;
 }
 
 .textAbout{
     width: 70%;
-    padding-left: 120px;
+    padding-left: 200px;
     transform: translateY(9rem);
     box-sizing: border-box;
     color: white;
     font-size: 18px;
     font-family: 'Gotham', sans-serif;
     line-height: 32px;
+    box-sizing: border-box;
 }
 
 .aboutArrow{

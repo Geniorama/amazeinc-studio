@@ -10,30 +10,28 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 
 
-export default function HeaderPrincipal({fixed, handlerT, style}){
+export default function HeaderPrincipal({fixed, style, menuData}){
     const [isMenuOpen, setIsMenuOpen] = useState(false)
-    const [pageChange, setPageChange] = useState(true)
     
     let router = useRouter()
 
     let langLink = {}
 
-    if(router.locale === "es") {
+    if(router.locale === "es-ES") {
         langLink = {
-            locale: "en",
+            locale: "en-US",
             text: "EN",
             title: "English"
         }
     }
 
-    if(router.locale === "en") {
+    if(router.locale === "en-US") {
          langLink = {
-            locale: "es",
+            locale: "es-ES",
             text: "ES",
             title: "Spanish"
         }
     }
-    // State menu
     
     // Animation variants
     const variants = {
@@ -93,7 +91,7 @@ export default function HeaderPrincipal({fixed, handlerT, style}){
                     <div className={styles.headerContRight}>
                         <SocialNav />
                         <Link href={router.asPath} locale={langLink.locale}>
-                            <a className={styles.btnLanguage} href="#" title={langLink.title}>
+                            <a className={styles.btnLanguage} title={langLink.title}>
                                 {langLink.text}
                             </a>
                         </Link>
@@ -112,7 +110,7 @@ export default function HeaderPrincipal({fixed, handlerT, style}){
                         <div className={styles.headerContRight}>
                             <SocialNav />
                             <Link href={router.asPath} locale={langLink.locale}>
-                                <a className={styles.btnLanguage} href="#" title={langLink.title}>
+                                <a className={styles.btnLanguage} title={langLink.title}>
                                     {langLink.text}
                                 </a>
                             </Link>
@@ -144,12 +142,10 @@ export default function HeaderPrincipal({fixed, handlerT, style}){
                     
                     <MenuPrincipal
                         handler={setIsMenuOpen}
-                        handlerT={handlerT}
+                        menuData={menuData}
                     /> 
                 </motion.div>
             </AnimatePresence>
-
-                    
         </header>
     )
 }

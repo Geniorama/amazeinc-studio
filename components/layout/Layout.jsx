@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { useRouter } from "next/router";
 import PreloadPages from "../PreloadPages";
 
-export default function Layout({children, title, description, idPage, header, headerFixed, footer, translate}){
+export default function Layout({children, title, description, idPage, header, headerFixed, footer, menuData}){
     const router = useRouter()
     // console.log(translate('menu:see_our_work'))
     const variants = {
@@ -34,8 +34,8 @@ export default function Layout({children, title, description, idPage, header, he
 
             <HeaderPrincipal
                 fixed={headerFixed}
-                handlerT={translate}
                 style={header}
+                menuData={menuData}
             />
             
             {router.asPath != "/"?

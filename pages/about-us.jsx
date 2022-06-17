@@ -2,9 +2,11 @@ import styles from "./../styles/AboutUs.module.css";
 import Layout from "../components/layout/Layout";
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from "next-i18next";
+import queries from "./api/queries";
 
-export default function AboutUs(props) {
+export default function AboutUs({locale, data, dataMenu}) {
   const { t } = useTranslation()
+  const innerHTML = data.data.pageBy.translation.content
   return (
     <Layout
       title={"AmazeInc Studio"}
@@ -13,23 +15,16 @@ export default function AboutUs(props) {
       headerFixed={true}
       footer={true}
       translate={t}
+      menuData={dataMenu.data}
     >
       <div className={styles.contAbout}>
         <div className="container">
           <div className={styles.contentAbout}>
             <h2 className={styles.titleAbout}>
-              ABOUT<br></br>US
+              {data.data.pageBy.translation.title}
             </h2>
             <span className={styles.aboutArrow}></span>
-            <p className={styles.textAbout}>
-              Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam
-              nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam
-              erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci
-              tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo
-              consequat. Duis autem vel eum iriure dolor in hendrerit in
-              vulputate velit esse molestie consequat, vel illum dolore eu
-              feugiat
-            </p>
+            <div className={styles.textAbout} dangerouslySetInnerHTML={{ __html: innerHTML }} />
           </div>
         </div>
       </div>
@@ -39,9 +34,26 @@ export default function AboutUs(props) {
 
 
 export async function getStaticProps({locale}){
+  const url_api = "https://www.geniorama.site/demo/amazeinc/graphql"
+  let localeForTranslation
+
+  if(locale == "en-US"){
+   localeForTranslation = "EN"
+  }
+
+  if(locale == "es-ES"){
+   localeForTranslation = "ES"
+  }
+
+
+  const data = await queries.getDataAboutUs(url_api, localeForTranslation)
+  const dataMenu = await queries.getMenuItems(url_api, localeForTranslation)
+
   return {
     props: {
-        ...(await serverSideTranslations(locale, ['menu'])) 
+        ...(await serverSideTranslations(locale, ['menu'])),
+        data,
+        dataMenu
     }
   }
 }
