@@ -8,6 +8,10 @@ import MultimediaGallery from "../../../components/MultimediaGallery"
 import { motion } from "framer-motion";
 import { flatMap } from "lodash";
 import queries from "../../api/queries";
+import { useEffect, useState } from "react";
+import PreloadImg from "../../../public/imagenes/ball-preloader.svg"
+import Image from "next/image";
+
 
 export default function Slug({locale, data, dataMenu }) {
 
@@ -16,18 +20,41 @@ export default function Slug({locale, data, dataMenu }) {
     return <h1 style={{ color: "white" }}>Cargando</h1>
   } 
 
+  const [pageLoad, setPageLoad] = useState(false)
+
+  function handleStart(){
+    setPageLoad(true)
+  }
+
+  function handleStop(){
+    setPageLoad(false)
+  }
+
+  useEffect(() => {
+    router.events.on('routeChangeStart', handleStart)
+    router.events.on('routeChangeComplete', handleStop)
+    router.events.on('routeChangeError', handleStop)
+
+    return () => {
+      router.events.on('routeChangeStart', handleStart)
+      router.events.on('routeChangeComplete', handleStop)
+      router.events.on('routeChangeError', handleStop)
+    }
+
+  }, [router])
+
   const projects = data.projects.data.categoryProject.translation.projects.nodes
   const categories = data.categories.data.categoriesProject.nodes
 
   const variants = {
     show: {
       opacity: 1,
-      scale: 1
+      y: 0
     },
 
     hide: {
       opacity: 0,
-      scale: 0
+      y: 20
     }
   }
 
@@ -70,20 +97,32 @@ export default function Slug({locale, data, dataMenu }) {
             </div>
           </div>
 
-          {/* Grid Projects */}
-          <motion.div key={"grid-projects"} className={styles.gridProjects} initial={'hide'} animate={'show'} variants={variants} transition={{delay: 1, duration: 2}}>
-              {projects.map((item) =>{
-                return (
-                  <div key={item.projectId} className={`${styles.gridProjectsItem} ${item.projectFeatures.layout==2 ? styles.gridProjectsItemFeat : item.projectFeatures.layout==3 ? styles.gridProjectsItemVertical : ""} `}>
-                    <MultimediaGallery
-                      title={item.title}
-                      customer={item.projectFeatures.customer}
-                      coverImage={item.featuredImage.node.mediaItemUrl}
-                    />
-                  </div>
-                )
-              })}
-          </motion.div>
+          <div>
+            {pageLoad 
+              ?
+              <motion.div className={styles.contPreload} style={{textAlign: "center", padding: "3rem"}} initial={'show'} animate={!pageLoad ? 'hide' : 'show'} variants={variants}>
+                <Image
+                  src={PreloadImg}
+                  width={300}
+                  height={300}
+                />
+              </motion.div>
+              :
+              <motion.div key={"grid-projects"} className={styles.gridProjects} initial={'hide'} animate={'show'} variants={variants} transition={{delay: 0, duration: 1}}>
+                  {projects.map((item) =>{
+                    return (
+                      <div key={item.projectId} className={`${styles.gridProjectsItem} ${item.projectFeatures.layout==2 ? styles.gridProjectsItemFeat : item.projectFeatures.layout==3 ? styles.gridProjectsItemVertical : ""} `}>
+                        <MultimediaGallery
+                          title={item.title}
+                          customer={item.projectFeatures.customer}
+                          coverImage={item.featuredImage.node.mediaItemUrl}
+                        />
+                      </div>
+                    )
+                  })}
+              </motion.div>
+            }
+          </div>          
         </div>
       </div>
     </Layout>
