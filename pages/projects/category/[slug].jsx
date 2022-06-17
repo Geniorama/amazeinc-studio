@@ -14,14 +14,8 @@ import Image from "next/image";
 
 
 export default function Slug({locale, data, dataMenu }) {
-
-  const router = useRouter()
-  if (router.isFallback) {
-    return <h1 style={{ color: "white" }}>Cargando</h1>
-  } 
-
   const [pageLoad, setPageLoad] = useState(false)
-
+  const router = useRouter()
   function handleStart(){
     setPageLoad(true)
   }
@@ -42,6 +36,11 @@ export default function Slug({locale, data, dataMenu }) {
     }
 
   }, [router])
+
+  
+  if (router.isFallback) {
+    return <h1 style={{ color: "white" }}>Cargando</h1>
+  } 
 
   const projects = data.projects.data.categoryProject.translation.projects.nodes
   const categories = data.categories.data.categoriesProject.nodes
