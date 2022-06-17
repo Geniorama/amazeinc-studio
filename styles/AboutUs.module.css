@@ -1,12 +1,12 @@
 .contAbout{
     width: 100%;
-    padding-top: 8rem;
+    margin: 2rem 0;
     box-sizing: border-box;
 }
 
 .contentAbout{
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
     position: relative;
 }
@@ -18,12 +18,13 @@
     position: relative;
     width: 30%;
     box-sizing: border-box;
+    margin: 0;
 }
 
 .textAbout{
     width: 70%;
     padding-left: 200px;
-    transform: translateY(9rem);
+    margin-top: 8rem;
     box-sizing: border-box;
     color: white;
     font-size: 18px;
@@ -38,8 +39,8 @@
     width: 450px;
     position: absolute;
     background: white;
-    left: 4rem;
-    bottom: 4rem;
+    left: 230px;
+    bottom: 300px;
     transform: rotate(-45deg);
 }
 
@@ -56,9 +57,7 @@
 }
 
 @media (max-width: 767.98px){
-    .contAbout{
-        padding-top: 6rem;
-    }
+    
 
     .titleAbout{
         margin-top: 0;
@@ -75,7 +74,7 @@
     .textAbout{
         width: 100%;
         padding: 0;
-        transform: translateY(0);
+        margin-top: 2rem;
     }
 
     .aboutArrow{

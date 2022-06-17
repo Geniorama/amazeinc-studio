@@ -3,10 +3,10 @@ import styles from "./../styles/MultimediaGallery.module.css";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function MultimediaGallery({title, customer, coverImage}) {
+export default function MultimediaGallery({title, customer, coverImage, link}) {
   return (
 
-    <Link href={"#"}>
+    <Link href={link}>
       <a className={styles.cardLink}>
         <div className={styles.contImage}>
           <Image

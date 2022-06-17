@@ -50,10 +50,10 @@ a {
   max-height: 100vh;
 }
 
-.amaze-layout{
+/* .amaze-layout{
   position: relative;
-}
+} */
 
 .amaze-main{
-  min-height: 100vh;
+  min-height: 60vh;
 }

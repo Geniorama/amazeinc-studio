@@ -10,10 +10,25 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 
 
-export default function HeaderPrincipal({fixed, style, menuData}){
+export default function HeaderPrincipal({fixed, style, menuData, headerSticky}){
     const [isMenuOpen, setIsMenuOpen] = useState(false)
     
     let router = useRouter()
+
+    useEffect(()=> {
+        if(headerSticky){
+            const menu = document.getElementById('amaze-header')
+            const stickyClass = styles.headerSticky
+
+            window.addEventListener('scroll', (e) => {
+                if(window.scrollY > 250){
+                    menu.classList.add(stickyClass)
+                } else {
+                    menu.classList.remove(stickyClass)
+                }
+            });
+        }
+    }, [])
 
     let langLink = {}
 

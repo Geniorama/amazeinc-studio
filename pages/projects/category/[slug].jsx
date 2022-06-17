@@ -58,7 +58,7 @@ export default function Slug({locale, data, dataMenu }) {
       title={"AmazeInc Studio"}
       idPage={"amaze-about-us"}
       header={"secondary"}
-      headerFixed={true}
+      headerSticky={true}
       footer={true}
       menuData={dataMenu.data}
     >
@@ -111,6 +111,7 @@ export default function Slug({locale, data, dataMenu }) {
                         title={item.title}
                         customer={item.projectFeatures.customer}
                         coverImage={item.featuredImage.node.mediaItemUrl}
+                        link={`/projects/${item.slug}`}
                       />
                     </div>
                     :

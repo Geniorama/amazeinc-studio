@@ -185,7 +185,61 @@ const queries = {
 
         const resJson = await res.json()
         return resJson
-    }
+    },
+
+    getProjectBySlug: async function(url_api, locale, slug){
+        const res = await fetch(url_api, {
+          method: "POST",
+          headers: { "Content-type": "application/json" },
+          body: JSON.stringify({
+              query: `
+              query getProject {
+                project(id: "${slug}", idType: SLUG) {
+                  slug
+                  projectId
+                  translation(language: ${locale}) {
+                    slug
+                    title(format: RENDERED)
+                    projectFeatures {
+                      coverImage {
+                        mediaItemUrl
+                      }
+                      coverVideo {
+                        mediaItemUrl
+                      }
+                      customer
+                    }
+                  }
+                }
+              }
+              `
+          })
+      })
+
+      const resJson = await res.json()
+      return resJson
+  },
+
+  getAllProjects: async function(url_api){
+      const res = await fetch(url_api, {
+        method: "POST",
+        headers: { "Content-type": "application/json" },
+        body: JSON.stringify({
+            query: `
+            query getAllProjects {
+              projects {
+                nodes {
+                  slug
+                }
+              }
+            }
+            `
+        })
+    })
+
+    const resJson = await res.json()
+    return resJson
+  }
 }
 
 export default queries

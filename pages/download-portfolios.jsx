@@ -14,7 +14,7 @@ export default function DownloadPortfolios({locale, dataMenu, data}) {
       title={"AmazeInc Studio"}
       idPage={"amaze-download"}
       header={"secondary"}
-      headerFixed={true}
+      headerSticky={true}
       footer={true}
       menuData={dataMenu.data}
     >

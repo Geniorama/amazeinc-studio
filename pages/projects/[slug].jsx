@@ -3,13 +3,15 @@ import Image from "next/image";
 import styles from "../../styles/SingleProject.module.css";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import queries from '../api/queries'
+import { flatMap } from "lodash";
 
 export default function SingleProject({ locale, dataMenu }) {
   
   return (
     <Layout 
       header={"secondary"} 
-      headerFixed={true} 
+      headerFixed={true}
+      headerSticky={true}
       footer={true} 
       menuData={dataMenu.data}  
     >
@@ -109,7 +111,25 @@ export default function SingleProject({ locale, dataMenu }) {
   );
 }
 
-export async function getStaticProps({ locale }) {
+export async function getStaticPaths({ locales }) {
+  if (locales == undefined) {
+    throw new Error('Please define locales in your next.config')
+  }
+
+  const url_api = "https://www.geniorama.site/demo/amazeinc/graphql"
+
+  const resJson = await queries.getAllProjects(url_api)
+  const projects = resJson.data.projects.nodes
+  const paths = flatMap(projects.map((project) => ({ params: { slug: project.slug } })), (path) => locales.map(loc => ({ locale: loc, ...path })))
+
+  return {
+    paths,
+    fallback: false
+  }
+}
+
+export async function getStaticProps({ locale, params }) {
+  
   const url_api = "https://www.geniorama.site/demo/amazeinc/graphql"
   let localeForTranslation
 
@@ -120,7 +140,9 @@ export async function getStaticProps({ locale }) {
   if (locale == "es-ES") {
     localeForTranslation = "ES"
   }
-  
+
+
+  const data = await queries.getProjectBySlug(url_api, localeForTranslation, slug)
   const dataMenu = await queries.getMenuItems(url_api, localeForTranslation)
 
   return {
