@@ -1,5 +1,5 @@
 .contPortfolios{
-    padding-top: 8rem;
+    margin-top: 2rem;
     box-sizing: border-box;
 }
 
@@ -80,9 +80,5 @@
 
     .contItems ul{
         margin: 0;
-    }
-
-    .contPortfolios{
-        padding-top: 6rem;
     }
 }

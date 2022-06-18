@@ -1,21 +1,25 @@
-import Layout from "./../../../components/layout/Layout";
+import Layout from "../../../components/layout/Layout";
 import styles from "./../../../styles/ProjectsArchive.module.css";
 import TextArrow from "../../../components/TextArrow";
 import Link from "next/link";
 import { useRouter } from "next/router"
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useTranslation } from "next-i18next";
 import MultimediaGallery from "../../../components/MultimediaGallery"
 import { motion } from "framer-motion";
 import { flatMap } from "lodash";
-import queries from "../../api/queries";
+import queries from "../../../api/queries";
 import { useEffect, useState } from "react";
 import PreloadImg from "../../../public/imagenes/ball-preloader.svg"
 import Image from "next/image";
 
 
-export default function Slug({locale, data, dataMenu }) {
+export default function Slug({ locale, data, dataMenu }) {
   const [pageLoad, setPageLoad] = useState(false)
   const router = useRouter()
+
+  const projects = data.projects.data.categoryProject.translation.projects.nodes
+  const categories = data.categories.data.categoriesProject.nodes
 
   function handleStart(){
     setPageLoad(true)
@@ -38,8 +42,7 @@ export default function Slug({locale, data, dataMenu }) {
 
   }, [router])
 
-  const projects = data.projects.data.categoryProject.translation.projects.nodes
-  const categories = data.categories.data.categoriesProject.nodes
+  const { t } = useTranslation()
 
   const variants = {
     show: {
@@ -58,7 +61,7 @@ export default function Slug({locale, data, dataMenu }) {
       title={"AmazeInc Studio"}
       idPage={"amaze-about-us"}
       header={"secondary"}
-      headerFixed={true}
+      headerSticky={true}
       footer={true}
       menuData={dataMenu.data}
     >
@@ -75,9 +78,9 @@ export default function Slug({locale, data, dataMenu }) {
             <div className={styles.contCategories}>
               <ul className={styles.contItemsCategories}>
                 {categories.map((cat) => (
-                  <li key={cat.customSlug.customSlug}>
-                    <Link href={`/projects/category/${cat.customSlug.customSlug}`}>
-                      <a className={router.query.slug==cat.customSlug.customSlug ? styles.catActive : ""}>
+                  <li key={cat.slug}>
+                    <Link href={`/projects/category/${cat.slug}`}>
+                      <a className={router.query.slug==cat.slug ? styles.catActive : ""}>
                         <TextArrow
                           text={cat.name}
                           arrowColor={"var(--s-color)"}
@@ -111,6 +114,7 @@ export default function Slug({locale, data, dataMenu }) {
                         title={item.title}
                         customer={item.projectFeatures.customer}
                         coverImage={item.featuredImage.node.mediaItemUrl}
+                        link={`/projects/${item.slug}`}
                       />
                     </div>
                     :
@@ -134,7 +138,7 @@ export async function getStaticPaths({ locales }) {
   // Query Categories Projects
 
   const resJson = await queries.getAllCategoriesProjects(url_api)
-  const cats = resJson.data.categoriesProject.edges
+  const cats = await resJson.data.categoriesProject.edges
   const paths = flatMap(cats.map((category) => ({ params: { slug: category.node.slug } })), (path) => locales.map(loc => ({ locale: loc, ...path })))
 
   return {
@@ -170,6 +174,7 @@ export async function getStaticProps({ locale, params }) {
       ...(await serverSideTranslations(locale, ['menu'])),
       data,
       dataMenu
-    }
+    },
+    revalidate: 1
   }
 }

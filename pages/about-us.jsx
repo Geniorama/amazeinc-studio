@@ -2,7 +2,7 @@ import styles from "./../styles/AboutUs.module.css";
 import Layout from "../components/layout/Layout";
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from "next-i18next";
-import queries from "./api/queries";
+import queries from "../api/queries";
 
 export default function AboutUs({locale, data, dataMenu}) {
   const { t } = useTranslation()
@@ -12,19 +12,23 @@ export default function AboutUs({locale, data, dataMenu}) {
       title={"AmazeInc Studio"}
       idPage={"amaze-about-us"}
       header={"secondary"}
-      headerFixed={true}
+      headerSticky={true}
       footer={true}
       translate={t}
       menuData={dataMenu.data}
     >
       <div className={styles.contAbout}>
+        {/* Arrow */}
+        <span className={styles.aboutArrow}></span>
         <div className="container">
           <div className={styles.contentAbout}>
             <h2 className={styles.titleAbout}>
               {data.data.pageBy.translation.title}
             </h2>
-            <span className={styles.aboutArrow}></span>
-            <div className={styles.textAbout} dangerouslySetInnerHTML={{ __html: innerHTML }} />
+            <div className={styles.textAbout}>
+              <div dangerouslySetInnerHTML={{ __html: innerHTML }} />
+            </div>
+            
           </div>
         </div>
       </div>

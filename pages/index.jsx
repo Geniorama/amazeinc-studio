@@ -7,7 +7,7 @@ import TextArrow from "../components/TextArrow";
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from "next-i18next";
 import { motion, AnimatePresence } from "framer-motion"
-import queries from "./api/queries";
+import queries from "../api/queries";
 
 export default function Home({locale, data, dataMenu}){
 

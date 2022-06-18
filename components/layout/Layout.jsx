@@ -4,10 +4,11 @@ import HeaderPrincipal from "../HeaderPrincipal";
 import { motion, AnimatePresence } from "framer-motion"
 import { useRouter } from "next/router";
 import PreloadPages from "../PreloadPages";
+import styles from '../../styles/Layout.module.css'
 
-export default function Layout({children, title, description, idPage, header, headerFixed, footer, menuData}){
+export default function Layout({children, title, description, idPage, header, headerFixed, footer, menuData, headerSticky}){
     const router = useRouter()
-    // console.log(translate('menu:see_our_work'))
+    
     const variants = {
         show: {
             opacity:1
@@ -20,7 +21,7 @@ export default function Layout({children, title, description, idPage, header, he
 
     return(
         <AnimatePresence exitBeforeEnter>
-        <div className="amaze-layout">
+        <div className={styles.layoutWraper} id="amaze-layout">
             {/* Preloader no carga en el home */}
             {router.asPath != "/" ? 
                 <PreloadPages theme={'light'} />
@@ -36,6 +37,7 @@ export default function Layout({children, title, description, idPage, header, he
                 fixed={headerFixed}
                 style={header}
                 menuData={menuData}
+                headerSticky={headerSticky}
             />
             
             {router.asPath != "/"?
@@ -46,17 +48,17 @@ export default function Layout({children, title, description, idPage, header, he
                 <main className="amaze-main" id={idPage} >
                     {children}
                 </main>
-            }
-            
-            
-            {footer 
-                ?
-                <Footer />
-                :
-                ""
-            }
-            
-        </div>
+                }
+                
+                
+                {footer 
+                    ?
+                    <Footer />
+                    :
+                    ""
+                }
+                
+            </div>
         </AnimatePresence>
     )
 }
