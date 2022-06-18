@@ -20,8 +20,9 @@ export default function HeaderPrincipal({fixed, style, menuData, headerSticky}){
             const menu = document.getElementById('amaze-header')
             const stickyClass = styles.headerSticky
 
-            window.addEventListener('scroll', (e) => {
-                if(window.scrollY > 250){
+            document.getElementById('amaze-layout').addEventListener('scroll', (e) => {
+                console.log("hizo scroll")
+                if(document.getElementById('amaze-layout').scrollTop > 250){
                     menu.classList.add(stickyClass)
                 } else {
                     menu.classList.remove(stickyClass)

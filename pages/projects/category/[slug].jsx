@@ -4,6 +4,7 @@ import TextArrow from "../../../components/TextArrow";
 import Link from "next/link";
 import { useRouter } from "next/router"
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useTranslation } from "next-i18next";
 import MultimediaGallery from "../../../components/MultimediaGallery"
 import { motion } from "framer-motion";
 import { flatMap } from "lodash";
@@ -13,9 +14,12 @@ import PreloadImg from "../../../public/imagenes/ball-preloader.svg"
 import Image from "next/image";
 
 
-export default function Slug({locale, data, dataMenu }) {
+export default function Slug({ locale, data, dataMenu }) {
   const [pageLoad, setPageLoad] = useState(false)
   const router = useRouter()
+
+  const projects = data.projects.data.categoryProject.translation.projects.nodes
+  const categories = data.categories.data.categoriesProject.nodes
 
   function handleStart(){
     setPageLoad(true)
@@ -38,8 +42,7 @@ export default function Slug({locale, data, dataMenu }) {
 
   }, [router])
 
-  const projects = data.projects.data.categoryProject.translation.projects.nodes
-  const categories = data.categories.data.categoriesProject.nodes
+  const { t } = useTranslation()
 
   const variants = {
     show: {
@@ -135,12 +138,12 @@ export async function getStaticPaths({ locales }) {
   // Query Categories Projects
 
   const resJson = await queries.getAllCategoriesProjects(url_api)
-  const cats = resJson.data.categoriesProject.edges
+  const cats = await resJson.data.categoriesProject.edges
   const paths = flatMap(cats.map((category) => ({ params: { slug: category.node.slug } })), (path) => locales.map(loc => ({ locale: loc, ...path })))
 
   return {
     paths,
-    fallback: false
+    fallback: true
   }
 }
 
@@ -171,6 +174,7 @@ export async function getStaticProps({ locale, params }) {
       ...(await serverSideTranslations(locale, ['menu'])),
       data,
       dataMenu
-    }
+    },
+    revalidate: 1
   }
 }

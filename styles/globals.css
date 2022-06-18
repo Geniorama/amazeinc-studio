@@ -46,7 +46,7 @@ a {
 }
 
 #amaze-home{
-  overflow-y: hidden;
+  overflow: hidden;
   max-height: 100vh;
 }
 

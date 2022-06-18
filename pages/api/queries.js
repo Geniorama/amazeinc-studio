@@ -95,9 +95,7 @@ const queries = {
                               projectFeatures {
                                 layout
                                 customer
-                                coverVideo {
-                                  mediaItemUrl
-                                }
+                                coverVideo
                               }
                             }
                           }
@@ -204,9 +202,7 @@ const queries = {
                       coverImage {
                         mediaItemUrl
                       }
-                      coverVideo {
-                        mediaItemUrl
-                      }
+                      coverVideo
                       customer
                       gallery {
                         mediaItemUrl

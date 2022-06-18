@@ -6,9 +6,10 @@ import queries from '../api/queries'
 import { flatMap } from "lodash";
 import { useState } from "react";
 
+
 export default function SingleProject({ locale, dataMenu, data }) {
-  
   const projectData = data.data.project.translation
+
   return (
     <Layout 
       header={"secondary"} 
@@ -17,13 +18,25 @@ export default function SingleProject({ locale, dataMenu, data }) {
       footer={true} 
       menuData={dataMenu.data}  
     >
-      <article>
+      <article id="project-details">
         <div className={styles.imageTop}>
-          <Image
-            src="https://www.geniorama.site/demo/amazeinc/wp-content/uploads/2022/06/1280.jpg"
-            layout="fill"
-            objectFit="cover"
-          />
+          {projectData.projectFeatures.coverVideo && projectData.projectFeatures.coverImage
+            ?
+            <video autoPlay loop preload muted className={styles.coverVideo} poster={projectData.projectFeatures.coverImage.mediaItemUrl}>
+              <source src={projectData.projectFeatures.coverVideo} type="video/mp4"/>
+              Your browser does not support the video tag.
+            </video>
+            :
+            projectData.projectFeatures.coverImage
+            ?
+            <Image 
+              src={projectData.projectFeatures.coverImage.mediaItemUrl}
+              layout="fill"
+            />
+            :
+            ""
+          }
+          
         </div>
 
         <section>
@@ -57,8 +70,6 @@ export default function SingleProject({ locale, dataMenu, data }) {
                           height={500}
                           layout="responsive"
                           objectFit="contain"
-                          srl_gallery_image="true"
-                          priority
                         />
                       </div>
                     </a>
