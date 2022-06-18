@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDownload } from "@fortawesome/free-solid-svg-icons";
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from "next-i18next";
-import queries from "./api/queries";
+import queries from "../api/queries";
 
 export default function DownloadPortfolios({locale, dataMenu, data}) {
   const portfolios = data.data.portfolios.nodes

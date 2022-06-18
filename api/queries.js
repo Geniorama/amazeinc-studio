@@ -120,9 +120,7 @@ const queries = {
                     categoriesProject(where: {language: ${locale}}) {
                     nodes {
                         name
-                        customSlug {
-                        customSlug
-                        }
+                        slug
                     }
                     }
                 }

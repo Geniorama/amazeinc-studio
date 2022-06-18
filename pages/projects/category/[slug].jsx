@@ -1,4 +1,4 @@
-import Layout from "./../../../components/layout/Layout";
+import Layout from "../../../components/layout/Layout";
 import styles from "./../../../styles/ProjectsArchive.module.css";
 import TextArrow from "../../../components/TextArrow";
 import Link from "next/link";
@@ -8,7 +8,7 @@ import { useTranslation } from "next-i18next";
 import MultimediaGallery from "../../../components/MultimediaGallery"
 import { motion } from "framer-motion";
 import { flatMap } from "lodash";
-import queries from "../../api/queries";
+import queries from "../../../api/queries";
 import { useEffect, useState } from "react";
 import PreloadImg from "../../../public/imagenes/ball-preloader.svg"
 import Image from "next/image";
@@ -78,9 +78,9 @@ export default function Slug({ locale, data, dataMenu }) {
             <div className={styles.contCategories}>
               <ul className={styles.contItemsCategories}>
                 {categories.map((cat) => (
-                  <li key={cat.customSlug.customSlug}>
-                    <Link href={`/projects/category/${cat.customSlug.customSlug}`}>
-                      <a className={router.query.slug==cat.customSlug.customSlug ? styles.catActive : ""}>
+                  <li key={cat.slug}>
+                    <Link href={`/projects/category/${cat.slug}`}>
+                      <a className={router.query.slug==cat.slug ? styles.catActive : ""}>
                         <TextArrow
                           text={cat.name}
                           arrowColor={"var(--s-color)"}
@@ -143,7 +143,7 @@ export async function getStaticPaths({ locales }) {
 
   return {
     paths,
-    fallback: true
+    fallback: false
   }
 }
 

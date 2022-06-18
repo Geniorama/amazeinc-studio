@@ -2,7 +2,7 @@ import styles from "./../styles/AboutUs.module.css";
 import Layout from "../components/layout/Layout";
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from "next-i18next";
-import queries from "./api/queries";
+import queries from "../api/queries";
 
 export default function AboutUs({locale, data, dataMenu}) {
   const { t } = useTranslation()

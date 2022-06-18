@@ -2,9 +2,8 @@ import Layout from "../../components/layout/Layout";
 import Image from "next/image";
 import styles from "../../styles/SingleProject.module.css";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import queries from '../api/queries'
-import { flatMap } from "lodash";
-import { useState } from "react";
+import queries from "../../api/queries"
+import { flatMap } from "lodash"; 
 
 
 export default function SingleProject({ locale, dataMenu, data }) {
@@ -22,7 +21,7 @@ export default function SingleProject({ locale, dataMenu, data }) {
         <div className={styles.imageTop}>
           {projectData.projectFeatures.coverVideo && projectData.projectFeatures.coverImage
             ?
-            <video autoPlay loop preload muted className={styles.coverVideo} poster={projectData.projectFeatures.coverImage.mediaItemUrl}>
+            <video autoPlay loop preload={true} muted className={styles.coverVideo} poster={projectData.projectFeatures.coverImage.mediaItemUrl}>
               <source src={projectData.projectFeatures.coverVideo} type="video/mp4"/>
               Your browser does not support the video tag.
             </video>
