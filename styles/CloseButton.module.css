@@ -1,0 +1,30 @@
+.btnClose{
+    background: none;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 45px;
+    border: none;
+    height: 45px;
+    cursor: pointer;
+}
+
+.btnCloseLine{
+    height: 1px;
+    width: 45px;
+    display: block;
+    background: white;
+    transition: .5s;
+}
+
+.btnCloseLine:first-child{
+    transform: rotate(45deg);
+}
+
+.btnCloseLine:last-child{
+    transform: rotate(-45deg);
+}
+
+.btnClose:hover .btnCloseLine{
+    transform: rotate(0);
+}

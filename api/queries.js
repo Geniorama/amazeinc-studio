@@ -191,7 +191,6 @@ const queries = {
               query: `
               query getProject {
                 project(id: "${slug}", idType: SLUG) {
-                  slug
                   projectId
                   translation(language: ${locale}) {
                     slug

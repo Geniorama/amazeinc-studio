@@ -1,19 +1,2 @@
-.layoutWraper{
-    height: 100vh;
-    overflow-x: hidden;
-    /* overflow-y: scroll; */
-}
 
-.layoutWraper::-webkit-scrollbar {
-    width: 6px;
-}
-
-.layoutWraper::-webkit-scrollbar-track {
-    background: #000;
-}
-
-.layoutWraper::-webkit-scrollbar-thumb {
-    background: #888;
-    border-radius: 20px;
-  }
   
