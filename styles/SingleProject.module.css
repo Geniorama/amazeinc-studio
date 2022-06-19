@@ -49,6 +49,30 @@
     justify-content: flex-end;
 }
 
+.imgLink{
+    display: flex;
+}
+
+.imgLink:nth-child(2n+1){
+    justify-content: flex-end;
+}
+
+.imgLink:nth-child(2n){
+    justify-content: center;
+}
+
+.imgLink:nth-child(3n){
+    justify-content: flex-start;
+}
+
+.imgItem{
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    min-height: 500px;
+    cursor: pointer;
+}
+
 .imgStyleRightCont{
     max-width: 850px;
     width: 100%;
@@ -132,4 +156,41 @@
     height: 100vh;
     object-fit: cover;
 
+}
+
+.lightbox{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    background-color: rgba(0, 0, 0, .9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.lightboxWrap{
+    width: 90%;
+    max-width: 800px;
+    height: 90vh;
+    position: relative;
+}
+
+.contButton{
+    position: absolute;
+    right: 30px;
+    top: 30px;
+}
+
+@media (max-width: 767.98px){
+    .infoProject{
+        flex-direction: column;
+    }
+
+    .infoLeft, .infoRight{
+        width: 100%;
+    }
 }

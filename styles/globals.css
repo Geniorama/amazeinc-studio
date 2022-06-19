@@ -57,3 +57,16 @@ a {
 .amaze-main{
   min-height: 60vh;
 }
+
+body::-webkit-scrollbar {
+  width: 6px;
+}
+
+body::-webkit-scrollbar-track {
+  background: #000;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 20px;
+}
