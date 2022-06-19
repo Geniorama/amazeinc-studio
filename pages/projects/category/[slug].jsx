@@ -140,7 +140,7 @@ export async function getStaticPaths({ locales }) {
   const resJson = await queries.getAllCategoriesProjects(url_api)
   const cats = await resJson.data.categoriesProject.edges
   const paths = flatMap(cats.map((category) => ({ params: { slug: category.node.slug } })), (path) => locales.map(loc => ({ locale: loc, ...path })))
-
+  
   return {
     paths,
     fallback: false

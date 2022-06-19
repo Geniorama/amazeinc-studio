@@ -55,7 +55,10 @@ export default function SingleProject({ locale, dataMenu, data }) {
       footer={true} 
       menuData={dataMenu.data}  
     >
-      <article id="project-details">
+    {projectData 
+    
+    ?
+    <article id="project-details">
         <div className={styles.imageTop}>
           {projectData.projectFeatures.coverVideo && projectData.projectFeatures.coverImage
             ?
@@ -132,6 +135,9 @@ export default function SingleProject({ locale, dataMenu, data }) {
           </div>
         </section>
       </article>
+    :
+    ""
+    }
     </Layout>
   );
 }
@@ -145,11 +151,32 @@ export async function getStaticPaths({ locales }) {
 
   const resJson = await queries.getAllProjects(url_api)
   const projects = resJson.data.projects.nodes
-  const paths = flatMap(projects.map((project) => ({ params: { slug: project.slug } })), (path) => locales.map(loc => ({ locale: loc, ...path })))
+  // const paths = flatMap(projects.map((project) => ({ params: { slug: project.slug } })), (path) => locales.map(loc => ({ locale: loc, ...path })))
+
+  let paths = []
+  projects.forEach(project => {
+    if(project.language != "null" && project.language != undefined){
+      if(project.language.locale == "en_US"){
+        paths.push({
+          params:{
+            slug: project.slug
+          },
+          locale: 'en-US'
+        })
+      } else if(project.language.locale == "es_ES"){
+        paths.push({
+          params:{
+            slug: project.slug
+          },
+          locale: 'es-ES'
+        })
+      }
+    }
+  });
 
   return {
     paths,
-    fallback: true
+    fallback: false
   }
 }
 
@@ -170,6 +197,10 @@ export async function getStaticProps({ locale, params }) {
 
   const data = await queries.getProjectBySlug(url_api, localeForTranslation, slug)
   const dataMenu = await queries.getMenuItems(url_api, localeForTranslation)
+
+  if(!data){
+    return {notFound: true}
+  }
 
   return {
     props: {

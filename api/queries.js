@@ -139,14 +139,17 @@ const queries = {
             body: JSON.stringify({
                 query: `
                 query allCategoriesProjects {
-                    categoriesProject {
+                  categoriesProject(where: {language: EN}) {
                     edges {
-                        node {
+                      node {
                         slug
                         name
+                        language {
+                          locale
                         }
+                      }
                     }
-                    }
+                  }
                 }
                 `
             })
@@ -228,6 +231,9 @@ const queries = {
               projects {
                 nodes {
                   slug
+                  language {
+                    locale
+                  }
                 }
               }
             }
