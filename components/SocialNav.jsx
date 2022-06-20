@@ -6,13 +6,13 @@ export default function SocialNav() {
   return (
     <ul className={styles.socialNav}>
       {/* Item youtube */}
-      <li className={styles.socialNavItem}>
+      {/* <li className={styles.socialNavItem}>
         <a href="" className={styles.socialNavLink}>
           <span className={styles.socialNavIcon}>
             <FontAwesomeIcon icon={faYoutube} />
           </span>
         </a>
-      </li>
+      </li> */}
 
       {/* Item Instagram */}
       <li className={styles.socialNavItem}>
@@ -25,7 +25,7 @@ export default function SocialNav() {
 
       {/* Item whatsapp */}
       <li className={styles.socialNavItem}>
-        <a href="" className={styles.socialNavLink}>
+        <a href="https://wa.link/5u46ma" className={styles.socialNavLink} target="_blank" rel="noreferrer">
         <span className={styles.socialNavIcon}>
             <FontAwesomeIcon icon={faWhatsapp}/>
           </span>

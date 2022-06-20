@@ -57,19 +57,19 @@
     justify-content: flex-end;
 }
 
-.imgLink{
+.imgLink, .videoLink{
     display: flex;
 }
 
-.imgLink:nth-child(2n+1){
+.imgLink:nth-child(2n+1), .videoLink:nth-child(2n+1){
     justify-content: flex-end;
 }
 
-.imgLink:nth-child(2n){
+.imgLink:nth-child(2n), .videoLink:nth-child(2n){
     justify-content: center;
 }
 
-.imgLink:nth-child(3n){
+.imgLink:nth-child(3n), .videoLink:nth-child(3n){
     justify-content: flex-start;
 }
 
@@ -77,86 +77,12 @@
     position: relative;
     width: 100%;
     max-width: 600px;
-    min-height: 500px;
     cursor: pointer;
+    margin-bottom: 5rem;
 }
 
-.imgStyleRightCont{
-    max-width: 850px;
+.imgGallery{
     width: 100%;
-    height: 500px;
-    position: relative;
-    text-align: right;
-    /* margin-left: auto; */
-}
-
-.imgStyleRightCont img{
-    right: 0;
-}
-
-.imgStyleLeft{
-    display: flex;
-    justify-content: flex-start;
-    margin-top: 5em;
-}
-
-.imgStyleLeftCont{
-    max-width: 850px;
-    width: 100%;
-    height: 500px;
-    position: relative;
-    text-align: left;
-    /* margin-left: auto; */
-}
-
-.imgStyleLeftCont img{
-    left: 0;
-}
-
-.imgStyleDuo{
-    width: 100%;
-    display: flex;
-    margin-top: 5em;
-}
-
-.imgStyleDuoLeft{
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.imgStyleDuoLeftCont{
-    max-width: 450px;
-    width: 100%;
-    height: 300px;
-    position: relative;
-}
-
-.imgStyleDuoRight{
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.imgStyleDuoRightCont{
-    max-width: 450px;
-    width: 100%;
-    height: 300px;
-    position: relative;
-    margin-top: 10em;
-}
-
-.imgStyleFull{
-    width: 100%;
-}
-
-.imgStyleFullCont{
-    width: 100%;
-    height: 500px;
-    position: relative;
-    margin-top: 7em;
 }
 
 .coverVideo{
@@ -191,6 +117,12 @@
     position: absolute;
     right: 30px;
     top: 30px;
+}
+
+.videoItemGallery{
+    width: 100%;
+    max-width: 600px;
+    margin-bottom: 5rem;
 }
 
 @media (max-width: 767.98px){

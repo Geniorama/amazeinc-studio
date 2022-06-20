@@ -96,6 +96,9 @@ const queries = {
                                 layout
                                 customer
                                 coverVideo
+                                featuredGif {
+                                  mediaItemUrl
+                                }
                               }
                             }
                           }
@@ -121,6 +124,7 @@ const queries = {
                     nodes {
                         name
                         slug
+                        count
                     }
                     }
                 }
@@ -208,6 +212,7 @@ const queries = {
                         mediaItemUrl
                         id
                       }
+                      galleryVideo
                     }
                     content(format: RENDERED)
                   }

@@ -47,6 +47,12 @@ export default function SingleProject({ locale, dataMenu, data }) {
     setIsOpenModal(true)
   }
 
+  let videoArr = []
+
+  if(projectData.projectFeatures.galleryVideo){
+    videoArr = (projectData.projectFeatures.galleryVideo).split(',')
+  }
+
   return (
     <Layout 
       header={"secondary"} 
@@ -121,16 +127,23 @@ export default function SingleProject({ locale, dataMenu, data }) {
                 projectData.projectFeatures.gallery.map((item) => (
                     <div key={item.id} className={styles.imgLink} onClick={() => handlerModal(item.mediaItemUrl)}>
                       <div className={styles.imgItem} data-aos="fade-up">
-                        <Image
-                          src={item.mediaItemUrl}
-                          layout="fill"
-                          objectFit="contain"
-                        />
+                        <img src={item.mediaItemUrl} alt="" className={styles.imgGallery}/>
                       </div>
                     </div>
                 ))
                 :
                 ""
+                }
+
+                {projectData.projectFeatures.galleryVideo
+                  ?
+                  videoArr.map((item) => (
+                    <div className={styles.videoLink} data-aos="fade-up">
+                      <video src={item} controls className={styles.videoItemGallery}></video>
+                    </div>
+                  ))
+                  :
+                  ""
                 }
               </div>
           </div>

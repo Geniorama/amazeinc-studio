@@ -124,6 +124,7 @@
 
     .contItemsCategories{
         margin-top: 3rem;
+        justify-content: flex-start;
     }
 }
 

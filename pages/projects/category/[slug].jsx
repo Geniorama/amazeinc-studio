@@ -69,27 +69,31 @@ export default function Slug({ locale, data, dataMenu }) {
         <div className="container">
           <div className={styles.contProjectsTop}>
             <div className={styles.contTitle}>
-              <h2>
-                OUR<br></br>WORK
+              <h2 className={styles.archiveTitle}>
+                {t("projects:our_work")}
               </h2>
             </div>
 
             {/* Menu Categories */}
             <div className={styles.contCategories}>
               <ul className={styles.contItemsCategories}>
-                {categories.map((cat) => (
-                  <li key={cat.slug}>
-                    <Link href={`/projects/category/${cat.slug}`}>
-                      <a className={router.query.slug==cat.slug ? styles.catActive : ""}>
-                        <TextArrow
-                          text={cat.name}
-                          arrowColor={"var(--s-color)"}
-                          fontFamily={"'Libre Caslon Text', serif"}
-                        />
-                      </a>
-                    </Link>
-                  </li>
-                ))}
+                {categories.map((cat) => {
+                  if(cat.count != null && cat.count >=1){
+                    return (
+                      <li key={cat.slug}>
+                        <Link href={`/projects/category/${cat.slug}`}>
+                          <a className={router.query.slug==cat.slug ? styles.catActive : ""}>
+                            <TextArrow
+                              text={cat.name}
+                              arrowColor={"var(--s-color)"}
+                              fontFamily={"'Libre Caslon Text', serif"}
+                            />
+                          </a>
+                        </Link>
+                      </li>
+                    )
+                  }
+                })}
               </ul>
             </div>
           </div>
@@ -114,6 +118,7 @@ export default function Slug({ locale, data, dataMenu }) {
                         title={item.title}
                         customer={item.projectFeatures.customer}
                         coverImage={item.featuredImage.node.mediaItemUrl}
+                        gifImage={item.projectFeatures.featuredGif ? item.projectFeatures.featuredGif.mediaItemUrl : false}
                         link={`/projects/${item.slug}`}
                       />
                     </div>
@@ -171,7 +176,7 @@ export async function getStaticProps({ locale, params }) {
 
   return {
     props: {
-      ...(await serverSideTranslations(locale, ['menu'])),
+      ...(await serverSideTranslations(locale, ['menu', 'projects'])),
       data,
       dataMenu
     }

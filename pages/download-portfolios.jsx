@@ -22,7 +22,7 @@ export default function DownloadPortfolios({locale, dataMenu, data}) {
         <div className="container">
           <div className={styles.contGeneral}>
             <div className={styles.contTitle}>
-              <h2 className={styles.title}>PORTFOLIOS</h2>
+              <h2 className={styles.title}>{t('portfolios:portfolios')}</h2>
             </div>
             <div className={styles.contItems}>
               <ul>
@@ -66,7 +66,7 @@ export async function getStaticProps({locale}){
 
   return {
     props: {
-        ...(await serverSideTranslations(locale, ['menu'])),
+        ...(await serverSideTranslations(locale, ['menu', 'portfolios'])),
         data,
         dataMenu
     }
