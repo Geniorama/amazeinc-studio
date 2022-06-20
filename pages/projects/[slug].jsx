@@ -72,6 +72,7 @@ export default function SingleProject({ locale, dataMenu, data }) {
             <Image 
               src={projectData.projectFeatures.coverImage.mediaItemUrl}
               layout="fill"
+              objectFit="cover"
               priority={true}
             />
             :
