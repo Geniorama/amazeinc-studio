@@ -167,11 +167,8 @@ export async function getStaticPaths({ locales }) {
     throw new Error('Please define locales in your next.config')
   }
 
-  const url_api = "https://www.geniorama.site/demo/amazeinc/graphql"
-
-  const resJson = await queries.getAllProjects(process.env.WORDPRESS_API_URL)
+  const resJson = await queries.getAllProjects(API_URL)
   const projects = resJson.data.projects.nodes
-  // const paths = flatMap(projects.map((project) => ({ params: { slug: project.slug } })), (path) => locales.map(loc => ({ locale: loc, ...path })))
 
   let paths = []
   projects.forEach(project => {
@@ -214,8 +211,8 @@ export async function getStaticProps({ locale, params }) {
   }
 
 
-  const data = await queries.getProjectBySlug(process.env.WORDPRESS_API_URL, localeForTranslation, slug)
-  const dataMenu = await queries.getMenuItems(process.env.WORDPRESS_API_URL, localeForTranslation)
+  const data = await queries.getProjectBySlug(API_URL, localeForTranslation, slug)
+  const dataMenu = await queries.getMenuItems(API_URL, localeForTranslation)
 
   if(!data){
     return {notFound: true}
