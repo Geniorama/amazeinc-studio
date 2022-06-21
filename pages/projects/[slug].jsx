@@ -198,31 +198,37 @@ export default function SingleProject({ locale, dataMenu, data }) {
 // }
 
 export async function getServerSideProps({ locale, params }) {
-  const {slug} = params
+  try {
+    const {slug} = params
 
-  let localeForTranslation
+    let localeForTranslation
 
-  if (locale == "en-US") {
-    localeForTranslation = "EN"
-  }
-
-  if (locale == "es-ES") {
-    localeForTranslation = "ES"
-  }
-
-
-  const data = await queries.getProjectBySlug(API_URL, localeForTranslation, slug)
-  const dataMenu = await queries.getMenuItems(API_URL, localeForTranslation)
-
-  if(!data){
-    return {notFound: true}
-  }
-
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, ["menu"])),
-      dataMenu,
-      data
+    if (locale == "en-US") {
+      localeForTranslation = "EN"
     }
+
+    if (locale == "es-ES") {
+      localeForTranslation = "ES"
+    }
+
+
+    const data = await queries.getProjectBySlug(API_URL, localeForTranslation, slug)
+    const dataMenu = await queries.getMenuItems(API_URL, localeForTranslation)
+
+    if(!data){
+      return {notFound: true}
+    }
+
+    return {
+      props: {
+        ...(await serverSideTranslations(locale, ["menu"])),
+        dataMenu,
+        data
+      }
+    }
+    
+  } catch (error) {
+    console.log(error)
+    return null
   }
 }

@@ -38,25 +38,30 @@ export default function AboutUs({locale, data, dataMenu}) {
 
 
 export async function getServerSideProps({locale}){
-  let localeForTranslation
+  try {
+    let localeForTranslation
 
-  if(locale == "en-US"){
-   localeForTranslation = "EN"
-  }
-
-  if(locale == "es-ES"){
-   localeForTranslation = "ES"
-  }
-
-
-  const data = await queries.getDataAboutUs(API_URL, localeForTranslation)
-  const dataMenu = await queries.getMenuItems(API_URL, localeForTranslation)
-
-  return {
-    props: {
-        ...(await serverSideTranslations(locale, ['menu'])),
-        data,
-        dataMenu
+    if(locale == "en-US"){
+    localeForTranslation = "EN"
     }
+
+    if(locale == "es-ES"){
+    localeForTranslation = "ES"
+    }
+
+
+    const data = await queries.getDataAboutUs(API_URL, localeForTranslation)
+    const dataMenu = await queries.getMenuItems(API_URL, localeForTranslation)
+
+    return {
+      props: {
+          ...(await serverSideTranslations(locale, ['menu'])),
+          data,
+          dataMenu
+      }
+    }
+  } catch (error) {
+    console.log(error)
+    return null
   }
 }

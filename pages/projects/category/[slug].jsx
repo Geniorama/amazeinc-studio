@@ -154,31 +154,36 @@ export default function Slug({ locale, data, dataMenu }) {
 // }
 
 export async function getServerSideProps({ locale, params }) {
-  const { slug } = params
-  let localeForTranslation
+  try {
+    const { slug } = params
+    let localeForTranslation
 
-  if (locale == "en-US") {
-    localeForTranslation = "EN"
-  }
-
-  if (locale == "es-ES") {
-    localeForTranslation = "ES"
-  }
-
-  const resCatsJson = await queries.getCategoriesProjects(API_URL, localeForTranslation)
-  const dataMenu = await queries.getMenuItems(API_URL, localeForTranslation)
-  const dataProjects = await queries.getProjectsByCategory(API_URL, localeForTranslation, slug)
-
-  const data = {
-    categories: resCatsJson,
-    projects: dataProjects
-  }
-
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, ['menu', 'projects'])),
-      data,
-      dataMenu
+    if (locale == "en-US") {
+      localeForTranslation = "EN"
     }
+
+    if (locale == "es-ES") {
+      localeForTranslation = "ES"
+    }
+
+    const resCatsJson = await queries.getCategoriesProjects(API_URL, localeForTranslation)
+    const dataMenu = await queries.getMenuItems(API_URL, localeForTranslation)
+    const dataProjects = await queries.getProjectsByCategory(API_URL, localeForTranslation, slug)
+
+    const data = {
+      categories: resCatsJson,
+      projects: dataProjects
+    }
+
+    return {
+      props: {
+        ...(await serverSideTranslations(locale, ['menu', 'projects'])),
+        data,
+        dataMenu
+      }
+    }
+  } catch (error) {
+    console.log(error)
+    return null
   }
 }

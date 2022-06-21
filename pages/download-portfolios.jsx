@@ -51,25 +51,31 @@ export default function DownloadPortfolios({locale, dataMenu, data}) {
 }
 
 export async function getServerSideProps({locale}){
-  let localeForTranslation
+  try {
+    let localeForTranslation
 
-  if (locale == "en-US") {
-    localeForTranslation = "EN"
-  }
-
-  if (locale == "es-ES") {
-    localeForTranslation = "ES"
-  }
-
-  const dataMenu = await queries.getMenuItems(API_URL, localeForTranslation)
-  const data = await queries.getAllPortfolios(API_URL, localeForTranslation)
-
-  return {
-    props: {
-        ...(await serverSideTranslations(locale, ['menu', 'portfolios'])),
-        data,
-        dataMenu
+    if (locale == "en-US") {
+      localeForTranslation = "EN"
     }
+
+    if (locale == "es-ES") {
+      localeForTranslation = "ES"
+    }
+
+    const dataMenu = await queries.getMenuItems(API_URL, localeForTranslation)
+    const data = await queries.getAllPortfolios(API_URL, localeForTranslation)
+
+    return {
+      props: {
+          ...(await serverSideTranslations(locale, ['menu', 'portfolios'])),
+          data,
+          dataMenu
+      }
+    }
+    
+  } catch (error) {
+    console.log(error)
+    return null
   }
 }
 
