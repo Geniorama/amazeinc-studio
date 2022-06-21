@@ -115,8 +115,7 @@ export async function getServerSideProps({locale}){
         ...(await serverSideTranslations(locale, ['homepage', 'menu'])),
         data,
         dataMenu
-    },
-    revalidate: 10
+    }
   }
 }
 
