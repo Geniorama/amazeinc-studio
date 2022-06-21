@@ -135,25 +135,25 @@ export default function Slug({ locale, data, dataMenu }) {
   )
 }
 
-// export async function getStaticPaths({ locales }) {
-//   if (locales == undefined) {
-//     throw new Error('Please define locales in your next.config')
-//   }
+export async function getStaticPaths({ locales }) {
+  if (locales == undefined) {
+    throw new Error('Please define locales in your next.config')
+  }
 
-//   const url_api = "https://www.geniorama.site/demo/amazeinc/graphql"
-//   // Query Categories Projects
+  const url_api = "https://www.geniorama.site/demo/amazeinc/graphql"
+  // Query Categories Projects
 
-//   const resJson = await queries.getAllCategoriesProjects(API_URL)
-//   const cats = await resJson.data.categoriesProject.edges
-//   const paths = flatMap(cats.map((category) => ({ params: { slug: category.node.slug } })), (path) => locales.map(loc => ({ locale: loc, ...path })))
+  const resJson = await queries.getAllCategoriesProjects(API_URL)
+  const cats = await resJson.data.categoriesProject.edges
+  const paths = flatMap(cats.map((category) => ({ params: { slug: category.node.slug } })), (path) => locales.map(loc => ({ locale: loc, ...path })))
   
-//   return {
-//     paths,
-//     fallback: false
-//   }
-// }
+  return {
+    paths,
+    fallback: false
+  }
+}
 
-export async function getServerSideProps({ locale, params }) {
+export async function getStaticProps({ locale, params }) {
   try {
     const { slug } = params
     let localeForTranslation

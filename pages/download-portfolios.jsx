@@ -50,7 +50,7 @@ export default function DownloadPortfolios({locale, dataMenu, data}) {
   );
 }
 
-export async function getServerSideProps({locale}){
+export async function getStaticProps({locale}){
   try {
     let localeForTranslation
 

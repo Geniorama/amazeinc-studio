@@ -37,7 +37,7 @@ export default function AboutUs({locale, data, dataMenu}) {
 }
 
 
-export async function getServerSideProps({locale}){
+export async function getStaticProps({locale}){
   try {
     let localeForTranslation
 
