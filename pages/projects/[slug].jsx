@@ -11,6 +11,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import CloseButton from "../../components/CloseButton";
 import { motion } from "framer-motion";
+import API_URL from "../../api/apiUrl";
 
 
 export default function SingleProject({ locale, dataMenu, data }) {
@@ -202,7 +203,6 @@ export async function getStaticPaths({ locales }) {
 export async function getStaticProps({ locale, params }) {
   const {slug} = params
 
-  const url_api = "https://www.geniorama.site/demo/amazeinc/graphql"
   let localeForTranslation
 
   if (locale == "en-US") {
@@ -214,8 +214,8 @@ export async function getStaticProps({ locale, params }) {
   }
 
 
-  const data = await queries.getProjectBySlug(url_api, localeForTranslation, slug)
-  const dataMenu = await queries.getMenuItems(url_api, localeForTranslation)
+  const data = await queries.getProjectBySlug(API_URL, localeForTranslation, slug)
+  const dataMenu = await queries.getMenuItems(API_URL, localeForTranslation)
 
   if(!data){
     return {notFound: true}

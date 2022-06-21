@@ -8,9 +8,10 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from "next-i18next";
 import { motion, AnimatePresence } from "framer-motion"
 import queries from "../api/queries";
+import API_URL from "../api/apiUrl";
 
 export default function Home({locale, data, dataMenu}){
-
+ 
   const videoCoverHome = data.data.page.homeFeatures.videoCover
   const imageCoverHome = data.data.page.homeFeatures.imageCover.mediaItemUrl
 
@@ -105,11 +106,9 @@ export async function getStaticProps({locale}){
   if(locale == "es-ES"){
    localeForTranslation = "ES"
   }
-
-  const url_api = "https://www.geniorama.site/demo/amazeinc/graphql"
  
-  const data = await queries.getDataHome(url_api)
-  const dataMenu = await queries.getMenuItems(url_api, localeForTranslation)
+  const data = await queries.getDataHome(API_URL)
+  const dataMenu = await queries.getMenuItems(API_URL, localeForTranslation)
 
   return {
     props: {

@@ -12,6 +12,7 @@ import queries from "../../../api/queries";
 import { useEffect, useState } from "react";
 import PreloadImg from "../../../public/imagenes/ball-preloader.svg"
 import Image from "next/image";
+import API_URL from "../../../api/apiUrl";
 
 
 export default function Slug({ locale, data, dataMenu }) {
@@ -154,7 +155,6 @@ export async function getStaticPaths({ locales }) {
 
 export async function getStaticProps({ locale, params }) {
   const { slug } = params
-  const url_api = "https://www.geniorama.site/demo/amazeinc/graphql"
   let localeForTranslation
 
   if (locale == "en-US") {
@@ -165,9 +165,9 @@ export async function getStaticProps({ locale, params }) {
     localeForTranslation = "ES"
   }
 
-  const resCatsJson = await queries.getCategoriesProjects(url_api, localeForTranslation)
-  const dataMenu = await queries.getMenuItems(url_api, localeForTranslation)
-  const dataProjects = await queries.getProjectsByCategory(url_api, localeForTranslation, slug)
+  const resCatsJson = await queries.getCategoriesProjects(API_URL, localeForTranslation)
+  const dataMenu = await queries.getMenuItems(API_URL, localeForTranslation)
+  const dataProjects = await queries.getProjectsByCategory(API_URL, localeForTranslation, slug)
 
   const data = {
     categories: resCatsJson,

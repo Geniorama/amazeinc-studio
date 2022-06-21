@@ -3,6 +3,7 @@ import Layout from "../components/layout/Layout";
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from "next-i18next";
 import queries from "../api/queries";
+import API_URL from "../api/apiUrl";
 
 export default function AboutUs({locale, data, dataMenu}) {
   const { t } = useTranslation()
@@ -37,7 +38,6 @@ export default function AboutUs({locale, data, dataMenu}) {
 
 
 export async function getStaticProps({locale}){
-  const url_api = "https://www.geniorama.site/demo/amazeinc/graphql"
   let localeForTranslation
 
   if(locale == "en-US"){
@@ -49,8 +49,8 @@ export async function getStaticProps({locale}){
   }
 
 
-  const data = await queries.getDataAboutUs(url_api, localeForTranslation)
-  const dataMenu = await queries.getMenuItems(url_api, localeForTranslation)
+  const data = await queries.getDataAboutUs(API_URL, localeForTranslation)
+  const dataMenu = await queries.getMenuItems(API_URL, localeForTranslation)
 
   return {
     props: {

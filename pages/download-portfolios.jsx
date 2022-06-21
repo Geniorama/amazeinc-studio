@@ -5,6 +5,7 @@ import { faDownload } from "@fortawesome/free-solid-svg-icons";
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from "next-i18next";
 import queries from "../api/queries";
+import API_URL from "../api/apiUrl";
 
 export default function DownloadPortfolios({locale, dataMenu, data}) {
   const portfolios = data.data.portfolios.nodes
@@ -50,7 +51,6 @@ export default function DownloadPortfolios({locale, dataMenu, data}) {
 }
 
 export async function getStaticProps({locale}){
-  const url_api = "https://www.geniorama.site/demo/amazeinc/graphql"
   let localeForTranslation
 
   if (locale == "en-US") {
@@ -61,8 +61,8 @@ export async function getStaticProps({locale}){
     localeForTranslation = "ES"
   }
 
-  const dataMenu = await queries.getMenuItems(url_api, localeForTranslation)
-  const data = await queries.getAllPortfolios(url_api, localeForTranslation)
+  const dataMenu = await queries.getMenuItems(API_URL, localeForTranslation)
+  const data = await queries.getAllPortfolios(API_URL, localeForTranslation)
 
   return {
     props: {
