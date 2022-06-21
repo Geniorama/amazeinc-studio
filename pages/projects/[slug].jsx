@@ -53,6 +53,8 @@ export default function SingleProject({ locale, dataMenu, data }) {
     videoArr = (projectData.projectFeatures.galleryVideo).split(',')
   }
 
+  let countGallery = 0
+
   return (
     <Layout 
       header={"secondary"} 
@@ -125,8 +127,8 @@ export default function SingleProject({ locale, dataMenu, data }) {
                 {projectData.projectFeatures.gallery
                 ?
                 projectData.projectFeatures.gallery.map((item) => (
-                    <div key={item.id} className={styles.imgLink} onClick={() => handlerModal(item.mediaItemUrl)}>
-                      <div className={styles.imgItem} data-aos="fade-up">
+                    <div key={item.id} className={styles.imgLink} onClick={() => handlerModal(item.mediaItemUrl)} data-aos="fade-up">
+                      <div className={styles.imgItem}>
                         <img src={item.mediaItemUrl} alt="" className={styles.imgGallery}/>
                       </div>
                     </div>
@@ -137,11 +139,14 @@ export default function SingleProject({ locale, dataMenu, data }) {
 
                 {projectData.projectFeatures.galleryVideo
                   ?
-                  videoArr.map((item) => (
-                    <div className={styles.videoLink} data-aos="fade-up">
-                      <video src={item} controls className={styles.videoItemGallery}></video>
-                    </div>
-                  ))
+                  videoArr.map((item) =>{
+                    countGallery++
+                    return(
+                      <div key={countGallery} className={styles.videoLink} data-aos="fade-up">
+                        <video src={item} controls className={styles.videoItemGallery}></video>
+                      </div>
+                    )
+                  })
                   :
                   ""
                 }
