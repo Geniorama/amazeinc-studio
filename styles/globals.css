@@ -1,6 +1,13 @@
 /* Fonts */
-@import url('http://fonts.cdnfonts.com/css/gotham');
+/* @import url('http://fonts.cdnfonts.com/css/gotham'); */
 @import url('https://fonts.googleapis.com/css2?family=Libre+Caslon+Text&display=swap');
+
+@font-face {
+  font-family: 'Gotham';
+  src: url('../public/fonts/GothamBook.ttf');
+  font-weight: 400;
+  font-style: normal;
+}
 
 html,
 body {
