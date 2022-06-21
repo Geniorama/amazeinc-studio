@@ -162,42 +162,42 @@ export default function SingleProject({ locale, dataMenu, data }) {
   );
 }
 
-export async function getStaticPaths({ locales }) {
-  if (locales == undefined) {
-    throw new Error('Please define locales in your next.config')
-  }
+// export async function getStaticPaths({ locales }) {
+//   if (locales == undefined) {
+//     throw new Error('Please define locales in your next.config')
+//   }
 
-  const resJson = await queries.getAllProjects(API_URL)
-  const projects = resJson.data.projects.nodes
+//   const resJson = await queries.getAllProjects(API_URL)
+//   const projects = resJson.data.projects.nodes
 
-  let paths = []
-  projects.forEach(project => {
-    if(project.language != "null" && project.language != undefined){
-      if(project.language.locale == "en_US"){
-        paths.push({
-          params:{
-            slug: project.slug
-          },
-          locale: 'en-US'
-        })
-      } else if(project.language.locale == "es_ES"){
-        paths.push({
-          params:{
-            slug: project.slug
-          },
-          locale: 'es-ES'
-        })
-      }
-    }
-  });
+//   let paths = []
+//   projects.forEach(project => {
+//     if(project.language != "null" && project.language != undefined){
+//       if(project.language.locale == "en_US"){
+//         paths.push({
+//           params:{
+//             slug: project.slug
+//           },
+//           locale: 'en-US'
+//         })
+//       } else if(project.language.locale == "es_ES"){
+//         paths.push({
+//           params:{
+//             slug: project.slug
+//           },
+//           locale: 'es-ES'
+//         })
+//       }
+//     }
+//   });
 
-  return {
-    paths,
-    fallback: false
-  }
-}
+//   return {
+//     paths,
+//     fallback: false
+//   }
+// }
 
-export async function getStaticProps({ locale, params }) {
+export async function getServerSideProps({ locale, params }) {
   const {slug} = params
 
   let localeForTranslation
