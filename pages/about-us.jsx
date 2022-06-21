@@ -4,9 +4,39 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from "next-i18next";
 import queries from "../api/queries";
 import API_URL from "../api/apiUrl";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
-export default function AboutUs({locale, data, dataMenu}) {
+export default function AboutUs({locale, dataMenu}) {
+  const [data, setData] = useState(null)
+  const [isLoading, setLoading] = useState(false)
   const { t } = useTranslation()
+  const router = useRouter()
+
+  let localeForTranslation
+
+  if(router.locale == "en-US"){
+  localeForTranslation = "EN"
+  }
+
+  if(router.locale == "es-ES"){
+  localeForTranslation = "ES"
+  }
+
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const res = await queries.getDataAboutUs(API_URL, localeForTranslation)
+      setData(res)
+      setLoading(false)
+    }
+
+    fetchPosts()
+  },[])
+
+  if(isLoading) return <p>Loading</p>
+  if (!data) return <p>No profile data</p>
+  
   const innerHTML = data.data.pageBy.translation.content
   return (
     <Layout
@@ -49,14 +79,11 @@ export async function getStaticProps({locale}){
     localeForTranslation = "ES"
     }
 
-
-    const data = await queries.getDataAboutUs(API_URL, localeForTranslation)
     const dataMenu = await queries.getMenuItems(API_URL, localeForTranslation)
 
     return {
       props: {
           ...(await serverSideTranslations(locale, ['menu'])),
-          data,
           dataMenu
       }
     }

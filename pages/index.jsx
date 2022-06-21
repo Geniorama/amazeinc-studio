@@ -9,13 +9,32 @@ import { useTranslation } from "next-i18next";
 import { motion, AnimatePresence } from "framer-motion"
 import queries from "../api/queries";
 import API_URL from "../api/apiUrl";
+import { useState } from "react";
+import { useEffect } from "react";
 
-export default function Home({locale, data, dataMenu}){
- 
+export default function Home({locale, dataMenu}){
+  const [data, setData] = useState(null)
+  const [isLoading, setLoading] = useState(false)
+  const { t } = useTranslation()
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const res = await queries.getDataHome(API_URL)
+      setData(res)
+      setLoading(false)
+    }
+
+    fetchPosts()
+
+  }, [])
+
+  if(isLoading) return <p>Loading</p>
+  if (!data) return <p>No profile data</p>
+
   const videoCoverHome = data.data.page.homeFeatures.videoCover
   const imageCoverHome = data.data.page.homeFeatures.imageCover.mediaItemUrl
 
-  const { t } = useTranslation()
+  
   const variants = {
     show:{
       y: 0,
@@ -107,14 +126,12 @@ export async function getStaticProps({locale}){
     if(locale == "es-ES"){
     localeForTranslation = "ES"
     }
-  
-    const data = await queries.getDataHome(API_URL)
+
     const dataMenu = await queries.getMenuItems(API_URL, localeForTranslation)
 
     return {
       props: {
           ...(await serverSideTranslations(locale, ['homepage', 'menu'])),
-          data,
           dataMenu
       }
     }
