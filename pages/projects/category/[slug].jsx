@@ -15,22 +15,41 @@ import Image from "next/image";
 import API_URL from "../../../api/apiUrl";
 
 
-export default function Slug({ locale, data, dataMenu }) {
+export default function Slug({ locale, dataMenu }) {
   const [pageLoad, setPageLoad] = useState(false)
+  const [data, setData] = useState(null)
+  const [isLoading, setLoading] = useState(false)
   const router = useRouter()
+  const { t } = useTranslation()
 
-  const projects = data.projects.data.categoryProject.translation.projects.nodes
-  const categories = data.categories.data.categoriesProject.nodes
+  let localeForTranslation
 
-  function handleStart(){
-    setPageLoad(true)
+  if(router.locale == "en-US"){
+  localeForTranslation = "EN"
   }
 
-  function handleStop(){
-    setPageLoad(false)
+  if(router.locale == "es-ES"){
+  localeForTranslation = "ES"
   }
+
+  console.log(router.query.slug)
+
 
   useEffect(() => {
+    const fetchPosts = async () => {
+      const resCatsJson = await queries.getCategoriesProjects(API_URL, localeForTranslation)
+      const dataProjects = await queries.getProjectsByCategory(API_URL, localeForTranslation, router.query.slug)
+
+      const data = {
+        categories: resCatsJson,
+        projects: dataProjects
+      }
+      setData(data)
+      setLoading(false)
+    }
+
+    fetchPosts()
+    
     router.events.on('routeChangeStart', handleStart)
     router.events.on('routeChangeComplete', handleStop)
     router.events.on('routeChangeError', handleStop)
@@ -40,10 +59,23 @@ export default function Slug({ locale, data, dataMenu }) {
       router.events.on('routeChangeComplete', handleStop)
       router.events.on('routeChangeError', handleStop)
     }
+  },[router])
 
-  }, [router])
+  function handleStart(){
+    setPageLoad(true)
+  }
 
-  const { t } = useTranslation()
+  function handleStop(){
+    setPageLoad(false)
+  }
+
+  if(isLoading) return <p>Loading</p>
+  if (!data) return <p>No profile data</p>
+  
+  const projects = data.projects.data.categoryProject.translation.projects.nodes
+  const categories = data.categories.data.categoriesProject.nodes
+
+  
 
   const variants = {
     show: {
@@ -135,25 +167,25 @@ export default function Slug({ locale, data, dataMenu }) {
   )
 }
 
-export async function getStaticPaths({ locales }) {
-  if (locales == undefined) {
-    throw new Error('Please define locales in your next.config')
-  }
+// export async function getStaticPaths({ locales }) {
+//   if (locales == undefined) {
+//     throw new Error('Please define locales in your next.config')
+//   }
 
-  const url_api = "https://www.geniorama.site/demo/amazeinc/graphql"
-  // Query Categories Projects
+//   const url_api = "https://www.geniorama.site/demo/amazeinc/graphql"
+//   // Query Categories Projects
 
-  const resJson = await queries.getAllCategoriesProjects(API_URL)
-  const cats = await resJson.data.categoriesProject.edges
-  const paths = flatMap(cats.map((category) => ({ params: { slug: category.node.slug } })), (path) => locales.map(loc => ({ locale: loc, ...path })))
+//   const resJson = await queries.getAllCategoriesProjects(API_URL)
+//   const cats = await resJson.data.categoriesProject.edges
+//   const paths = flatMap(cats.map((category) => ({ params: { slug: category.node.slug } })), (path) => locales.map(loc => ({ locale: loc, ...path })))
   
-  return {
-    paths,
-    fallback: false
-  }
-}
+//   return {
+//     paths,
+//     fallback: false
+//   }
+// }
 
-export async function getStaticProps({ locale, params }) {
+export async function getServerSideProps({ locale, params }) {
   try {
     const { slug } = params
     let localeForTranslation
@@ -166,19 +198,11 @@ export async function getStaticProps({ locale, params }) {
       localeForTranslation = "ES"
     }
 
-    const resCatsJson = await queries.getCategoriesProjects(API_URL, localeForTranslation)
     const dataMenu = await queries.getMenuItems(API_URL, localeForTranslation)
-    const dataProjects = await queries.getProjectsByCategory(API_URL, localeForTranslation, slug)
-
-    const data = {
-      categories: resCatsJson,
-      projects: dataProjects
-    }
 
     return {
       props: {
         ...(await serverSideTranslations(locale, ['menu', 'projects'])),
-        data,
         dataMenu
       }
     }
