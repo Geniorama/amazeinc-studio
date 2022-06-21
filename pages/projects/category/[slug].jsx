@@ -143,7 +143,7 @@ export async function getStaticPaths({ locales }) {
   const url_api = "https://www.geniorama.site/demo/amazeinc/graphql"
   // Query Categories Projects
 
-  const resJson = await queries.getAllCategoriesProjects(url_api)
+  const resJson = await queries.getAllCategoriesProjects(process.env.WORDPRESS_API_URL)
   const cats = await resJson.data.categoriesProject.edges
   const paths = flatMap(cats.map((category) => ({ params: { slug: category.node.slug } })), (path) => locales.map(loc => ({ locale: loc, ...path })))
   
@@ -165,9 +165,9 @@ export async function getStaticProps({ locale, params }) {
     localeForTranslation = "ES"
   }
 
-  const resCatsJson = await queries.getCategoriesProjects(API_URL, localeForTranslation)
-  const dataMenu = await queries.getMenuItems(API_URL, localeForTranslation)
-  const dataProjects = await queries.getProjectsByCategory(API_URL, localeForTranslation, slug)
+  const resCatsJson = await queries.getCategoriesProjects(process.env.WORDPRESS_API_URL, localeForTranslation)
+  const dataMenu = await queries.getMenuItems(process.env.WORDPRESS_API_URL, localeForTranslation)
+  const dataProjects = await queries.getProjectsByCategory(process.env.WORDPRESS_API_URL, localeForTranslation, slug)
 
   const data = {
     categories: resCatsJson,

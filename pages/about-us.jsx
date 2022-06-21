@@ -49,8 +49,8 @@ export async function getStaticProps({locale}){
   }
 
 
-  const data = await queries.getDataAboutUs(API_URL, localeForTranslation)
-  const dataMenu = await queries.getMenuItems(API_URL, localeForTranslation)
+  const data = await queries.getDataAboutUs(process.env.WORDPRESS_API_URL, localeForTranslation)
+  const dataMenu = await queries.getMenuItems(process.env.WORDPRESS_API_URL, localeForTranslation)
 
   return {
     props: {
