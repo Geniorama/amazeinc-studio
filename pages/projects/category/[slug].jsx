@@ -7,7 +7,6 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from "next-i18next";
 import MultimediaGallery from "../../../components/MultimediaGallery"
 import { motion } from "framer-motion";
-import { flatMap } from "lodash";
 import queries from "../../../api/queries";
 import { useEffect, useState } from "react";
 import PreloadImg from "../../../public/imagenes/ball-preloader.svg"
@@ -15,39 +14,16 @@ import Image from "next/image";
 import API_URL from "../../../api/apiUrl";
 
 
-export default function Slug({ locale, dataMenu }) {
+export default function Slug({ locale, data, dataMenu }) {
   const [pageLoad, setPageLoad] = useState(false)
-  const [data, setData] = useState(null)
-  const [isLoading, setLoading] = useState(false)
   const router = useRouter()
   const { t } = useTranslation()
 
-  let localeForTranslation
-
-  if(router.locale == "en-US"){
-  localeForTranslation = "EN"
+  if(!data){
+    return <p>Error no hay datos</p>
   }
-
-  if(router.locale == "es-ES"){
-  localeForTranslation = "ES"
-  }
-
-
 
   useEffect(() => {
-    const fetchPosts = async () => {
-      const resCatsJson = await queries.getCategoriesProjects(API_URL, localeForTranslation)
-      const dataProjects = await queries.getProjectsByCategory(API_URL, localeForTranslation, router.query.slug)
-
-      const data = {
-        categories: resCatsJson,
-        projects: dataProjects
-      }
-      setData(data)
-      setLoading(false)
-    }
-
-    fetchPosts()
     
     router.events.on('routeChangeStart', handleStart)
     router.events.on('routeChangeComplete', handleStop)
@@ -67,14 +43,9 @@ export default function Slug({ locale, dataMenu }) {
   function handleStop(){
     setPageLoad(false)
   }
-
-  if(isLoading) return <p>Loading</p>
-  if (!data) return <p>No profile data</p>
   
   const projects = data.projects.data.categoryProject.translation.projects.nodes
   const categories = data.categories.data.categoriesProject.nodes
-
-  
 
   const variants = {
     show: {
@@ -197,21 +168,23 @@ export async function getServerSideProps({  req, res, locale, params }) {
       localeForTranslation = "ES"
     }
 
+    const dataProjects = await queries.getProjectsByCategory(API_URL, localeForTranslation, slug)
     const dataMenu = await queries.getMenuItems(API_URL, localeForTranslation)
+    const dataCategories = await queries.getCategoriesProjects(API_URL, localeForTranslation)
 
-    res.setHeader(
-      'Cache-Control',
-      'public, s-maxage=10, stale-while-revalidate=59'
-    )
+    const data = {
+      projects: dataProjects,
+      categories: dataCategories
+    }
 
     return {
       props: {
         ...(await serverSideTranslations(locale, ['menu', 'projects'])),
-        dataMenu
+        dataMenu,
+        data
       }
     }
   } catch (error) {
-    console.log(error)
     return null
   }
 }

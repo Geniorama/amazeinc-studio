@@ -7,22 +7,11 @@ import API_URL from "../api/apiUrl";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
-export default function AboutUs({locale, dataMenu}) {
+export default function AboutUs({locale, dataMenu, localeForTranslation}) {
   const [data, setData] = useState(null)
   const [isLoading, setLoading] = useState(false)
   const { t } = useTranslation()
   const router = useRouter()
-
-  let localeForTranslation
-
-  if(router.locale == "en-US"){
-  localeForTranslation = "EN"
-  }
-
-  if(router.locale == "es-ES"){
-  localeForTranslation = "ES"
-  }
-
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -84,7 +73,8 @@ export async function getStaticProps({locale}){
     return {
       props: {
           ...(await serverSideTranslations(locale, ['menu'])),
-          dataMenu
+          dataMenu,
+          localeForTranslation
       }
     }
   } catch (error) {
