@@ -32,7 +32,6 @@ export default function Slug({ locale, dataMenu }) {
   localeForTranslation = "ES"
   }
 
-  console.log(router.query.slug)
 
 
   useEffect(() => {
@@ -185,7 +184,7 @@ export default function Slug({ locale, dataMenu }) {
 //   }
 // }
 
-export async function getServerSideProps({ locale, params }) {
+export async function getServerSideProps({  req, res, locale, params }) {
   try {
     const { slug } = params
     let localeForTranslation
@@ -199,6 +198,11 @@ export async function getServerSideProps({ locale, params }) {
     }
 
     const dataMenu = await queries.getMenuItems(API_URL, localeForTranslation)
+
+    res.setHeader(
+      'Cache-Control',
+      'public, s-maxage=10, stale-while-revalidate=59'
+    )
 
     return {
       props: {
