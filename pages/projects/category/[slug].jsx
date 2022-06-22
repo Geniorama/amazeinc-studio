@@ -19,10 +19,6 @@ export default function Slug({ locale, data, dataMenu }) {
   const router = useRouter()
   const { t } = useTranslation()
 
-  if(!data){
-    return <p>Error no hay datos</p>
-  }
-
   useEffect(() => {
     
     router.events.on('routeChangeStart', handleStart)
@@ -42,6 +38,10 @@ export default function Slug({ locale, data, dataMenu }) {
 
   function handleStop(){
     setPageLoad(false)
+  }
+
+  if(!data){
+    return <p>Error no hay datos</p>
   }
   
   const projects = data.projects.data.categoryProject.translation.projects.nodes
