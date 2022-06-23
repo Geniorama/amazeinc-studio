@@ -53,6 +53,7 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
+    margin-left: 30px;
 }
 
 .headerFixed{
@@ -70,7 +71,8 @@
     right: 0;
     z-index: 4;
     background: black;
-    animation: toggleSticky 1s
+    animation: toggleSticky 1s;
+    opacity: .8;
 }
 
 .headerBrand{
