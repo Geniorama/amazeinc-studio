@@ -5,7 +5,7 @@
 
 .contGeneral{
     align-items: center;
-    display: flex;
+    display: flex-start;
     flex-flow: row wrap;
 }
 
@@ -15,6 +15,7 @@
     font-size: 75px;
     text-align: left;
     display: inline-block;
+    margin: .5em 0px;
 }
 .contTitle{
     width: 50%;
@@ -42,11 +43,11 @@
 }
 
 .contIcon{
-    font-size: 28px;
+    font-size: 17px;
 }
 
 .contIcon svg{
-    width: 28px;
+    width: 17px;
     margin-right: 10px;
 }
 

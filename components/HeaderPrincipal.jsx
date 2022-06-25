@@ -132,7 +132,7 @@ export default function HeaderPrincipal({fixed, style, menuData, headerSticky}){
                         </div>
                     </div>
                     <div className={styles.headerBrand}>
-                        <Link href={"/"}>
+                        <Link href={"/projects"}>
                             <a>
                                 <Image
                                     src={Logo}
