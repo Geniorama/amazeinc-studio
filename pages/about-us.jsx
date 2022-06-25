@@ -6,10 +6,11 @@ import queries from "../api/queries";
 import API_URL from "../api/apiUrl";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import PreloadPages from "../components/PreloadPages";
 
 export default function AboutUs({locale, dataMenu, localeForTranslation}) {
   const [data, setData] = useState(null)
-  const [isLoading, setLoading] = useState(false)
+  const [isLoading, setLoading] = useState(true)
   const { t } = useTranslation()
   const router = useRouter()
 
@@ -17,13 +18,17 @@ export default function AboutUs({locale, dataMenu, localeForTranslation}) {
     const fetchPosts = async () => {
       const res = await queries.getDataAboutUs(API_URL, localeForTranslation)
       setData(res)
-      setLoading(false)
+      setTimeout(()=>{
+        setLoading(false)
+      }, 3000)
     }
 
     fetchPosts()
   },[])
 
-  if(isLoading) return <p>Loading</p>
+  if(isLoading) return (
+    <PreloadPages theme={'light'} isLoading={isLoading} />
+  )
   if (!data) return <p>No profile data</p>
   
   const innerHTML = data.data.pageBy.translation.content
@@ -78,7 +83,6 @@ export async function getStaticProps({locale}){
       }
     }
   } catch (error) {
-    console.log(error)
     return null
   }
 }

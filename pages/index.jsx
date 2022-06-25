@@ -14,7 +14,7 @@ import { useEffect } from "react";
 
 export default function Home({locale, dataMenu}){
   const [data, setData] = useState(null)
-  const [isLoading, setLoading] = useState(false)
+  const [isLoading, setLoading] = useState(true)
   const { t } = useTranslation()
 
   useEffect(() => {
@@ -28,13 +28,6 @@ export default function Home({locale, dataMenu}){
 
   }, [])
 
-  if(isLoading) return <p>Loading</p>
-  if (!data) return <p>No profile data</p>
-
-  const videoCoverHome = data.data.page.homeFeatures.videoCover
-  const imageCoverHome = data.data.page.homeFeatures.imageCover.mediaItemUrl
-
-  
   const variants = {
     show:{
       y: 0,
@@ -58,6 +51,52 @@ export default function Home({locale, dataMenu}){
       opacity: 0
     }
   }
+
+  if(isLoading) return (
+    <Layout
+      title={"AmazeInc Studio"}
+      idPage={"amaze-home"}
+      header={"principal"}
+      headerFixed={true}
+      translate={t}
+      menuData={dataMenu.data}
+    >
+
+    {/* Video */}
+    <div className={styles.contVideoHome}>
+      <div className={styles.videoCaption}>
+          <Image
+            width={200}
+            src={LogoAmazeinc}
+            alt="Logo AmazeInc"
+          />
+          <Link href={"/projects/category/all"}>
+            <motion.a key={"video-text-bottom"} className={styles.videoCaptionText}>
+                <span className={styles.videoCaptionTextTop}>
+                  {t('homepage:see_our_amazing')}
+                </span>
+                <span className={styles.videoCaptionTextBottom}>
+                  <TextArrow
+                     text={t('homepage:works')}
+                     fontSize="40px"
+                     fontFamily={"'Libre Caslon Text', serif"}
+                     arrowColor="white"
+                  />
+                </span>
+            </motion.a>
+          </Link>
+
+          <motion.div key={"layer-home"} className={styles.layerHome}></motion.div>
+      </div>
+    </div>
+    </Layout>
+  )
+
+  
+  if (!data) return <p>No profile data</p>
+
+  const videoCoverHome = data.data.page.homeFeatures.videoCover
+  const imageCoverHome = data.data.page.homeFeatures.imageCover.mediaItemUrl
 
   return(
     <Layout
@@ -94,7 +133,6 @@ export default function Home({locale, dataMenu}){
           </Link>
 
           <motion.div key={"layer-home"} className={styles.layerHome} initial="show" animate={'hide'} variants={variants} transition={{duration: 2, ease: "easeInOut"}}></motion.div>
-          
       </div>
 
       {videoCoverHome
