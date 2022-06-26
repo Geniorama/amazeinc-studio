@@ -6,9 +6,10 @@ import queries from "../api/queries";
 import API_URL from "../api/apiUrl";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { localeCovert } from "../helpers";
 import PreloadPages from "../components/PreloadPages";
 
-export default function AboutUs({locale, dataMenu, localeForTranslation}) {
+export default function AboutUs({dataMenu}) {
   const [data, setData] = useState(null)
   const [isLoading, setLoading] = useState(true)
   const { t } = useTranslation()
@@ -16,24 +17,17 @@ export default function AboutUs({locale, dataMenu, localeForTranslation}) {
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const res = await queries.getDataAboutUs(API_URL, localeForTranslation)
+      const res = await queries.getDataAboutUs(API_URL, localeCovert(router.locale))
       setData(res)
-      setTimeout(()=>{
-        setLoading(false)
-      }, 3000)
+      setLoading(false)
     }
-
     fetchPosts()
   },[])
-
-  if(isLoading) return (
-    <PreloadPages theme={'light'} isLoading={isLoading} />
-  )
-  if (!data) return <p>No profile data</p>
   
-  const innerHTML = data.data.pageBy.translation.content
   return (
-    <Layout
+    <>
+      <PreloadPages theme={"dark"} trigger={data}/>
+      <Layout
       title={"AmazeInc Studio"}
       idPage={"amaze-about-us"}
       header={"secondary"}
@@ -42,6 +36,9 @@ export default function AboutUs({locale, dataMenu, localeForTranslation}) {
       translate={t}
       menuData={dataMenu.data}
     >
+
+      {data
+      ?
       <div className={styles.contAbout}>
         {/* Arrow */}
         {/* <span className={styles.aboutArrow}></span> */}
@@ -51,35 +48,29 @@ export default function AboutUs({locale, dataMenu, localeForTranslation}) {
               {data.data.pageBy.translation.title}
             </h2>
             <div className={styles.textAbout}>
-              <div dangerouslySetInnerHTML={{ __html: innerHTML }} />
+              <div dangerouslySetInnerHTML={{ __html: data.data.pageBy.translation.content }} />
             </div>
           </div>
         </div>
       </div>
+      :
+      <p>Data not found</p>
+      }
+      
     </Layout>
+    </>
   );
 }
 
 
 export async function getStaticProps({locale}){
   try {
-    let localeForTranslation
-
-    if(locale == "en-US"){
-    localeForTranslation = "EN"
-    }
-
-    if(locale == "es-ES"){
-    localeForTranslation = "ES"
-    }
-
-    const dataMenu = await queries.getMenuItems(API_URL, localeForTranslation)
+    const dataMenu = await queries.getMenuItems(API_URL, localeCovert(locale))
 
     return {
       props: {
           ...(await serverSideTranslations(locale, ['menu'])),
-          dataMenu,
-          localeForTranslation
+          dataMenu
       }
     }
   } catch (error) {

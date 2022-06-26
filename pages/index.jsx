@@ -11,6 +11,7 @@ import queries from "../api/queries";
 import API_URL from "../api/apiUrl";
 import { useState } from "react";
 import { useEffect } from "react";
+import { localeCovert } from "../helpers";
 
 export default function Home({locale, dataMenu}){
   const [data, setData] = useState(null)
@@ -117,25 +118,13 @@ export default function Home({locale, dataMenu}){
 
 export async function getStaticProps({locale}){
   try {
-    let localeForTranslation
-
-    if(locale == "en-US"){
-    localeForTranslation = "EN"
-    }
-
-    if(locale == "es-ES"){
-    localeForTranslation = "ES"
-    }
-
-    const dataMenu = await queries.getMenuItems(API_URL, localeForTranslation)
-
+    const dataMenu = await queries.getMenuItems(API_URL, localeCovert(locale))
     return {
       props: {
           ...(await serverSideTranslations(locale, ['homepage', 'menu'])),
           dataMenu
       }
     }
-    
   } catch (error) {
     console.log(error)
     return null

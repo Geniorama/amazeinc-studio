@@ -3,7 +3,6 @@ import Image from "next/image";
 import styles from "../../styles/SingleProject.module.css";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import queries from "../../api/queries"
-import { flatMap, initial } from "lodash"; 
 import { useRouter } from "next/router";
 import AOS from "aos";
 import 'aos/dist/aos.css'
@@ -15,22 +14,32 @@ import API_URL from "../../api/apiUrl";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUpRightAndDownLeftFromCenter, faAngleDown} from "@fortawesome/free-solid-svg-icons";
 import ButtonBack from "../../components/ButtonBack";
+import { localeCovert } from "../../helpers";
 
 
-export default function SingleProject({ locale, dataMenu, data }) {
+export default function SingleProject({ dataMenu }) {
   const [imageUrl, setImageUrl] = useState("https://www.geniorama.site/demo/amazeinc/wp-content/uploads/2022/06/3456-scaled.jpg")
   const [isOpenModal, setIsOpenModal] = useState(false)
-  const projectData = data.data.project.translation
+  const [isLoading, setLoading] = useState(true)
+  const [data, setData] = useState(null)
+  
   const router = useRouter()
 
   useEffect(()=>{
+    const fetchPosts = async () => {
+      const projects = await queries.getProjectBySlug(API_URL, localeCovert(router.locale) , router.query.slug)
+      setData(projects)
+      setLoading(false)
+    }
+
+    fetchPosts()
     AOS.init({
       duration: 1000
     })
   })
 
-  if(router.isFallback){
-    <h1 style={{color: "white"}}>Cargando</h1>
+  if(!data){
+    return <p>Data not found</p>
   }
 
   const variantsModal = {
@@ -46,11 +55,11 @@ export default function SingleProject({ locale, dataMenu, data }) {
   }
 
   function handlerModal(image){
-    console.log(image)
     setImageUrl(image)
     setIsOpenModal(true)
   }
 
+  const projectData = data.data.project.translation
   let videoArr = []
 
   if(projectData.projectFeatures.galleryVideo){
@@ -181,68 +190,51 @@ export default function SingleProject({ locale, dataMenu, data }) {
   );
 }
 
-export async function getStaticPaths({ locales }) {
-  if (locales == undefined) {
-    throw new Error('Please define locales in your next.config')
-  }
+// export async function getStaticPaths({ locales }) {
+//   if (locales == undefined) {
+//     throw new Error('Please define locales in your next.config')
+//   }
 
-  const resJson = await queries.getAllProjects(API_URL)
-  const projects = resJson.data.projects.nodes
+//   const resJson = await queries.getAllProjects(API_URL)
+//   const projects = resJson.data.projects.nodes
 
-  let paths = []
-  projects.forEach(project => {
-    if(project.language != "null" && project.language != undefined){
-      if(project.language.locale == "en_US"){
-        paths.push({
-          params:{
-            slug: project.slug
-          },
-          locale: 'en-US'
-        })
-      } else if(project.language.locale == "es_ES"){
-        paths.push({
-          params:{
-            slug: project.slug
-          },
-          locale: 'es-ES'
-        })
-      }
-    }
-  });
+//   let paths = []
+//   projects.forEach(project => {
+//     if(project.language != "null" && project.language != undefined){
+//       if(project.language.locale == "en_US"){
+//         paths.push({
+//           params:{
+//             slug: project.slug
+//           },
+//           locale: 'en-US'
+//         })
+//       } else if(project.language.locale == "es_ES"){
+//         paths.push({
+//           params:{
+//             slug: project.slug
+//           },
+//           locale: 'es-ES'
+//         })
+//       }
+//     }
+//   });
 
-  return {
-    paths,
-    fallback: false
-  }
-}
+//   return {
+//     paths,
+//     fallback: false
+//   }
+// }
 
-export async function getStaticProps({ locale, params }) {
+export async function getServerSideProps({ locale }) {
   try {
-    const {slug} = params
 
-    let localeForTranslation
-
-    if (locale == "en-US") {
-      localeForTranslation = "EN"
-    }
-
-    if (locale == "es-ES") {
-      localeForTranslation = "ES"
-    }
-
-
-    const data = await queries.getProjectBySlug(API_URL, localeForTranslation, slug)
-    const dataMenu = await queries.getMenuItems(API_URL, localeForTranslation)
-
-    if(!data){
-      return {notFound: true}
-    }
+    // const data = await queries.getProjectBySlug(API_URL, localeCovert(locale) , slug)
+    const dataMenu = await queries.getMenuItems(API_URL, localeCovert(locale))
 
     return {
       props: {
         ...(await serverSideTranslations(locale, ["menu"])),
-        dataMenu,
-        data
+        dataMenu
       }
     }
     

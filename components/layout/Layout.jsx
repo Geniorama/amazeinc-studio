@@ -23,9 +23,6 @@ export default function Layout({children, title, description, idPage, header, he
         <AnimatePresence exitBeforeEnter>
         <div className={styles.layoutWraper} id="amaze-layout">
             {/* Preloader no carga en el home */}
-            {router.asPath != "/" ? 
-                <PreloadPages theme={'light'} />
-            : ""}
             <div id="amaze-ancle-top"></div>
             <Head>
                 <title>{title}</title>

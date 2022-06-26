@@ -6,15 +6,17 @@ import { useRouter } from "next/router"
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from "next-i18next";
 import MultimediaGallery from "../../../components/MultimediaGallery"
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import queries from "../../../api/queries";
 import { useEffect, useState } from "react";
 import PreloadImg from "../../../public/imagenes/ball-preloader.svg"
 import Image from "next/image";
 import API_URL from "../../../api/apiUrl";
+import { localeCovert } from "../../../helpers";
+import PreloadPages from "../../../components/PreloadPages";
 
 
-export default function Slug({ locale, dataMenu }) {
+export default function Slug({ dataMenu }) {
   const [data, setData] = useState(null)
   const [pageLoad, setPageLoad] = useState(false)
   const [isLoading, setLoading] = useState(true)
@@ -23,8 +25,8 @@ export default function Slug({ locale, dataMenu }) {
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const categories = await queries.getCategoriesProjects(API_URL, router.locale)
-      const projects = await queries.getProjectsByCategory(API_URL, router.locale, router.query.slug)
+      const categories = await queries.getCategoriesProjects(API_URL, localeCovert(router.locale))
+      const projects = await queries.getProjectsByCategory(API_URL, localeCovert(router.locale), router.query.slug)
       setData({
         categories: categories,
         projects: projects
@@ -53,14 +55,6 @@ export default function Slug({ locale, dataMenu }) {
     setPageLoad(false)
   }
 
-  if(!data){
-    return <p>Error no hay datos</p>
-  }
-  
-  const projects = data.projects.data.categoryProject.translation.projects.nodes
-  const categories = data.categories.data.categoriesProject.nodes
-  console.log(data)
-
   const variants = {
     show: {
       opacity: 1,
@@ -69,65 +63,74 @@ export default function Slug({ locale, dataMenu }) {
 
     hide: {
       opacity: 0,
-      y: 20
+      y: 50
     }
   }
 
   return (
-    <Layout
-      title={"AmazeInc Studio"}
-      idPage={"amaze-about-us"}
-      header={"secondary"}
-      headerSticky={true}
-      footer={true}
-      menuData={dataMenu.data}
-    >
-      <div className={styles.contProjectArchive}>
-        <div className="container">
-          <div className={styles.contProjectsTop}>
-            <div className={styles.contTitle}>
-              <h2 className={styles.archiveTitle}>
-                {t("projects:our_work")}
-              </h2>
+    <>
+      <PreloadPages theme={"dark"} trigger={data}/>
+      <Layout
+        title={"AmazeInc Studio"}
+        idPage={"amaze-about-us"}
+        header={"secondary"}
+        headerSticky={true}
+        footer={true}
+        menuData={dataMenu.data}
+      >
+        <div className={styles.contProjectArchive}>
+          <div className="container">
+            <div className={styles.contProjectsTop}>
+              <div className={styles.contTitle}>
+                <h2 className={styles.archiveTitle}>
+                  {t("projects:our_work")}
+                </h2>
+              </div>
+              {/* Menu Categories */}
+              {data
+                ?
+                <div className={styles.contCategories}>
+                  <ul className={styles.contItemsCategories}>
+                    {data.categories.data.categoriesProject.nodes.map((cat) => {
+                      if(cat.count != null && cat.count >=1){
+                        return (
+                          <li key={cat.slug}>
+                            <Link href={`/projects/category/${cat.slug}`}>
+                              <a className={router.query.slug==cat.slug ? styles.catActive : ""}>
+                                <TextArrow
+                                  text={cat.name}
+                                  arrowColor={"var(--s-color)"}
+                                  fontFamily={"'Libre Caslon Text', serif"}
+                                />
+                              </a>
+                            </Link>
+                          </li>
+                        )
+                      }
+                    })}
+                  </ul>
+                </div>
+                :
+                ""
+              }
             </div>
 
-            {/* Menu Categories */}
-            <div className={styles.contCategories}>
-              <ul className={styles.contItemsCategories}>
-                {categories.map((cat) => {
-                  if(cat.count != null && cat.count >=1){
-                    return (
-                      <li key={cat.slug}>
-                        <Link href={`/projects/category/${cat.slug}`}>
-                          <a className={router.query.slug==cat.slug ? styles.catActive : ""}>
-                            <TextArrow
-                              text={cat.name}
-                              arrowColor={"var(--s-color)"}
-                              fontFamily={"'Libre Caslon Text', serif"}
-                            />
-                          </a>
-                        </Link>
-                      </li>
-                    )
-                  }
-                })}
-              </ul>
-            </div>
-          </div>
+            <div>
 
-          <div>
-            {pageLoad 
+              {data
+              ?
+              pageLoad
               ?
               <motion.div className={styles.contPreload} style={{textAlign: "center", padding: "3rem"}} initial={'show'} animate={!pageLoad ? 'hide' : 'show'} variants={variants}>
-                <Image
-                  src={PreloadImg}
-                  width={300}
-                  height={300}
-                />
+                  <Image
+                    src={PreloadImg}
+                    width={300}
+                    height={300}
+                  />
               </motion.div>
               :
               <motion.div key={"grid-projects"} className={styles.gridProjects} initial={'hide'} animate={!isLoading ? 'show' : 'hide'} variants={variants} transition={{delay: 1, duration: 1}}>
-                  {projects.map((item) =>(
+                  {data.projects.data.categoryProject.translation.projects.nodes.map((item) =>(
                     item.featuredImage
                     ?
                     <div key={item.projectId} className={`${styles.gridProjectsItem} ${item.projectFeatures.layout==2 ? styles.gridProjectsItemFeat : item.projectFeatures.layout==3 ? styles.gridProjectsItemVertical : ""} `}>
@@ -143,54 +146,20 @@ export default function Slug({ locale, dataMenu }) {
                     ""
                   ))}
               </motion.div>
-            }
-          </div>          
+              :
+              ""
+              }
+            </div>          
+          </div>
         </div>
-      </div>
-    </Layout>
+      </Layout>
+    </>
   )
 }
 
-// export async function getStaticPaths({ locales }) {
-//   if (locales == undefined) {
-//     throw new Error('Please define locales in your next.config')
-//   }
-
-//   const url_api = "https://www.geniorama.site/demo/amazeinc/graphql"
-//   // Query Categories Projects
-
-//   const resJson = await queries.getAllCategoriesProjects(API_URL)
-//   const cats = await resJson.data.categoriesProject.edges
-//   const paths = flatMap(cats.map((category) => ({ params: { slug: category.node.slug } })), (path) => locales.map(loc => ({ locale: loc, ...path })))
-  
-//   return {
-//     paths,
-//     fallback: false
-//   }
-// }
-
-export async function getServerSideProps({  req, res, locale, params }) {
+export async function getServerSideProps({ locale }) {
   try {
-    const { slug } = params
-    let localeForTranslation
-
-    if (locale == "en-US") {
-      localeForTranslation = "EN"
-    }
-
-    if (locale == "es-ES") {
-      localeForTranslation = "ES"
-    }
-
-    // const dataProjects = await queries.getProjectsByCategory(API_URL, localeForTranslation, slug)
-    const dataMenu = await queries.getMenuItems(API_URL, localeForTranslation)
-    // const dataCategories = await queries.getCategoriesProjects(API_URL, localeForTranslation)
-
-    // const data = {
-    //   projects: dataProjects,
-    //   categories: dataCategories
-    // }
-
+    const dataMenu = await queries.getMenuItems(API_URL, localeCovert(locale))
     return {
       props: {
         ...(await serverSideTranslations(locale, ['menu', 'projects'])),
