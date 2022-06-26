@@ -14,12 +14,25 @@ import Image from "next/image";
 import API_URL from "../../../api/apiUrl";
 
 
-export default function Slug({ locale, data, dataMenu }) {
+export default function Slug({ locale, dataMenu }) {
+  const [data, setData] = useState(null)
   const [pageLoad, setPageLoad] = useState(false)
+  const [isLoading, setLoading] = useState(true)
   const router = useRouter()
   const { t } = useTranslation()
 
   useEffect(() => {
+    const fetchPosts = async () => {
+      const categories = await queries.getCategoriesProjects(API_URL, router.locale)
+      const projects = await queries.getProjectsByCategory(API_URL, router.locale, router.query.slug)
+      setData({
+        categories: categories,
+        projects: projects
+      })
+      setLoading(false)
+    }
+
+    fetchPosts()
     
     router.events.on('routeChangeStart', handleStart)
     router.events.on('routeChangeComplete', handleStop)
@@ -46,6 +59,7 @@ export default function Slug({ locale, data, dataMenu }) {
   
   const projects = data.projects.data.categoryProject.translation.projects.nodes
   const categories = data.categories.data.categoriesProject.nodes
+  console.log(data)
 
   const variants = {
     show: {
@@ -112,7 +126,7 @@ export default function Slug({ locale, data, dataMenu }) {
                 />
               </motion.div>
               :
-              <motion.div key={"grid-projects"} className={styles.gridProjects} initial={'hide'} animate={'show'} variants={variants} transition={{delay: 0, duration: 1}}>
+              <motion.div key={"grid-projects"} className={styles.gridProjects} initial={'hide'} animate={!isLoading ? 'show' : 'hide'} variants={variants} transition={{delay: 1, duration: 1}}>
                   {projects.map((item) =>(
                     item.featuredImage
                     ?
@@ -168,20 +182,19 @@ export async function getServerSideProps({  req, res, locale, params }) {
       localeForTranslation = "ES"
     }
 
-    const dataProjects = await queries.getProjectsByCategory(API_URL, localeForTranslation, slug)
+    // const dataProjects = await queries.getProjectsByCategory(API_URL, localeForTranslation, slug)
     const dataMenu = await queries.getMenuItems(API_URL, localeForTranslation)
-    const dataCategories = await queries.getCategoriesProjects(API_URL, localeForTranslation)
+    // const dataCategories = await queries.getCategoriesProjects(API_URL, localeForTranslation)
 
-    const data = {
-      projects: dataProjects,
-      categories: dataCategories
-    }
+    // const data = {
+    //   projects: dataProjects,
+    //   categories: dataCategories
+    // }
 
     return {
       props: {
         ...(await serverSideTranslations(locale, ['menu', 'projects'])),
-        dataMenu,
-        data
+        dataMenu
       }
     }
   } catch (error) {

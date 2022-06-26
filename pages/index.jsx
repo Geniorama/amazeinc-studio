@@ -52,47 +52,9 @@ export default function Home({locale, dataMenu}){
     }
   }
 
-  if(isLoading) return (
-    <Layout
-      title={"AmazeInc Studio"}
-      idPage={"amaze-home"}
-      header={"principal"}
-      headerFixed={true}
-      translate={t}
-      menuData={dataMenu.data}
-    >
-
-    {/* Video */}
-    <div className={styles.contVideoHome}>
-      <div className={styles.videoCaption}>
-          <Image
-            width={200}
-            src={LogoAmazeinc}
-            alt="Logo AmazeInc"
-          />
-          <Link href={"/projects/category/all"}>
-            <motion.a key={"video-text-bottom"} className={styles.videoCaptionText}>
-                <span className={styles.videoCaptionTextTop}>
-                  {t('homepage:see_our_amazing')}
-                </span>
-                <span className={styles.videoCaptionTextBottom}>
-                  <TextArrow
-                     text={t('homepage:works')}
-                     fontSize="40px"
-                     fontFamily={"'Libre Caslon Text', serif"}
-                     arrowColor="white"
-                  />
-                </span>
-            </motion.a>
-          </Link>
-
-          <motion.div key={"layer-home"} className={styles.layerHome}></motion.div>
-      </div>
-    </div>
-    </Layout>
-  )
-
   
+  
+  if (isLoading) return <p>Cargando</p>
   if (!data) return <p>No profile data</p>
 
   const videoCoverHome = data.data.page.homeFeatures.videoCover

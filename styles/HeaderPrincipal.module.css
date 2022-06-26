@@ -70,9 +70,8 @@
     left: 0;
     right: 0;
     z-index: 4;
-    background: black;
+    background: rgba(0, 0, 0, .8);
     animation: toggleSticky 1s;
-    opacity: .8;
 }
 
 .headerBrand{

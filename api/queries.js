@@ -73,6 +73,15 @@ const queries = {
     },
 
     getProjectsByCategory: async function (url_api, locale, slug) {
+        let localeForTranslation
+
+        if (locale == "en-US") {
+          localeForTranslation = "EN"
+        }
+
+        if (locale == "es-ES") {
+          localeForTranslation = "ES"
+        }
         const res = await fetch(url_api, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -81,7 +90,7 @@ const queries = {
                     query projectsByCategory {
                       categoryProject(id: "${slug}", idType: SLUG) {
                         name
-                        translation(language: ${locale}) {
+                        translation(language: ${localeForTranslation}) {
                           projects {
                             nodes {
                               slug
@@ -114,13 +123,22 @@ const queries = {
     },
 
     getCategoriesProjects: async function(url_api, locale){
+        let localeForTranslation
+
+        if (locale == "en-US") {
+          localeForTranslation = "EN"
+        }
+
+        if (locale == "es-ES") {
+          localeForTranslation = "ES"
+        }
         const res = await fetch(url_api, {
             method: "POST",
             headers: { "Content-type": "application/json" },
             body: JSON.stringify({
                 query: `
                 query getAllCategoriesProjects {
-                    categoriesProject(where: {language: ${locale}}) {
+                    categoriesProject(where: {language: ${localeForTranslation}}) {
                     nodes {
                         name
                         slug

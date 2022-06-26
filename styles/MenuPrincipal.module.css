@@ -49,8 +49,8 @@
 .btnCloseMenu{
     background: none;
     position: absolute;
-    right: 0;
-    top: 0;
+    right: 2rem;
+    top: 2rem;
     width: 45px;
     border: none;
     height: 45px;

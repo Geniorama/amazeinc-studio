@@ -85,6 +85,12 @@
     width: 100%;
 }
 
+.imgWrap{
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
 .coverVideo{
     width: 100vw;
     height: 100vh;
@@ -108,21 +114,92 @@
 
 .lightboxWrap{
     width: 90%;
-    max-width: 800px;
+    max-width: 1200px;
     height: 90vh;
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .contButton{
     position: absolute;
-    right: 30px;
-    top: 30px;
+    right: -50px;
+    top: -50px;
 }
 
 .videoItemGallery{
     width: 100%;
     max-width: 600px;
     margin-bottom: 5rem;
+}
+
+.iconExpand{
+    font-size: 17px;
+    color: white;
+    margin-left: 20px;
+    opacity: 0;
+    position: absolute;
+    transition: .3s;
+    right: -20px;
+    top: -20px;
+}
+
+.iconExpand svg{
+    width: 17px;
+}
+
+.imgWrap:hover .iconExpand{
+    opacity: 1;
+}
+
+.imgLightbox{
+    width: 100%;
+    max-height: 80vh;
+}
+
+.lightboxContent{
+    position: relative;
+}
+
+.moreContent{
+    font-size: 15px;
+    color: white;
+    position: absolute;
+    z-index: 3;
+    left: 0;
+    bottom: 0;
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 1rem 2rem;
+    opacity: 0;
+    transform: translateY(-50px);
+    transition: 1s;
+    
+}
+
+.moreContent svg{
+    width: 15px;
+}
+
+.moreContentText{
+    font-family: 'Gotham', sans-serif;
+    line-height: 1em;
+    margin: 0;
+    margin-bottom: 5px;
+    font-size: 15px;
+}
+
+.imageTop:hover .moreContent{
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@media (min-width: 1400px){
+    .infoLeft{
+        margin-bottom: -400px;
+    }
 }
 
 @media (max-width: 991.98px){
@@ -132,5 +209,9 @@
 
     .infoLeft, .infoRight{
         width: 100%;
+    }
+
+    .contButton{
+        right: 0;
     }
 }

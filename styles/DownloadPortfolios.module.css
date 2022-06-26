@@ -4,8 +4,8 @@
 }
 
 .contGeneral{
-    align-items: center;
-    display: flex-start;
+    align-items: flex-start;
+    display: flex;
     flex-flow: row wrap;
 }
 

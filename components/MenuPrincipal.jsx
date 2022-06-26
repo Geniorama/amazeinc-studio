@@ -8,16 +8,16 @@ export default function MenuPrincipal({ handler, menuData }) {
   const menuItems = menuData.mainMenus.nodes
   return (
     <div className={styles.menuPrincipal}>
+      <button className={styles.btnCloseMenu} onClick={() => handler(false)} role={"button"}>
+        <span className={styles.btnCloseMenuLine}></span>
+        <span className={styles.btnCloseMenuLine}></span>
+      </button>
       <div className="container" style={{position: 'relative'}}>
-        <button className={styles.btnCloseMenu} onClick={() => handler(false)} role={"button"}>
-          <span className={styles.btnCloseMenuLine}></span>
-          <span className={styles.btnCloseMenuLine}></span>
-        </button>
         <ul className={styles.menuPrincipalList}>
           {menuItems.map((item) => (
               <li key={item.main_menuId} className={styles.menuPrincipalItem}>
                 <Link href={item.mainMenuFeatures.mainSlug} scroll={false}>
-                  <a className={`${styles.menuPrincipalLink} ${router.pathname == item.mainMenuFeatures.mainSlug ? styles.active : ""}`}>
+                  <a className={`${styles.menuPrincipalLink} ${router.pathname == item.mainMenuFeatures.mainSlug ? styles.active : ""} ${router.pathname.includes('/projects') && item.mainMenuFeatures.mainSlug.includes('/projects') ? styles.active : ""}`}>
                     <div className={styles.menuPrincipalIndicator}>
                       <svg
                         width="30"

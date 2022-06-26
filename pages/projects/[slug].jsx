@@ -12,6 +12,9 @@ import { useState } from "react";
 import CloseButton from "../../components/CloseButton";
 import { motion } from "framer-motion";
 import API_URL from "../../api/apiUrl";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUpRightAndDownLeftFromCenter, faAngleDown} from "@fortawesome/free-solid-svg-icons";
+import ButtonBack from "../../components/ButtonBack";
 
 
 export default function SingleProject({ locale, dataMenu, data }) {
@@ -87,36 +90,45 @@ export default function SingleProject({ locale, dataMenu, data }) {
             :
             ""
           }
-          
+          <span className={styles.moreContent}>
+              <p className={styles.moreContentText}>
+                {router.locale == "en-US"
+                  ?
+                  "SEE MORE"
+                  :
+                  "VER MÁS"
+                }
+              </p>
+              <FontAwesomeIcon icon={faAngleDown} />
+          </span>
         </div>
 
         <section>
           <div className="container">
             {/* Lightbox */}
             <motion.div className={styles.lightbox} initial={"hide"} animate={isOpenModal ? 'show':'hide'} variants={variantsModal} transition={{duration:1}}>
-                <div className={styles.contButton} onClick={() => setIsOpenModal(false)}>
-                <CloseButton />
-                </div>
                 <div className={styles.lightboxWrap}>
-                  <Image
-                    src={imageUrl}
-                    layout={"fill"}
-                    objectFit="contain"
-                  />
+                  <div className={styles.lightboxContent}>
+                    <div className={styles.contButton} onClick={() => setIsOpenModal(false)}>
+                      <CloseButton />
+                    </div>
+                    <img src={imageUrl} alt="" className={styles.imgLightbox} />
+                  </div>
                 </div>
             </motion.div>
             <div className={styles.infoProject}>
-              <div className={styles.infoLeft}>
+              <div className={styles.infoLeft} data-aos="fade-right">
                 <span className={styles.companyName}>{projectData.projectFeatures.customer}</span>
                 <span className={styles.projectName}>{projectData.title}</span>
-              </div>
-              <div className={styles.infoRight}>
                 {projectData.content
                   ?
                   <div className={styles.descProject} dangerouslySetInnerHTML={{__html: projectData.content}}/>
                   :
                   ""
                 }
+              </div>
+              <div className={styles.infoRight}>
+                {/* Not found */}
               </div>
             </div>
           </div>
@@ -128,9 +140,14 @@ export default function SingleProject({ locale, dataMenu, data }) {
                 {projectData.projectFeatures.gallery
                 ?
                 projectData.projectFeatures.gallery.map((item) => (
-                    <div key={item.id} className={styles.imgLink} onClick={() => handlerModal(item.mediaItemUrl)} data-aos="fade-up">
-                      <div className={styles.imgItem}>
-                        <img src={item.mediaItemUrl} alt="" className={styles.imgGallery}/>
+                    <div key={item.id} className={styles.imgLink} data-aos="fade-up">
+                      <div className={styles.imgWrap} onClick={() => handlerModal(item.mediaItemUrl)} >
+                        <div className={styles.imgItem}>
+                          <img src={item.mediaItemUrl} alt="" className={styles.imgGallery}/>
+                        </div>
+                        <div className={styles.iconExpand}>
+                          <FontAwesomeIcon icon={faUpRightAndDownLeftFromCenter} size={"sm"} />
+                        </div>
                       </div>
                     </div>
                 ))
@@ -158,6 +175,8 @@ export default function SingleProject({ locale, dataMenu, data }) {
     :
     ""
     }
+
+      <ButtonBack />
     </Layout>
   );
 }
