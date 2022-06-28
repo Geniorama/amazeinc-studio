@@ -13,7 +13,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { localeCovert } from "../helpers";
 
-export default function Home({locale, dataMenu}){
+export default function Home({dataMenu}){
   const [data, setData] = useState(null)
   const [isLoading, setLoading] = useState(true)
   const { t } = useTranslation()
