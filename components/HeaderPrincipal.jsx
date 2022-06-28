@@ -28,7 +28,7 @@ export default function HeaderPrincipal({fixed, style, menuData, headerSticky}){
                 }
             });
         }
-    }, [])
+    }, [headerSticky])
 
     let langLink = {}
 

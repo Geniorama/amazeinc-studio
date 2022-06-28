@@ -15,6 +15,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUpRightAndDownLeftFromCenter, faAngleDown} from "@fortawesome/free-solid-svg-icons";
 import ButtonBack from "../../components/ButtonBack";
 import { localeCovert } from "../../helpers";
+import PreloadPages from "../../components/PreloadPages";
 
 
 export default function SingleProject({ dataMenu }) {
@@ -36,11 +37,8 @@ export default function SingleProject({ dataMenu }) {
     AOS.init({
       duration: 1000
     })
-  })
+  },[router])
 
-  if(!data){
-    return <p>Data not found</p>
-  }
 
   const variantsModal = {
     show: {
@@ -58,177 +56,145 @@ export default function SingleProject({ dataMenu }) {
     setImageUrl(image)
     setIsOpenModal(true)
   }
-
-  const projectData = data.data.project.translation
   let videoArr = []
 
-  if(projectData.projectFeatures.galleryVideo){
-    videoArr = (projectData.projectFeatures.galleryVideo).split(',')
+  if(data){
+    if(data.data.project.translation.projectFeatures.galleryVideo){
+      videoArr = (data.data.project.translation.projectFeatures.galleryVideo).split(',')
+    }
   }
+  
 
   let countGallery = 0
 
   return (
-    <Layout 
-      header={"secondary"} 
-      headerFixed={true}
-      headerSticky={true}
-      footer={true} 
-      menuData={dataMenu.data}  
-    >
-    {projectData 
-    
-    ?
-    <article id="project-details">
-        <div className={styles.imageTop}>
-          {projectData.projectFeatures.coverVideo && projectData.projectFeatures.coverImage
-            ?
-            <video autoPlay loop preload={"true"} muted className={styles.coverVideo} poster={projectData.projectFeatures.coverImage.mediaItemUrl}>
-              <source src={projectData.projectFeatures.coverVideo} type="video/mp4"/>
-              Your browser does not support the video tag.
-            </video>
-            :
-            projectData.projectFeatures.coverImage
-            ?
-            <Image 
-              src={projectData.projectFeatures.coverImage.mediaItemUrl}
-              layout="fill"
-              objectFit="cover"
-              priority={true}
-            />
-            :
-            ""
-          }
-          <span className={styles.moreContent}>
-              <p className={styles.moreContentText}>
-                {router.locale == "en-US"
-                  ?
-                  "SEE MORE"
-                  :
-                  "VER MÁS"
-                }
-              </p>
-              <FontAwesomeIcon icon={faAngleDown} />
-          </span>
-        </div>
+    <>
+      <PreloadPages theme={"dark"} trigger={data}/>
+      <Layout 
+        header={"secondary"} 
+        headerFixed={true}
+        headerSticky={true}
+        footer={true} 
+        menuData={dataMenu.data}  
+      >
+      {data
+      
+      ?
+      <article id="project-details">
+          <div className={styles.imageTop}>
+            {data.data.project.translation.projectFeatures.coverVideo && data.data.project.translation.projectFeatures.coverImage
+              ?
+              <video autoPlay loop preload={"true"} muted className={styles.coverVideo} poster={data.data.project.translation.projectFeatures.coverImage.mediaItemUrl}>
+                <source src={data.data.project.translation.projectFeatures.coverVideo} type="video/mp4"/>
+                Your browser does not support the video tag.
+              </video>
+              :
+              data.data.project.translation.projectFeatures.coverImage
+              ?
+              <Image 
+                src={data.data.project.translation.projectFeatures.coverImage.mediaItemUrl}
+                layout="fill"
+                objectFit="cover"
+                priority={true}
+              />
+              :
+              ""
+            }
+            <span className={styles.moreContent}>
+                <p className={styles.moreContentText}>
+                  {router.locale == "en-US"
+                    ?
+                    "SEE MORE"
+                    :
+                    "VER MÁS"
+                  }
+                </p>
+                <FontAwesomeIcon icon={faAngleDown} />
+            </span>
+          </div>
 
-        <section>
-          <div className="container">
-            {/* Lightbox */}
-            <motion.div className={styles.lightbox} initial={"hide"} animate={isOpenModal ? 'show':'hide'} variants={variantsModal} transition={{duration:1}}>
-                <div className={styles.lightboxWrap}>
-                  <div className={styles.lightboxContent}>
-                    <div className={styles.contButton} onClick={() => setIsOpenModal(false)}>
-                      <CloseButton />
+          <section>
+            <div className="container">
+              {/* Lightbox */}
+              <motion.div className={styles.lightbox} initial={"hide"} animate={isOpenModal ? 'show':'hide'} variants={variantsModal} transition={{duration:1}}>
+                  <div className={styles.lightboxWrap}>
+                    <div className={styles.lightboxContent}>
+                      <div className={styles.contButton} onClick={() => setIsOpenModal(false)}>
+                        <CloseButton />
+                      </div>
+                      <img src={imageUrl} alt="" className={styles.imgLightbox} />
                     </div>
-                    <img src={imageUrl} alt="" className={styles.imgLightbox} />
                   </div>
+              </motion.div>
+              <div className={styles.infoProject}>
+                <div className={styles.infoLeft} data-aos="fade-right">
+                  <span className={styles.companyName}>{data.data.project.translation.projectFeatures.customer}</span>
+                  <span className={styles.projectName}>{data.data.project.translation.title}</span>
+                  {data.data.project.translation.content
+                    ?
+                    <div className={styles.descProject} dangerouslySetInnerHTML={{__html: data.data.project.translation.content}}/>
+                    :
+                    ""
+                  }
                 </div>
-            </motion.div>
-            <div className={styles.infoProject}>
-              <div className={styles.infoLeft} data-aos="fade-right">
-                <span className={styles.companyName}>{projectData.projectFeatures.customer}</span>
-                <span className={styles.projectName}>{projectData.title}</span>
-                {projectData.content
-                  ?
-                  <div className={styles.descProject} dangerouslySetInnerHTML={{__html: projectData.content}}/>
-                  :
-                  ""
-                }
-              </div>
-              <div className={styles.infoRight}>
-                {/* Not found */}
+                <div className={styles.infoRight}>
+                  {/* Not found */}
+                </div>
               </div>
             </div>
-          </div>
-        </section>
+          </section>
 
-        <section>
-          <div className="container">
-              <div className={styles.contGallery}>
-                {projectData.projectFeatures.gallery
-                ?
-                projectData.projectFeatures.gallery.map((item) => (
-                    <div key={item.id} className={styles.imgLink} data-aos="fade-up">
-                      <div className={styles.imgWrap} onClick={() => handlerModal(item.mediaItemUrl)} >
-                        <div className={styles.imgItem}>
-                          <img src={item.mediaItemUrl} alt="" className={styles.imgGallery}/>
-                        </div>
-                        <div className={styles.iconExpand}>
-                          <FontAwesomeIcon icon={faUpRightAndDownLeftFromCenter} size={"sm"} />
-                        </div>
-                      </div>
-                    </div>
-                ))
-                :
-                ""
-                }
-
-                {projectData.projectFeatures.galleryVideo
+          <section>
+            <div className="container">
+                <div className={styles.contGallery}>
+                  {data.data.project.translation.projectFeatures.gallery
                   ?
-                  videoArr.map((item) =>{
-                    countGallery++
-                    return(
-                      <div key={countGallery} className={styles.videoLink} data-aos="fade-up">
-                        <video src={item} controls className={styles.videoItemGallery}></video>
+                  data.data.project.translation.projectFeatures.gallery.map((item) => (
+                      <div key={item.id} className={styles.imgLink} data-aos="fade-up">
+                        <div className={styles.imgWrap} onClick={() => handlerModal(item.mediaItemUrl)} >
+                          <div className={styles.imgItem}>
+                            <img src={item.mediaItemUrl} alt="" className={styles.imgGallery}/>
+                          </div>
+                          <div className={styles.iconExpand}>
+                            <FontAwesomeIcon icon={faUpRightAndDownLeftFromCenter} size={"sm"} />
+                          </div>
+                        </div>
                       </div>
-                    )
-                  })
+                  ))
                   :
                   ""
-                }
-              </div>
-          </div>
-        </section>
-      </article>
-    :
-    ""
-    }
+                  }
 
-      <ButtonBack />
-    </Layout>
+                  {data.data.project.translation.projectFeatures.galleryVideo
+                    ?
+                    videoArr.map((item) =>{
+                      countGallery++
+                      return(
+                        <div key={countGallery} className={styles.videoLink} data-aos="fade-up">
+                          <video src={item} controls className={styles.videoItemGallery}></video>
+                        </div>
+                      )
+                    })
+                    :
+                    ""
+                  }
+                </div>
+            </div>
+          </section>
+        </article>
+      :
+      ""
+      }
+
+        <ButtonBack />
+      </Layout>
+    </>
   );
 }
 
-// export async function getStaticPaths({ locales }) {
-//   if (locales == undefined) {
-//     throw new Error('Please define locales in your next.config')
-//   }
-
-//   const resJson = await queries.getAllProjects(API_URL)
-//   const projects = resJson.data.projects.nodes
-
-//   let paths = []
-//   projects.forEach(project => {
-//     if(project.language != "null" && project.language != undefined){
-//       if(project.language.locale == "en_US"){
-//         paths.push({
-//           params:{
-//             slug: project.slug
-//           },
-//           locale: 'en-US'
-//         })
-//       } else if(project.language.locale == "es_ES"){
-//         paths.push({
-//           params:{
-//             slug: project.slug
-//           },
-//           locale: 'es-ES'
-//         })
-//       }
-//     }
-//   });
-
-//   return {
-//     paths,
-//     fallback: false
-//   }
-// }
 
 export async function getServerSideProps({ locale }) {
   try {
-
-    // const data = await queries.getProjectBySlug(API_URL, localeCovert(locale) , slug)
     const dataMenu = await queries.getMenuItems(API_URL, localeCovert(locale))
 
     return {

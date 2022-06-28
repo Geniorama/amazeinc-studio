@@ -22,7 +22,7 @@ export default function AboutUs({dataMenu}) {
       setLoading(false)
     }
     fetchPosts()
-  },[])
+  },[router])
   
   return (
     <>

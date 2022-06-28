@@ -24,7 +24,7 @@ export default function DownloadPortfolios({dataMenu}) {
       setLoading(false)
     }
     fetchData()
-  })
+  }, [router])
   
   return (
     <>

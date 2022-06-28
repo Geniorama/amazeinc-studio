@@ -11,18 +11,20 @@ export default function Layout({children, title, description, idPage, header, he
     
     const variants = {
         show: {
-            opacity:1
+            opacity:1,
+            y: 0
         },
 
         hide: {
-            opacity:0
+            opacity:0,
+            y: 200
         }
     }
 
     return(
         <AnimatePresence exitBeforeEnter>
         <div className={styles.layoutWraper} id="amaze-layout">
-            {/* Preloader no carga en el home */}
+            
             <div id="amaze-ancle-top"></div>
             <Head>
                 <title>{title}</title>
