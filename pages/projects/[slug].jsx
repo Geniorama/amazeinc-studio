@@ -26,10 +26,6 @@ export default function SingleProject({ dataMenu, error, errorMsje }) {
   
   const router = useRouter()
 
-  if(error){
-    return <p>{errorMsje}</p>
-  }
-
   useEffect(()=>{
     const fetchPosts = async () => {
       const projects = await queries.getProjectBySlug(API_URL, localeCovert(router.locale) , router.query.slug)
@@ -41,8 +37,12 @@ export default function SingleProject({ dataMenu, error, errorMsje }) {
     AOS.init({
       duration: 1000
     })
+    
   },[router])
 
+  if(error){
+    return <p style={{color: "white"}}>{errorMsje}</p>
+  }
 
   const variantsModal = {
     show: {
@@ -205,14 +205,17 @@ export async function getServerSideProps({ locale }) {
       props: {
         ...(await serverSideTranslations(locale, ["menu"])),
         dataMenu,
-        error: false
+        error: false,
+        errorMsje: ""
       }
     }
     
   } catch (error) {
     return {
-      error: true,
-      errorMsje: error
+      props: {
+        error: true,
+        errorMsje: "Data not found"
+      }
     }
   }
 }
