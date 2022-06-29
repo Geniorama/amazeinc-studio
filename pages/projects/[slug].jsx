@@ -18,13 +18,17 @@ import { localeCovert } from "../../helpers";
 import PreloadPages from "../../components/PreloadPages";
 
 
-export default function SingleProject({ dataMenu }) {
+export default function SingleProject({ dataMenu, error, errorMsje }) {
   const [imageUrl, setImageUrl] = useState("https://www.geniorama.site/demo/amazeinc/wp-content/uploads/2022/06/3456-scaled.jpg")
   const [isOpenModal, setIsOpenModal] = useState(false)
   const [isLoading, setLoading] = useState(true)
   const [data, setData] = useState(null)
   
   const router = useRouter()
+
+  if(error){
+    return <p>{errorMsje}</p>
+  }
 
   useEffect(()=>{
     const fetchPosts = async () => {
@@ -200,12 +204,15 @@ export async function getServerSideProps({ locale }) {
     return {
       props: {
         ...(await serverSideTranslations(locale, ["menu"])),
-        dataMenu
+        dataMenu,
+        error: false
       }
     }
     
   } catch (error) {
-    console.log(error)
-    return null
+    return {
+      error: true,
+      errorMsje: error
+    }
   }
 }

@@ -16,12 +16,16 @@ import { localeCovert } from "../../../helpers";
 import PreloadPages from "../../../components/PreloadPages";
 
 
-export default function Slug({ dataMenu }) {
+export default function Slug({ dataMenu, error, errorMsje }) {
   const [data, setData] = useState(null)
   const [pageLoad, setPageLoad] = useState(false)
   const [isLoading, setLoading] = useState(true)
   const router = useRouter()
   const { t } = useTranslation()
+
+  if(error){
+    return <p>{errorMsje}</p>
+  }
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -163,10 +167,14 @@ export async function getServerSideProps({ locale }) {
     return {
       props: {
         ...(await serverSideTranslations(locale, ['menu', 'projects'])),
-        dataMenu
+        dataMenu,
+        error: false
       }
     }
   } catch (error) {
-    return null
+    return {
+      error: true,
+      errorMsje: error
+    }
   }
 }
