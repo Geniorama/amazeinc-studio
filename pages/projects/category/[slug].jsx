@@ -17,7 +17,7 @@ import PreloadPages from "../../../components/PreloadPages";
 
 
 export default function Slug({ dataMenu }) {
-  const [data, setData] = useState(null)
+  const [data, setData] = useState(false)
   const [pageLoad, setPageLoad] = useState(false)
   const [isLoading, setLoading] = useState(true)
   const router = useRouter()
