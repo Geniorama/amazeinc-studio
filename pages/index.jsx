@@ -13,21 +13,16 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { localeCovert } from "../helpers";
 
-export default function Home({dataMenu}){
-  const [data, setData] = useState(null)
+export default function Home({dataMenu, data}){
   const [isLoading, setLoading] = useState(true)
   const { t } = useTranslation()
 
   useEffect(() => {
-    const fetchPosts = async () => {
-      const res = await queries.getDataHome(API_URL)
-      setData(res)
+    if(data){
       setLoading(false)
     }
 
-    fetchPosts()
-
-  }, [])
+  },[data])
 
   const variants = {
     show:{
@@ -52,11 +47,6 @@ export default function Home({dataMenu}){
       opacity: 0
     }
   }
-
-  
-  
-  if (isLoading) return <p>Cargando</p>
-  if (!data) return <p>No profile data</p>
 
   const videoCoverHome = data.data.page.homeFeatures.videoCover
   const imageCoverHome = data.data.page.homeFeatures.imageCover.mediaItemUrl
@@ -95,7 +85,7 @@ export default function Home({dataMenu}){
             </motion.a>
           </Link>
 
-          <motion.div key={"layer-home"} className={styles.layerHome} initial="show" animate={'hide'} variants={variants} transition={{duration: 2, ease: "easeInOut"}}></motion.div>
+          <motion.div key={"layer-home"} className={styles.layerHome} initial="show" animate={!isLoading ? 'hide':'show'} variants={variants} transition={{duration: 2, ease: "easeInOut"}}></motion.div>
       </div>
 
       {videoCoverHome
@@ -119,14 +109,15 @@ export default function Home({dataMenu}){
 export async function getStaticProps({locale}){
   try {
     const dataMenu = await queries.getMenuItems(API_URL, localeCovert(locale))
+    const data = await queries.getDataHome(API_URL)
     return {
       props: {
           ...(await serverSideTranslations(locale, ['homepage', 'menu'])),
-          dataMenu
+          dataMenu,
+          data
       }
     }
   } catch (error) {
-    console.log(error)
     return null
   }
 }

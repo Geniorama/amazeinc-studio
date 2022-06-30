@@ -9,20 +9,17 @@ import { useRouter } from "next/router";
 import { localeCovert } from "../helpers";
 import PreloadPages from "../components/PreloadPages";
 
-export default function AboutUs({dataMenu}) {
-  const [data, setData] = useState(null)
+export default function AboutUs({dataMenu, data}) {
+  // const [data, setData] = useState(null)
   const [isLoading, setLoading] = useState(true)
   const { t } = useTranslation()
   const router = useRouter()
 
   useEffect(() => {
-    const fetchPosts = async () => {
-      const res = await queries.getDataAboutUs(API_URL, localeCovert(router.locale))
-      setData(res)
+    if(data){
       setLoading(false)
     }
-    fetchPosts()
-  },[router])
+  },[data])
   
   return (
     <>
@@ -66,11 +63,14 @@ export default function AboutUs({dataMenu}) {
 export async function getStaticProps({locale}){
   try {
     const dataMenu = await queries.getMenuItems(API_URL, localeCovert(locale))
+    const data = await queries.getDataAboutUs(API_URL, localeCovert(locale))
 
     return {
       props: {
           ...(await serverSideTranslations(locale, ['menu'])),
-          dataMenu
+          dataMenu,
+          data
+
       }
     }
   } catch (error) {

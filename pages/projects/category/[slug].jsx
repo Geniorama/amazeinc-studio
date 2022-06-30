@@ -121,7 +121,7 @@ export default function Slug({ dataMenu, data }) {
                   />
               </motion.div>
               :
-              <motion.div key={"grid-projects"} className={styles.gridProjects} initial={'hide'} animate={!isLoading ? 'show' : 'hide'} variants={variants} transition={{delay: 1, duration: 1}}>
+              <motion.div key={"grid-projects"} className={styles.gridProjects} initial={'hide'} animate={!isLoading ? 'show' : 'hide'} variants={variants} transition={{delay: 0, duration: 1}}>
                   {data.projects.data.categoryProject.translation.projects.nodes.map((item) =>(
                     item.featuredImage
                     ?
@@ -149,9 +149,14 @@ export default function Slug({ dataMenu, data }) {
   )
 }
 
-export async function getServerSideProps({ locale, params }) {
+export async function getServerSideProps({ locale, params, req, res }) {
   const { slug } = params
   try {
+    res.setHeader(
+      'Cache-Control',
+      'public, s-maxage=10, stale-while-revalidate=59'
+    )
+
     const dataMenu = await queries.getMenuItems(API_URL, localeCovert(locale))
     const categories = await queries.getCategoriesProjects(API_URL, localeCovert(locale))
     const projects = await queries.getProjectsByCategory(API_URL, localeCovert(locale), slug)

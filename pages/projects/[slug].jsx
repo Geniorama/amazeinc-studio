@@ -18,31 +18,24 @@ import { localeCovert } from "../../helpers";
 import PreloadPages from "../../components/PreloadPages";
 
 
-export default function SingleProject({ dataMenu, error, errorMsje }) {
+export default function SingleProject({ dataMenu, data }) {
   const [imageUrl, setImageUrl] = useState("https://www.geniorama.site/demo/amazeinc/wp-content/uploads/2022/06/3456-scaled.jpg")
   const [isOpenModal, setIsOpenModal] = useState(false)
   const [isLoading, setLoading] = useState(true)
-  const [data, setData] = useState(null)
   
   const router = useRouter()
 
   useEffect(()=>{
-    const fetchPosts = async () => {
-      const projects = await queries.getProjectBySlug(API_URL, localeCovert(router.locale) , router.query.slug)
-      setData(projects)
+    if(data){
       setLoading(false)
     }
 
-    fetchPosts()
     AOS.init({
       duration: 1000
     })
     
-  },[router])
+  },[data])
 
-  if(error){
-    return <p style={{color: "white"}}>{errorMsje}</p>
-  }
 
   const variantsModal = {
     show: {
@@ -197,25 +190,26 @@ export default function SingleProject({ dataMenu, error, errorMsje }) {
 }
 
 
-export async function getServerSideProps({ locale }) {
+export async function getServerSideProps({ locale, params, req, res }) {
+  const { slug } = params
+
   try {
+    res.setHeader(
+      'Cache-Control',
+      'public, s-maxage=10, stale-while-revalidate=59'
+    )
     const dataMenu = await queries.getMenuItems(API_URL, localeCovert(locale))
+    const data = await queries.getProjectBySlug(API_URL, localeCovert(locale), slug)
 
     return {
       props: {
         ...(await serverSideTranslations(locale, ["menu"])),
         dataMenu,
-        error: false,
-        errorMsje: ""
+        data
       }
     }
     
   } catch (error) {
-    return {
-      props: {
-        error: true,
-        errorMsje: "Data not found"
-      }
-    }
+    return null
   }
 }

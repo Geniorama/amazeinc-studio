@@ -30,7 +30,7 @@ export default function PreloadPages({theme, trigger}) {
   
   return (
     
-    <motion.div key={"preloader"} className={`${styles.preloaderWrap}`} initial="show" animate={trigger ? "hide":"show"} variants={variants} transition={{duration: 3}}>
+    <motion.div key={"preloader"} className={`${styles.preloaderWrap}`} initial="show" animate={trigger ? "hide":"show"} variants={variants} transition={{delay: 1, duration: 3}}>
         <motion.div key={"layer"} className={`${styles.layerPreloader} ${theme =="light" ? styles.layerLight : styles.layerDark}`}></motion.div>
         <Image
             width={200}

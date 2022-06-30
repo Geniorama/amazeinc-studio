@@ -89,7 +89,6 @@ export async function getStaticProps({locale}){
     }
     
   } catch (error) {
-    console.log(error)
     return null
   }
 }
