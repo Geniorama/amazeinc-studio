@@ -21,6 +21,7 @@ body {
 
 body{
   background-color: var(--p-color);
+  overflow: hidden;
 }
 
 a {
@@ -63,6 +64,7 @@ a {
 
 .amaze-main{
   min-height: 70vh;
+  overflow: hidden;
 }
 
 body::-webkit-scrollbar {

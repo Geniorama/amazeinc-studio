@@ -21,7 +21,7 @@ export default function HeaderPrincipal({fixed, style, menuData, headerSticky}){
             const stickyClass = styles.headerSticky
 
             window.addEventListener('scroll', (e) => {
-                if(window.scrollY > 300){
+                if(window.scrollY > 200){
                     menu.classList.add(stickyClass)
                 } else {
                     menu.classList.remove(stickyClass)
