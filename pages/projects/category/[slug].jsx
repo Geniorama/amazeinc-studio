@@ -6,7 +6,7 @@ import { useRouter } from "next/router"
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from "next-i18next";
 import MultimediaGallery from "../../../components/MultimediaGallery"
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import queries from "../../../api/queries";
 import { useEffect, useState } from "react";
 import PreloadImg from "../../../public/imagenes/ball-preloader.svg"
@@ -16,25 +16,16 @@ import { localeCovert } from "../../../helpers";
 import PreloadPages from "../../../components/PreloadPages";
 
 
-export default function Slug({ dataMenu }) {
-  const [data, setData] = useState(false)
+export default function Slug({ dataMenu, data }) {
   const [pageLoad, setPageLoad] = useState(false)
   const [isLoading, setLoading] = useState(true)
   const router = useRouter()
   const { t } = useTranslation()
 
   useEffect(() => {
-    const fetchPosts = async () => {
-      const categories = await queries.getCategoriesProjects(API_URL, localeCovert(router.locale))
-      const projects = await queries.getProjectsByCategory(API_URL, localeCovert(router.locale), router.query.slug)
-      setData({
-        categories: categories,
-        projects: projects
-      })
+    if(data){
       setLoading(false)
     }
-
-    fetchPosts()
     
     router.events.on('routeChangeStart', handleStart)
     router.events.on('routeChangeComplete', handleStop)
@@ -45,7 +36,8 @@ export default function Slug({ dataMenu }) {
       router.events.on('routeChangeComplete', handleStop)
       router.events.on('routeChangeError', handleStop)
     }
-  },[router])
+  },[router, data])
+
 
   function handleStart(){
     setPageLoad(true)
@@ -157,23 +149,25 @@ export default function Slug({ dataMenu }) {
   )
 }
 
-export async function getServerSideProps({ locale }) {
+export async function getServerSideProps({ locale, params }) {
+  const { slug } = params
   try {
     const dataMenu = await queries.getMenuItems(API_URL, localeCovert(locale))
+    const categories = await queries.getCategoriesProjects(API_URL, localeCovert(locale))
+    const projects = await queries.getProjectsByCategory(API_URL, localeCovert(locale), slug)
+
+    const data = {
+      categories,
+      projects
+    }
     return {
       props: {
         ...(await serverSideTranslations(locale, ['menu', 'projects'])),
         dataMenu,
-        error: false,
-        errorMsje: ""
+        data
       }
     }
   } catch (error) {
-    return {
-      props: {
-        error: true,
-        errorMsje: "Data not found"
-      }
-    }
+    return null
   }
 }
