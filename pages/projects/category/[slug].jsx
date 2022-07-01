@@ -38,7 +38,6 @@ export default function Slug({ dataMenu, data }) {
     }
   },[router, data])
 
-
   function handleStart(){
     setPageLoad(true)
   }
@@ -129,9 +128,10 @@ export default function Slug({ dataMenu, data }) {
                       <MultimediaGallery
                         title={item.title}
                         customer={item.projectFeatures.customer}
-                        coverImage={item.featuredImage.node.mediaItemUrl}
+                        coverImage={item.featuredImage.node.mediaDetails.sizes[3].sourceUrl}
                         gifImage={item.projectFeatures.featuredGif ? item.projectFeatures.featuredGif.mediaItemUrl : false}
                         link={`/projects/${item.slug}`}
+                        alt={item.title}
                       />
                     </div>
                     :

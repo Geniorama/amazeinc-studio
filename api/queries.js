@@ -89,6 +89,12 @@ const queries = {
                               featuredImage {
                                 node {
                                   mediaItemUrl
+                                  mediaDetails {
+                                    sizes {
+                                      sourceUrl
+                                      name
+                                    }
+                                  }
                                 }
                               }
                               projectId

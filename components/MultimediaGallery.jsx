@@ -3,9 +3,8 @@ import styles from "./../styles/MultimediaGallery.module.css";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { useEffect } from "react";
 
-export default function MultimediaGallery({title, customer, coverImage, link, gifImage}) {
+export default function MultimediaGallery({title, customer, coverImage, link, gifImage, alt}) {
   const [urlImage, setUrlImage] = useState(coverImage)
 
   function handleEnter(){
@@ -26,7 +25,7 @@ export default function MultimediaGallery({title, customer, coverImage, link, gi
             layout="fill"
             objectFit="cover"
             objectPosition={"top"}
-            alt="Image test"
+            alt={alt}
           />
           <div className={styles.overlayGallery}>
             <h2 className={styles.titleProject}>{title}</h2>

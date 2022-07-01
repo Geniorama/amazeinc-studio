@@ -90,7 +90,7 @@ export default function Home({dataMenu, data}){
 
       {videoCoverHome
         ?
-        <video poster={imageCoverHome ? imageCoverHome : ""} className={styles.videoHome} autoPlay muted loop>
+        <video preload={true} poster={imageCoverHome ? imageCoverHome : ""} className={styles.videoHome} autoPlay muted loop>
           <source src={videoCoverHome} type="video/mp4" />
           Your browser does not support the video tag.
         </video>
