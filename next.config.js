@@ -8,7 +8,7 @@ const nextConfig = {
     localeDetection: false
   },
   images: {
-    domains: ['geniorama.site', 'www.geniorama.site', 'cloudinary.com', 'res.cloudinary.com'],
+    domains: ['geniorama.site', 'www.geniorama.site', 'cloudinary.com', 'res.cloudinary.com', 'amazeincstudio.com', 'www.amazeincstudio.com', 'admin.amazeincstudio.com'],
   },
 
   async redirects() {

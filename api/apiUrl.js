@@ -1,3 +1,3 @@
-const API_URL = "https://www.geniorama.site/demo/amazeinc/graphql";
+const API_URL = "https://admin.amazeincstudio.com/graphql";
 
 export default API_URL
