@@ -19,9 +19,31 @@ export default function Home({dataMenu, data}){
   const [isImage, setImage] = useState(false)
   const { t } = useTranslation()
 
+
+  const videoDefault = "https://admin.amazeincstudio.com/wp-content/uploads/2022/10/video.mp4"
+  // const imageDefault = "https://admin.amazeincstudio.com/wp-content/uploads/2022/10/nadine-shaabana-DrPcfuaeYFQ-unsplash.jpg"
+
   useEffect(() => {
     if(data){
       setLoading(false)
+
+      if(data.data.page.homeFeatures.videoCover){
+        fetch(data.data.page.homeFeatures.videoCover)
+        .then(function(response){
+          if(response.ok){
+            console.log(data.data.page.homeFeatures.videoCover)
+            setVideo(data.data.page.homeFeatures.videoCover)
+            return
+          }
+          setVideo(videoDefault)
+        })
+      }
+
+      
+      if(data.data.page.homeFeatures.imageCover){
+        setImage(data.data.page.homeFeatures.imageCover.mediaItemUrl)
+      } 
+      
     }
   },[data])
 
@@ -48,32 +70,6 @@ export default function Home({dataMenu, data}){
       opacity: 0
     }
   }
-  
-  const imageCoverHome = isImage
-
-
-  // https://admin.amazeincstudio.com/wp-content/uploads/2022/10/nadine-shaabana-DrPcfuaeYFQ-unsplash.jpg
-
-
-  if(isLoading){
-    if(data.data.page.homeFeatures.videoCover){
-      fetch(data.data.page.homeFeatures.videoCover)
-      .then(function(response){
-        if(response.ok){
-          setVideo(data.data.page.homeFeatures.videoCover)
-          console.log('Existe el video')
-          return
-        }
-        setVideo('https://admin.amazeincstudio.com/wp-content/uploads/2022/10/video.mp4')
-      })
-    }
-
-    // data.data.page.homeFeatures.imageCover.mediaItemUrl
-    if(data.data.page.homeFeatures.imageCover){
-      setImage(data.data.page.homeFeatures.imageCover.mediaItemUrl)
-    }
-  }
-  
 
   return(
     <Layout
@@ -119,11 +115,16 @@ export default function Home({dataMenu, data}){
           Your browser does not support the video tag.
         </video>
         :
+
+        isImage
+        ?
         <Image 
-          src={imageCoverHome}
+          src={isImage}
           layout="fill"
           objectFit="cover"
         />
+        :
+        null
       }
     </div>
     </Layout>
