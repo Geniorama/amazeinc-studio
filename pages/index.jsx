@@ -15,13 +15,14 @@ import { localeCovert } from "../helpers";
 
 export default function Home({dataMenu, data}){
   const [isLoading, setLoading] = useState(true)
+  const [isVideo, setVideo] = useState(false)
+  const [isImage, setImage] = useState(false)
   const { t } = useTranslation()
 
   useEffect(() => {
     if(data){
       setLoading(false)
     }
-
   },[data])
 
   const variants = {
@@ -47,9 +48,32 @@ export default function Home({dataMenu, data}){
       opacity: 0
     }
   }
+  
+  const imageCoverHome = isImage
 
-  const videoCoverHome = data.data.page.homeFeatures.videoCover
-  const imageCoverHome = data.data.page.homeFeatures.imageCover.mediaItemUrl
+
+  // https://admin.amazeincstudio.com/wp-content/uploads/2022/10/nadine-shaabana-DrPcfuaeYFQ-unsplash.jpg
+
+
+  if(isLoading){
+    if(data.data.page.homeFeatures.videoCover){
+      fetch(data.data.page.homeFeatures.videoCover)
+      .then(function(response){
+        if(response.ok){
+          setVideo(data.data.page.homeFeatures.videoCover)
+          console.log('Existe el video')
+          return
+        }
+        setVideo('https://admin.amazeincstudio.com/wp-content/uploads/2022/10/video.mp4')
+      })
+    }
+
+    // data.data.page.homeFeatures.imageCover.mediaItemUrl
+    if(data.data.page.homeFeatures.imageCover){
+      setImage(data.data.page.homeFeatures.imageCover.mediaItemUrl)
+    }
+  }
+  
 
   return(
     <Layout
@@ -88,10 +112,10 @@ export default function Home({dataMenu, data}){
           <motion.div key={"layer-home"} className={styles.layerHome} initial="show" animate={!isLoading ? 'hide':'show'} variants={variants} transition={{duration: 2, ease: "easeInOut"}}></motion.div>
       </div>
 
-      {videoCoverHome
+      {isVideo
         ?
-        <video preload={"true"} poster={imageCoverHome ? imageCoverHome : ""} className={styles.videoHome} autoPlay muted loop>
-          <source src={videoCoverHome} type="video/mp4" />
+        <video preload={"true"} poster={isVideo ? isVideo : ""} className={styles.videoHome} autoPlay muted loop>
+          <source src={isVideo} type="video/mp4" />
           Your browser does not support the video tag.
         </video>
         :
