@@ -31,7 +31,6 @@ export default function Home({dataMenu, data}){
         fetch(data.data.page.homeFeatures.videoCover)
         .then(function(response){
           if(response.ok){
-            console.log(data.data.page.homeFeatures.videoCover)
             setVideo(data.data.page.homeFeatures.videoCover)
             return
           }
@@ -45,7 +44,7 @@ export default function Home({dataMenu, data}){
       } 
       
     }
-  },[data])
+  },[])
 
   const variants = {
     show:{
