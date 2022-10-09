@@ -128,7 +128,6 @@ export default function HeaderPrincipal({fixed, style, menuData, headerSticky}){
                                     {langLink.text}
                                 </a>
                             </Link>
-                            
                         </div>
                     </div>
                     <div className={styles.headerBrand}>

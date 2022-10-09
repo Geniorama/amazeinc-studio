@@ -82,7 +82,7 @@ const queries = {
                       categoryProject(id: "${slug}", idType: SLUG) {
                         name
                         translation(language: ${locale}) {
-                          projects {
+                          projects (first: 100){
                             nodes {
                               slug
                               title(format: RENDERED)

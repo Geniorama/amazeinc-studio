@@ -11,20 +11,19 @@ import { localeCovert } from "../helpers";
 import { useRouter } from "next/router";
 import PreloadPages from "../components/PreloadPages";
 
-export default function DownloadPortfolios({dataMenu}) {
-  const [data, setData] = useState(null);
+export default function DownloadPortfolios({dataMenu, data}) {
+  
   const [isLoading, setLoading] = useState(true)
   const router = useRouter()
   const { t } = useTranslation()
 
   useEffect(() => {
-    const fetchData = async () => {
-      const res = await queries.getAllPortfolios(API_URL, localeCovert(router.locale))
-      setData(res)
+    if(data){
       setLoading(false)
     }
-    fetchData()
-  }, [router])
+  },[data])
+
+  console.log(data)
   
   return (
     <>
@@ -49,7 +48,7 @@ export default function DownloadPortfolios({dataMenu}) {
               <div className={styles.contItems}>
                 <ul>
                   {data.data.portfolios.nodes.map((item) => (
-                      item.downloads.file.mediaItemUrl
+                      item.downloads.file
                       ?
                       <li key={item.portfolioId}>
                         <a href={item.downloads.file.mediaItemUrl} target="_blank" rel="noreferrer" download={item.title}>
@@ -77,14 +76,20 @@ export default function DownloadPortfolios({dataMenu}) {
   );
 }
 
-export async function getStaticProps({locale}){
+export async function getServerSideProps({locale, req, res}){
   try {
+    res.setHeader(
+      'Cache-Control',
+      'public, s-maxage=10, stale-while-revalidate=59'
+    )
     const dataMenu = await queries.getMenuItems(API_URL, localeCovert(locale))
+    const data = await queries.getAllPortfolios(API_URL, localeCovert(locale))
 
     return {
       props: {
           ...(await serverSideTranslations(locale, ['menu', 'portfolios'])),
-          dataMenu
+          dataMenu,
+          data
       }
     }
     

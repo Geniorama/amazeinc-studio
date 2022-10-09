@@ -9,7 +9,7 @@ import MultimediaGallery from "../../../components/MultimediaGallery"
 import { motion } from "framer-motion";
 import queries from "../../../api/queries";
 import { useEffect, useState } from "react";
-import PreloadImg from "../../../public/imagenes/ball-preloader.svg"
+import PreloadImg from "../../../public/imagenes/Rolling-1s-200px.svg"
 import Image from "next/image";
 import API_URL from "../../../api/apiUrl";
 import { localeCovert } from "../../../helpers";
@@ -25,6 +25,7 @@ export default function Slug({ dataMenu, data }) {
   useEffect(() => {
     if(data){
       setLoading(false)
+      console.log(data)
     }
     
     router.events.on('routeChangeStart', handleStart)
@@ -36,6 +37,7 @@ export default function Slug({ dataMenu, data }) {
       router.events.on('routeChangeComplete', handleStop)
       router.events.on('routeChangeError', handleStop)
     }
+    
   },[router, data])
 
   function handleStart(){
@@ -112,11 +114,11 @@ export default function Slug({ dataMenu, data }) {
               ?
               pageLoad
               ?
-              <motion.div className={styles.contPreload} style={{textAlign: "center", padding: "3rem"}} initial={'show'} animate={!pageLoad ? 'hide' : 'show'} variants={variants}>
+              <motion.div className={styles.contPreload} style={{textAlign: "center", padding: "6rem"}} initial={'show'} animate={!pageLoad ? 'hide' : 'show'} variants={variants}>
                   <Image
                     src={PreloadImg}
-                    width={300}
-                    height={300}
+                    width={100}
+                    height={100}
                   />
               </motion.div>
               :
@@ -124,11 +126,11 @@ export default function Slug({ dataMenu, data }) {
                   {data.projects.data.categoryProject.translation.projects.nodes.map((item) =>(
                     item.featuredImage
                     ?
-                    <div key={item.projectId} className={`${styles.gridProjectsItem} ${item.projectFeatures.layout==2 ? styles.gridProjectsItemFeat : item.projectFeatures.layout==3 ? styles.gridProjectsItemVertical : ""} `}>
+                    <div key={item.projectId} className={`${styles.gridProjectsItem} ${item.projectFeatures.layout=="2" ? styles.gridProjectsItemFeat : item.projectFeatures.layout=="3" ? styles.gridProjectsItemVertical : ""} `}>
                       <MultimediaGallery
                         title={item.title}
                         customer={item.projectFeatures.customer}
-                        coverImage={item.featuredImage.node.mediaDetails.sizes[3].sourceUrl}
+                        coverImage={item.featuredImage.node.mediaDetails.sizes > 2 ? item.featuredImage.node.mediaDetails.sizes[3].sourceUrl: item.featuredImage.node.mediaItemUrl}
                         gifImage={item.projectFeatures.featuredGif ? item.projectFeatures.featuredGif.mediaItemUrl : false}
                         link={`/projects/${item.slug}`}
                         alt={item.title}

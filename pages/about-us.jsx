@@ -60,8 +60,12 @@ export default function AboutUs({dataMenu, data}) {
 }
 
 
-export async function getStaticProps({locale}){
+export async function getServerSideProps({locale, req, res}){
   try {
+    res.setHeader(
+      'Cache-Control',
+      'public, s-maxage=10, stale-while-revalidate=59'
+    )
     const dataMenu = await queries.getMenuItems(API_URL, localeCovert(locale))
     const data = await queries.getDataAboutUs(API_URL, localeCovert(locale))
 

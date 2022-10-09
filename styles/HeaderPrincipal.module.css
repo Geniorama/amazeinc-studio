@@ -47,6 +47,8 @@
     color: white;
     margin-left: 5px;
     font-family: 'Gotham', sans-serif;
+    font-size: 17px;
+    display: none; /*Hide language button*/
 }
 
 .headerContRight{
@@ -54,6 +56,10 @@
     align-items: center;
     justify-content: flex-end;
     margin-left: 30px;
+}
+
+.headerContRight a{
+    line-height: 1em;
 }
 
 .headerFixed{
