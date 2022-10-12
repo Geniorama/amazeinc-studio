@@ -76,7 +76,9 @@ export default function Slug({ dataMenu, data }) {
             <div className={styles.contProjectsTop}>
               <div className={styles.contTitle}>
                 <h2 className={styles.archiveTitle}>
-                  {t("projects:our_work")}
+                  OUR
+                  <br />
+                  WORK
                 </h2>
               </div>
               {/* Menu Categories */}
