@@ -119,6 +119,53 @@ const queries = {
         return resJson
     },
 
+    getProjectsByDirector: async function (url_api, locale, slug) {
+        const res = await fetch(url_api, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                query: `
+                query projectsByDirector {
+                  directorProjects(id: "${slug}", idType: SLUG) {
+                    name
+                    translation(language: ${locale}) {
+                      projects {
+                        nodes {
+                          slug
+                          title(format: RENDERED)
+                          featuredImage {
+                            node {
+                              mediaItemUrl
+                              mediaDetails {
+                                sizes {
+                                  sourceUrl
+                                  name
+                                }
+                              }
+                            }
+                          }
+                          projectId
+                          projectFeatures {
+                            layout
+                            customer
+                            coverVideo
+                            featuredGif {
+                              mediaItemUrl
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+                    `
+            })
+        })
+
+        const resJson = await res.json()
+        return resJson
+    },
+
     getCategoriesProjects: async function(url_api, locale){
         const res = await fetch(url_api, {
             method: "POST",
@@ -141,6 +188,29 @@ const queries = {
         const resJson = await res.json()
         return resJson
     },
+
+    getDirectorsProjects: async function(url_api, locale){
+      const res = await fetch(url_api, {
+          method: "POST",
+          headers: { "Content-type": "application/json" },
+          body: JSON.stringify({
+              query: `
+              query getAllDirectorsProjects {
+                directorsProjects(where: {language: EN}) {
+                  nodes {
+                    name
+                    slug
+                    count
+                  }
+                }
+              }
+              `
+          })
+      })
+
+      const resJson = await res.json()
+      return resJson
+  },
     
     getAllCategoriesProjects: async function(url_api){
         const res = await fetch(url_api, {

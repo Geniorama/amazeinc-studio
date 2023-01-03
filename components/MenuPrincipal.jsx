@@ -17,7 +17,7 @@ export default function MenuPrincipal({ handler, menuData }) {
           {menuItems.map((item) => (
               <li key={item.main_menuId} className={styles.menuPrincipalItem}>
                 <Link href={item.mainMenuFeatures.mainSlug} scroll={false}>
-                  <a className={`${styles.menuPrincipalLink} ${router.pathname == item.mainMenuFeatures.mainSlug ? styles.active : ""} ${router.pathname.includes('/projects') && item.mainMenuFeatures.mainSlug.includes('/projects') ? styles.active : ""}`}>
+                  <a className={`${styles.menuPrincipalLink} ${router.pathname == item.mainMenuFeatures.mainSlug && styles.active} ${router.pathname.includes('/projects/category') && item.mainMenuFeatures.mainSlug.includes('/projects/category') ? styles.active : ""} ${router.pathname.includes('/projects/director') && item.mainMenuFeatures.mainSlug.includes('/projects/director') ? styles.active : ""}`}>
                     <div className={styles.menuPrincipalIndicator}>
                       <svg
                         width="30"
