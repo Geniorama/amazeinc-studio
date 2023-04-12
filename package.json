@@ -1,7 +1,7 @@
 {
   "name": "amazeinc-studio",
   "version": "0.1.0",
-  "private": false,
+  "private": true,
   "main": "index.jsx",
   "scripts": {
     "dev": "next dev",
@@ -26,9 +26,5 @@
   "devDependencies": {
     "eslint": "8.17.0",
     "eslint-config-next": "12.1.6"
-  },
-  "engines": {
-    "npm": "6.x",
-    "node": "18.x"
   }
 }
