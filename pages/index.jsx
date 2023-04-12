@@ -146,7 +146,10 @@ export async function getServerSideProps({locale, req, res}){
       }
     }
   } catch (error) {
-    return null
+    return {
+      "message": error,
+      "status": 'error'
+    }
   }
 }
 
