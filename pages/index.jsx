@@ -44,7 +44,7 @@ export default function Home({dataMenu, data}){
       } 
       
     }
-  },[])
+  },[data])
 
   const variants = {
     show:{
