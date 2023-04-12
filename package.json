@@ -1,7 +1,7 @@
 {
   "name": "amazeinc-studio",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "main": "index.jsx",
   "scripts": {
     "dev": "next dev",
