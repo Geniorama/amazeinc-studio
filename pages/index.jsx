@@ -21,7 +21,6 @@ export default function Home({dataMenu, data}){
 
 
   const videoDefault = "https://admin.amazeincstudio.com/wp-content/uploads/2022/10/video.mp4"
-  // const imageDefault = "https://admin.amazeincstudio.com/wp-content/uploads/2022/10/nadine-shaabana-DrPcfuaeYFQ-unsplash.jpg"
 
   useEffect(() => {
     if(data){
