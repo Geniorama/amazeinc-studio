@@ -19,7 +19,7 @@ import PreloadPages from "../../components/PreloadPages";
 
 
 export default function SingleProject({ dataMenu, data }) {
-  const [imageUrl, setImageUrl] = useState("https://www.geniorama.site/demo/amazeinc/wp-content/uploads/2022/06/3456-scaled.jpg")
+  const [imageUrl, setImageUrl] = useState("")
   const [isOpenModal, setIsOpenModal] = useState(false)
   const [isLoading, setLoading] = useState(true)
   

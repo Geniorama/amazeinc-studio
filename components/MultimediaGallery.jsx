@@ -1,4 +1,3 @@
-import Photo from "./../public/imagenes/photo-1.jpg";
 import styles from "./../styles/MultimediaGallery.module.css";
 import Image from "next/image";
 import Link from "next/link";
