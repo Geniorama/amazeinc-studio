@@ -1,0 +1,33 @@
+.textArrow{
+    position: relative;
+    display: inline-block;
+}
+
+.arrow{
+    display: inline-block;
+    width: 0px;
+    height: 1px;
+    top: 50%;
+    position: absolute;
+    left: -10px;
+    opacity: 0;
+    transition: width .5s;
+}
+
+
+.arrow::before{
+    position: absolute;
+    content: '';
+    border-top: 1px solid var(--backgroundBefore);
+    border-right: 1px solid var(--backgroundBefore);
+    transform: rotate(45deg);
+    right: 1px;
+    width: 8px;
+    height: 8px;
+    top: -4px;
+ }
+
+.textArrow:hover .arrow{
+    width: calc(100% + 20px);
+    opacity: 1;
+}
