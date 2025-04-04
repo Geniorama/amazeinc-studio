@@ -93,6 +93,7 @@ export default function SingleProject({ dataMenu, data }) {
                 layout="fill"
                 objectFit="cover"
                 priority={true}
+                unoptimized={true}
               />
               :
               ""

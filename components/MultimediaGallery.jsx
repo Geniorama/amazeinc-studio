@@ -25,6 +25,7 @@ export default function MultimediaGallery({title, customer, coverImage, link, gi
             objectFit="cover"
             objectPosition={"top"}
             alt={alt}
+            unoptimized={true}
           />
           <div className={styles.overlayGallery}>
             <h2 className={styles.titleProject}>{title}</h2>
